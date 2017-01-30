@@ -20,7 +20,7 @@ MySQL线程池只在MariaDB，Oracle MySQL企业版中提供，Oracl">
 <meta property="og:image" content="http://dbanote.github.io/img/mysql_innodb_architecture_01.png">
 <meta property="og:image" content="http://dbanote.github.io/img/mysql_utilities_download_00.png">
 <meta property="og:image" content="http://dbanote.github.io/img/mysql_utilities_download_01.png">
-<meta property="og:updated_time" content="2017-01-26T06:25:28.247Z">
+<meta property="og:updated_time" content="2017-01-30T10:10:17.362Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL DBA从小白到大神实战-03 深入MySQL体系结构">
 <meta name="twitter:description" content="第三课 深入MySQL体系结构1. thread pool的原理是什么？线程池的原理很简单，类似于操作系统中的缓冲区的概念，它的流程如下：先启动若干数量的线程，并让这些线程都处于睡眠状态，当客户端有一个新请求时，就会唤醒线程池中的某一个睡眠线程，让它来处理客户端的这个请求，当处理完这个请求后，线程又处于睡眠状态。
@@ -182,6 +182,7 @@ MySQL线程池只在MariaDB，Oracle MySQL企业版中提供，Oracl">
         <h1 id="第三课-深入MySQL体系结构"><a href="#第三课-深入MySQL体系结构" class="headerlink" title="第三课 深入MySQL体系结构"></a>第三课 深入MySQL体系结构</h1><h2 id="1-thread-pool的原理是什么？"><a href="#1-thread-pool的原理是什么？" class="headerlink" title="1. thread pool的原理是什么？"></a>1. thread pool的原理是什么？</h2><p>线程池的原理很简单，类似于操作系统中的缓冲区的概念，它的流程如下：先启动若干数量的线程，并让这些线程都处于睡眠状态，当客户端有一个新请求时，就会唤醒线程池中的某一个睡眠线程，让它来处理客户端的这个请求，当处理完这个请求后，线程又处于睡眠状态。</p>
 <p>MySQL线程池只在MariaDB，Oracle MySQL企业版中提供，Oracle MySQL社区版并不提供。</p>
 <p>在传统方式下，MySQL线程调度方式有两种：每个连接一个线程(one-thread-per-connection)和所有连接一个线程（no-threads）。在实际生产中，一般用的是前者。即每当有一个客户端连接到MySQL服务器，MySQL服务器都会为该客户端创建一个单独的线程，请求结束后，销毁线程。连接数越多，则相应的线程会越多。这种方式在高并发情况下，会导致线程的频繁创建和释放。</p>
+<a id="more"></a>
 <h2 id="2-为什么用double-write就能解决page坏的问题？"><a href="#2-为什么用double-write就能解决page坏的问题？" class="headerlink" title="2. 为什么用double write就能解决page坏的问题？"></a>2. 为什么用double write就能解决page坏的问题？</h2><p>InnoDB 的Page Size一般是16KB，其数据校验也是针对这16KB来计算的，将数据写入到磁盘是以Page为单位进行操作的，mysql的page size跟系统文件的page size是不一致的，在写数据的时候, 系统并不是把整个buffer pool page一次性写到disk上，在极端情况下（比如断电）往往并不能保证这一操作的原子性，16K的数据，写入4K时，发生了系统断电/OS crash ，只有一部分写是成功的，这种情况下就是partial page write问题。</p>
 <p>mysql在恢复的过程中是检查page的checksum（检验和），checksum就是pgae的最后事务号，发生partial page write问题时，page已经损坏，找不到该page中的事务号，就无法恢复（ redo里面是没有保留这个损坏page完全的镜像，就无法从REDO里恢复）。</p>
 <p>为了解决 partial page write 问题 ，当mysql将脏数据flush到data file的时候, 先使用memcopy 将脏数据复制到内存中的double write buffer ，之后通过double write buffer再分2次，每次写入1MB到共享表空间，然后马上调用fsync函数，同步到磁盘上，避免缓冲带来的问题，在这个过程中，doublewrite是顺序写，开销并不大，在完成doublewrite写入后，在将double write buffer写入各表空间文件，这时是离散写入。如果发生了极端情况（断电），InnoDB再次启动后，发现了一个Page数据已经损坏，那么此时就可以从double write buffer中进行数据恢复了。</p>
@@ -418,15 +419,15 @@ MySQL线程池只在MariaDB，Oracle MySQL企业版中提供，Oracl">
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">tools</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">sublime text</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">

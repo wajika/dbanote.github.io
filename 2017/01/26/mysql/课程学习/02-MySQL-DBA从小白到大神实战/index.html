@@ -24,7 +24,7 @@
 详细描述MySQL编译安装的过程（截图安装步骤）
 
 1. 为什么数据目录和日志目录需要分开?这里的分开，我理解是将MySQL的数据目录和日志目录分别放到不同类型的磁盘中。假设生产环境中服务器上有两种类型的磁盘，分别是SSD和SAS，SSD比">
-<meta property="og:updated_time" content="2017-01-26T06:18:27.570Z">
+<meta property="og:updated_time" content="2017-01-30T10:13:46.970Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL DBA从小白到大神实战-02 MySQL标准化、自动化部署">
 <meta name="twitter:description" content="第二课 MySQL标准化、自动化部署作业题目
@@ -191,7 +191,7 @@
 <li>如何标准化配置多实例?（例如：一台物理主机上部署3306与3307两个实例）</li>
 <li>详细描述MySQL编译安装的过程（截图安装步骤）</li>
 </ol>
-<h2 id="1-为什么数据目录和日志目录需要分开"><a href="#1-为什么数据目录和日志目录需要分开" class="headerlink" title="1. 为什么数据目录和日志目录需要分开?"></a>1. 为什么数据目录和日志目录需要分开?</h2><p>这里的分开，我理解是将MySQL的数据目录和日志目录分别放到不同类型的磁盘中。<br>假设生产环境中服务器上有两种类型的磁盘，分别是SSD和SAS，SSD比SAS的响应时间要快（SSD响应时间约0.1毫秒，SAS的响应时间约10毫秒），为了更好的利用磁盘，一般会把活跃的数据放到SSD上，冷数据放到SAS磁盘上。<br>数据目录下的数据一般是随机读写的热数据，放到SSD盘中会有较高的响应速度；<br>日志目录下的日志是顺序读写的冷数据，放到SAS盘中满足写日志高吞吐量的需求。</p>
+<h2 id="1-为什么数据目录和日志目录需要分开"><a href="#1-为什么数据目录和日志目录需要分开" class="headerlink" title="1. 为什么数据目录和日志目录需要分开?"></a>1. 为什么数据目录和日志目录需要分开?</h2><p>这里的分开，我理解是将MySQL的数据目录和日志目录分别放到不同类型的磁盘中。<br>假设生产环境中服务器上有两种类型的磁盘，分别是SSD和SAS，SSD比SAS的响应时间要快（SSD响应时间约0.1毫秒，SAS的响应时间约10毫秒），为了更好的利用磁盘，一般会把活跃的数据放到SSD上，冷数据放到SAS磁盘上。<br>数据目录下的数据一般是随机读写的热数据，放到SSD盘中会有较高的响应速度；<br>日志目录下的日志是顺序读写的冷数据，放到SAS盘中满足写日志高吞吐量的需求。<br><a id="more"></a></p>
 <h2 id="2-如何标准化配置多实例"><a href="#2-如何标准化配置多实例" class="headerlink" title="2. 如何标准化配置多实例?"></a>2. 如何标准化配置多实例?</h2><p>标准化配置多实例，主要是标准化每个实例的目录和内存设置，这样每个实例的参数设置也很容易达到标准化。标准化配置的MYSQL实例，方便实施监控及运维管理。<br>因一个MySQL实例最多占用64G的物理内存，所以在物理内存较高的服务器上，一般会安装多个MySQL实例，MySQL不同实例是通过端口来区别的。  </p>
 <p>例如：一台64G的物理主机上部署3306与3307两个MYSQL实例  </p>
 <h6 id="标准化目录："><a href="#标准化目录：" class="headerlink" title="标准化目录："></a>标准化目录：</h6><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">实例1：</div><div class="line">/data/my3306</div><div class="line">/log/my3306</div><div class="line"></div><div class="line">实例2：</div><div class="line">/data/my3307</div><div class="line">/log/my3307</div><div class="line"></div><div class="line"># /data 目录挂载到SSD盘上</div><div class="line"># /log  目录挂载到SAS盘上</div></pre></td></tr></table></figure>
@@ -422,15 +422,15 @@
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">tools</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">sublime text</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">

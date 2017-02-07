@@ -30,6 +30,16 @@
   
 
   
+<script>
+var _hmt = _hmt || [];
+(function() {
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?https://hm.baidu.com/hm.js?2e7a5de312dd959398193e7e92a5cdce";
+	var s = document.getElementsByTagName("script")[0]; 
+	s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
 
 </head>
 
@@ -76,11 +86,13 @@
 		<nav class="header-nav">
 			<div class="social">
 				
-					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+					<a class="github" target="_blank" href="https://github.com/dbanote" title="github"><i class="icon-github"></i></a>
 		        
-					<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+					<a class="weibo" target="_blank" href="http://weibo.com/foxbei" title="weibo"><i class="icon-weibo"></i></a>
 		        
-					<a class="mail" target="_blank" href="mailto:9320802@qq.com" title="mail"><i class="icon-mail"></i></a>
+					<a class="qq" target="_blank" href="http://sighttp.qq.com/msgrd?v=1&uin=9320802" title="qq"><i class="icon-qq"></i></a>
+		        
+					<a class="mail" target="_blank" href="mailto:15004618839@139.com" title="mail"><i class="icon-mail"></i></a>
 		        
 			</div>
 		</nav>
@@ -117,11 +129,13 @@
 			<nav class="header-nav">
 				<div class="social">
 					
-						<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
+						<a class="github" target="_blank" href="https://github.com/dbanote" title="github"><i class="icon-github"></i></a>
 			        
-						<a class="weibo" target="_blank" href="#" title="weibo"><i class="icon-weibo"></i></a>
+						<a class="weibo" target="_blank" href="http://weibo.com/foxbei" title="weibo"><i class="icon-weibo"></i></a>
 			        
-						<a class="mail" target="_blank" href="mailto:9320802@qq.com" title="mail"><i class="icon-mail"></i></a>
+						<a class="qq" target="_blank" href="http://sighttp.qq.com/msgrd?v=1&uin=9320802" title="qq"><i class="icon-qq"></i></a>
+			        
+						<a class="mail" target="_blank" href="mailto:15004618839@139.com" title="mail"><i class="icon-mail"></i></a>
 			        
 				</div>
 			</nav>
@@ -148,111 +162,6 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-    <article id="post-tools/hexo+github搭建个人博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/06/tools/hexo+github搭建个人博客/">hexo+github搭建个人博客</a>
-    </h1>
-  
-
-        
-        <a href="/2017/02/06/tools/hexo+github搭建个人博客/" class="archive-article-date">
-  	<time datetime="2017-02-05T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="前言：我的博客之旅"><a href="#前言：我的博客之旅" class="headerlink" title="前言：我的博客之旅"></a>前言：我的博客之旅</h2><p>我用wordpress写过一段时间的博客，因租用的外国空间访问速度不理想，放弃！<br>我用<code>vimwiki</code>写过一段时间博客，因其配置、更新博客比较麻烦，且生成的html也需要存放到租用的空间上才能共享，放弃！<br>我在类似CSDN免费空间上也写过一段时间博客，因没有客户端工具，在线编辑功能受限，且本地不能保存备份博客，放弃！<br>这两年我一直用有道云笔记写博客，其本地编辑功能比较强大，有易用的分类目录和标签功能，单条博客也易于分享，但缺乏一个整体对外的窗口，文章中的代码也无法实现高亮显示，不够美观！<br>2017年初，偶然的机会知道了hexo，因有较强的markdown和git功底，决定开启hexo写博之旅。</p>
-<h2 id="hexo是什么"><a href="#hexo是什么" class="headerlink" title="hexo是什么"></a>hexo是什么</h2><p>hexo是一款基于Node.js的静态博客框架。 hexo官网地址：<a href="https://hexo.io" target="_blank" rel="external">https://hexo.io</a></p>
-<h2 id="为什么选择Hexo"><a href="#为什么选择Hexo" class="headerlink" title="为什么选择Hexo"></a>为什么选择Hexo</h2><p>目前比较流行的静态博客框架有<a href="http://jekyllrb.com/" target="_blank" rel="external">Jekyll</a>，Hexo，Simple，Octopress，Pelican以及Lo·gecho等。 些静态博客框架各有各的好处，之所以选择Hexo，最主要的原因如下：</p>
-<ul>
-<li>Hexo基于Node.js实现，在Windows上安装Node.js环境简单；而其他的静态博客框架如Jekyll基于Ruby实现，不建议在Windows下搭建的。</li>
-<li>Hexo有本地WEB服务器，能实现本地预览，并直接发布到WEB容器(github)中实现同步；而Jekyll没有本地服务器，无法实现本地博文预览。</li>
-<li>Hexo主题丰富，基本直接就可以用，不需要太多的修改。</li>
-<li>支持Markdown语法。</li>
-</ul>
-<h2 id="hexo安装部署"><a href="#hexo安装部署" class="headerlink" title="hexo安装部署"></a>hexo安装部署</h2><h6 id="1-下载并默认安装git和Node-js"><a href="#1-下载并默认安装git和Node-js" class="headerlink" title="1. 下载并默认安装git和Node.js"></a>1. 下载并默认安装git和Node.js</h6><p>从以下地址下载所需的Windows版安装包，使用默认设置安装：</p>
-<ul>
-<li>Node.js: <a href="https://nodejs.org" target="_blank" rel="external">https://nodejs.org</a></li>
-<li>git: <a href="https://git-scm.com" target="_blank" rel="external">https://git-scm.com</a></li>
-</ul>
-<p>安装成功后，可通过以下命令查看安装版本：<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ node -v</div><div class="line">v6.9.4</div><div class="line"></div><div class="line">$ git --version</div><div class="line">git version 2.11.1.windows.1</div></pre></td></tr></table></figure></p>
-<h6 id="2-配置Git-Bash样式（可选）"><a href="#2-配置Git-Bash样式（可选）" class="headerlink" title="2. 配置Git Bash样式（可选）"></a>2. 配置Git Bash样式（可选）</h6><p>新建D:\08_dbanote目录做为博客根目录，进入目录，右键选择Git Bash Here<br><img src="/img/git-bash-here.jpg" alt="git-bash-here.jpg"></p>
-<p>在弹出的窗口上右键选择Options，设置窗口样式<br><img src="/img/git-bash-01.png" alt="git-bash-01.jpg"></p>
-<p>设置显示字体<br><img src="/img/git-bash-02.jpg" alt="git-bash-02.jpg"></p>
-<p>设置窗口大小(需重新开启Git Bash方可生效)<br><img src="/img/git-bash-03.jpg" alt="git-bash-03.jpg"></p>
-<p>设置鼠标右健直接粘贴<br><img src="/img/git-bash-04.jpg" alt="git-bash-04.jpg"></p>
-<h6 id="3-安装淘宝的cnpm源"><a href="#3-安装淘宝的cnpm源" class="headerlink" title="3. 安装淘宝的cnpm源"></a>3. 安装淘宝的cnpm源</h6><p>考虑到国内访问速度慢，建议安装淘宝的cnpm源，以后使用<code>cnpm</code>命令代替<code>npm</code><br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</div></pre></td></tr></table></figure></p>
-<h6 id="4-安装hexo-g-是全局化安装"><a href="#4-安装hexo-g-是全局化安装" class="headerlink" title="4. 安装hexo (-g 是全局化安装)"></a>4. 安装hexo (-g 是全局化安装)</h6><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">cnpm install hexo-cli -g</div></pre></td></tr></table></figure>
-<h6 id="5-初始化hexo博客"><a href="#5-初始化hexo博客" class="headerlink" title="5. 初始化hexo博客"></a>5. 初始化hexo博客</h6><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># 确保当前目录为博客根目录</div><div class="line">cd D:\08_dbanote</div><div class="line">hexo init</div><div class="line">cnpm install</div></pre></td></tr></table></figure>
-<h6 id="6-安装git部署包"><a href="#6-安装git部署包" class="headerlink" title="6. 安装git部署包"></a>6. 安装git部署包</h6><p>作用：通过<code>hexo d</code>这一条命令，将博客部署到git服务器上，如github<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">cnpm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
-<p>生成SSH密码<br>ssh-keygen -t rsa -C “foxbei@163.com”<br>ssh-keygen -t rsa -C “15004618839@139.com”</p>
-<p>Clone Existing Repository</p>
-<p><a href="https://github.com/foxbei/hexo.git" target="_blank" rel="external">https://github.com/foxbei/hexo.git</a><br>D:/06_MyBlog</p>
-<p>git config –global user.name “dbanote”<br>git config –global user.email “15004618839@139.com”</p>
-<p>git config –global user.email foxbei@163.com</p>
-<p>git config –global user.name “</p>
-<p>git init</p>
-<p>git remote add origin <a href="https://github.com/foxbei/hexo.git" target="_blank" rel="external">https://github.com/foxbei/hexo.git</a></p>
-<p>git pull origin</p>
-<p>liuyajun@liuyajun-PC MINGW64 /d<br>$ git remote add origin <a href="https://github.com/foxbei/hexo.git" target="_blank" rel="external">https://github.com/foxbei/hexo.git</a><br>fatal: Not a git repository (or any of the parent directories): .git</p>
-<p>liuyajun@liuyajun-PC MINGW64 /d<br>$ echo “# hexo” &gt;&gt; README.md</p>
-<p>liuyajun@liuyajun-PC MINGW64 /d<br>$<br>Initialized empty Git repository in D:/.git/</p>
-<p>liuyajun@liuyajun-PC MINGW64 /d (master)</p>
-<p>修改_config.yml文件中以下内容：<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"># Site</div><div class="line">title: DBA工作笔记</div><div class="line">subtitle: 欲事之无繁，则必劳于始而逸于终</div><div class="line">description: </div><div class="line">author: 刘雅君</div><div class="line">language:</div><div class="line">timezone:</div><div class="line"></div><div class="line"></div><div class="line"># Deployment</div><div class="line">## Docs: https://hexo.io/docs/deployment.html</div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repository: git@github.com:dbanote/dbanote.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure></p>
-<p>生成静态页<br>hexo g</p>
-<p>启动web server<br>hexo s</p>
-<p>部署到github上<br>hexo d</p>
-<p>ssh -T git@github.com</p>
-<p>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br>cnpm i hexo-generator-json-content –save</p>
-<p>2、在根目录_config.yml里添加配置：<br>  jsonContent:<br>    meta: false<br>    pages: false<br>    posts:<br>      title: true<br>      date: true<br>      path: true<br>      text: true<br>      raw: false<br>      content: falsef<br>      slug: false<br>      updated: false<br>      comments: false<br>      link: false<br>      permalink: false<br>      excerpt: false<br>      categories: false<br>      tags: true</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">tools</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/02/06/tools/hexo+github搭建个人博客/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
   
     <article id="post-tools/Sublime常用快捷键" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -568,6 +477,69 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/01/23/mysql/课程学习/03-MySQL-DBA从小白到大神实战/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-tools/hexo+github搭建个人博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/19/tools/hexo+github搭建个人博客/">hexo+github搭建个人博客</a>
+    </h1>
+  
+
+        
+        <a href="/2017/01/19/tools/hexo+github搭建个人博客/" class="archive-article-date">
+  	<time datetime="2017-01-19T09:28:31.624Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="前言：我的博客之旅"><a href="#前言：我的博客之旅" class="headerlink" title="前言：我的博客之旅"></a>前言：我的博客之旅</h2><p>我用<code>wordpress</code>写过一段时间博客，因租用的外国空间访问速度不理想，放弃！<br>我用<code>vimwiki</code>写过一段时间博客，因其配置、更新博客比较麻烦，且生成的html也需要存放到租用的空间上才能共享，放弃！<br>我在类似CSDN免费空间上也写过一段时间博客，因没有客户端工具，在线编辑功能受限，且本地不能保存备份博客，放弃！<br>这两年我一直用有道云笔记写博客，其本地编辑功能比较强大，有易用的分类目录和标签功能，单条博客也易于分享，但缺乏一个整体对外的窗口，文章中的代码也无法实现高亮显示，不够美观！<br>2017年初，偶然的机会知道了hexo，因有较强的markdown和git功底，决定开启hexo写博之旅。</p>
+<h2 id="hexo是什么"><a href="#hexo是什么" class="headerlink" title="hexo是什么"></a>hexo是什么</h2><p>hexo是一款基于Node.js的静态博客框架。 hexo官网地址：<a href="https://hexo.io">https://hexo.io</a><br>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">tools</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/01/19/tools/hexo+github搭建个人博客/">展开全文 >></a>
         </p>
       
 

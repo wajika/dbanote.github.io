@@ -346,6 +346,14 @@
 <h3 id="部署远程博客"><a href="#部署远程博客-1" class="headerlink" title="部署远程博客"></a>部署远程博客</h3><h4 id="1-编辑修改根目录下的_configyml文件"><a href="#1-编辑修改根目录下的-config-yml文件" class="headerlink" title="1. 编辑修改根目录下的_config.yml文件"></a>1. 编辑修改根目录下的<code>_config.yml</code>文件</h4><figure class="highlight perl"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 设置部署到github(https方式出现错误，使用ssh方式成功)</span></div><div class="line"><span class="comment"># Deployment</span></div><div class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repository: git@github.com:dbanote/dbanote.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
 <h4 id="2-部署远程博客输入以下命令"><a href="#2-部署远程博客，输入以下命令" class="headerlink" title="2. 部署远程博客，输入以下命令"></a>2. 部署远程博客，输入以下命令</h4><figure class="highlight perl"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 生成静态页</span></div><div class="line">hexo g</div><div class="line"></div><div class="line"><span class="comment"># 部署到github上</span></div><div class="line">hexo d</div></pre></td></tr></table></figure>
 <p>部署好了后，在浏览器地址栏中输入你的仓库名来访问，我的是<a href="http://dbanote.github.io">dbanote.github.io</a>。注意一点，第一次部署的话，可能需要等待一会（一般不到10分钟就好了）才能生效，以后每次部署就可以直接访问。到这里基本的博客就搭建好了。</p>
+<h2 id="tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><ol>
+<li>注意一定要验证Github的验证邮件。</li>
+<li><p>出现其他任何的问题，先删除博客目录下的<code>db.json</code>文件，然后清理再部署远程博客，操作时输入以下的命令</p>
+<figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo d -g</div></pre></td></tr></table></figure>
+</li>
+<li><p>Hexo的基本命令</p>
+<figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">hexo g = hexo generate  <span class="comment">#生成</span></div><div class="line">hexo <span class="keyword">s</span> = hexo server  <span class="comment">#启动本地预览</span></div><div class="line">hexo d = hexo deploy  <span class="comment">#远程部署</span></div><div class="line">hexo n <span class="string">"文章标题"</span> = hexo new <span class="string">"文章标题"</span>  <span class="comment">#新建一篇博文</span></div><div class="line"></div><div class="line">hexo <span class="keyword">s</span> -g  <span class="comment">#等同先输入hexo g，再输入hexo s</span></div><div class="line">hexo d -g  <span class="comment">#等同先输入hexo g，再输入hexo d</span></div></pre></td></tr></table></figure></li>
+</ol>
 ]]></content>
     </entry>
     

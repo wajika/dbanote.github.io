@@ -21,19 +21,19 @@
 <meta property="og:url" content="http://dbanote.github.io/2017/01/19/tools/hexo+github搭建个人博客/index.html">
 <meta property="og:site_name" content="一个DBA的工作学习笔记">
 <meta property="og:description" content="前言：我的博客之旅我用wordpress写过一段时间博客，因租用的外国空间访问速度不理想，放弃！我用vimwiki写过一段时间博客，因其配置、更新博客比较麻烦，且生成的html也需要存放到租用的空间上才能共享，放弃！我在类似CSDN免费空间上也写过一段时间博客，因没有客户端工具，在线编辑功能受限，且本地不能保存备份博客，放弃！这两年我一直用有道云笔记写博客，其本地编辑功能比较强大，有易用的分类目录">
-<meta property="og:image" content="http://dbanote.github.io/img/2017/git-bash-here.jpg">
-<meta property="og:image" content="http://dbanote.github.io/img/2017/git-bash-01.png">
-<meta property="og:image" content="http://dbanote.github.io/img/2017/git-bash-02.jpg">
-<meta property="og:image" content="http://dbanote.github.io/img/2017/git-bash-03.jpg">
-<meta property="og:image" content="http://dbanote.github.io/img/2017/git-bash-04.jpg">
-<meta property="og:image" content="http://dbanote.github.io/img/2017/hexo_init.png">
-<meta property="og:image" content="http://dbanote.github.io/img/2017/github_01.png">
-<meta property="og:image" content="http://dbanote.github.io/img/2017/github_02.png">
-<meta property="og:updated_time" content="2017-02-09T09:24:06.835Z">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/git-bash-here.jpg">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/git-bash-01.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/git-bash-02.jpg">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/git-bash-03.jpg">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/git-bash-04.jpg">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/hexo_init.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/github_01.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/github_02.png">
+<meta property="og:updated_time" content="2017-02-17T08:49:39.904Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo+github搭建个人博客">
 <meta name="twitter:description" content="前言：我的博客之旅我用wordpress写过一段时间博客，因租用的外国空间访问速度不理想，放弃！我用vimwiki写过一段时间博客，因其配置、更新博客比较麻烦，且生成的html也需要存放到租用的空间上才能共享，放弃！我在类似CSDN免费空间上也写过一段时间博客，因没有客户端工具，在线编辑功能受限，且本地不能保存备份博客，放弃！这两年我一直用有道云笔记写博客，其本地编辑功能比较强大，有易用的分类目录">
-<meta name="twitter:image" content="http://dbanote.github.io/img/2017/git-bash-here.jpg">
+<meta name="twitter:image" content="http://oligvdnzp.bkt.clouddn.com/git-bash-here.jpg">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -197,7 +197,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sublime-text/">sublime text</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/11g/">11g</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sublime-text/">sublime text</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li></ul>
                     </div>
                 </section>
                 
@@ -329,38 +329,111 @@
 <li>Node.js: <a href="https://nodejs.org" target="_blank" rel="external">https://nodejs.org</a></li>
 <li>git: <a href="https://git-scm.com" target="_blank" rel="external">https://git-scm.com</a></li>
 </ul>
-<p>安装成功后，可通过以下命令查看安装版本：<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">$ node -v</div><div class="line">v6.9.4</div><div class="line"></div><div class="line">$ git --version</div><div class="line">git version 2.11.1.windows.1</div></pre></td></tr></table></figure></p>
-<h3 id="配置git-bash样式可选"><a href="#配置Git-Bash样式（可选）" class="headerlink" title="配置Git Bash样式（可选）"></a>配置Git Bash样式（可选）</h3><p>新建<code>D:\08_dbanote</code>目录做为博客根目录，进入目录，右键选择Git Bash Here<br><img src="/img/2017/git-bash-here.jpg" alt="git-bash-here.jpg"></p>
-<p>在弹出的窗口上右键选择Options，设置窗口样式<br><img src="/img/2017/git-bash-01.png" alt="git-bash-01.jpg"></p>
-<p>设置显示字体<br><img src="/img/2017/git-bash-02.jpg" alt="git-bash-02.jpg"></p>
-<p>设置窗口大小(需重新开启Git Bash方可生效)<br><img src="/img/2017/git-bash-03.jpg" alt="git-bash-03.jpg"></p>
-<p>设置鼠标右健直接粘贴<br><img src="/img/2017/git-bash-04.jpg" alt="git-bash-04.jpg"></p>
-<h3 id="安装淘宝的cnpm源"><a href="#安装淘宝的cnpm源" class="headerlink" title="安装淘宝的cnpm源"></a>安装淘宝的cnpm源</h3><p>访问国外源速度较慢，建议安装淘宝的cnpm源，以后使用<code>cnpm</code>命令代替<code>npm</code><br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</div></pre></td></tr></table></figure></p>
-<h3 id="安装hexo-g-是全局化安装"><a href="#安装hexo-g-是全局化安装" class="headerlink" title="安装hexo (-g 是全局化安装)"></a>安装hexo (-g 是全局化安装)</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">cnpm install hexo-cli -g</div></pre></td></tr></table></figure>
-<h3 id="初始化hexo博客"><a href="#初始化hexo博客" class="headerlink" title="初始化hexo博客"></a>初始化hexo博客</h3><figure class="highlight perl"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 确保当前目录为博客根目录</span></div><div class="line">cd D:\08_dbanote</div><div class="line">hexo init</div><div class="line">cnpm install</div></pre></td></tr></table></figure>
-<h3 id="安装git部署包"><a href="#安装git部署包" class="headerlink" title="安装git部署包"></a>安装git部署包</h3><p>作用：通过<code>hexo d</code>这一条命令，将博客部署到git服务器上，如github<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">cnpm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
-<h3 id="生成博客静态文件"><a href="#生成博客静态文件" class="headerlink" title="生成博客静态文件"></a>生成博客静态文件</h3><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">hexo g</div></pre></td></tr></table></figure>
-<h3 id="启动本地服务器"><a href="#启动本地服务器" class="headerlink" title="启动本地服务器"></a>启动本地服务器</h3><p>确保4000端口没有被占用<br><figure class="highlight perl"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 在windows命令行下执行</span></div><div class="line">netstat -ano | findstr <span class="string">"4000"</span></div><div class="line">  TCP    <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">4000</span>         <span class="number">0</span>.<span class="number">0</span>.<span class="number">0</span>.<span class="number">0</span>:<span class="number">0</span>              LISTENING       <span class="number">16360</span></div><div class="line">  TCP    <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">4000</span>         <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">53443</span>        ESTABLISHED     <span class="number">16360</span></div><div class="line">  TCP    <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">4000</span>         <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">63485</span>        CLOSE_WAIT      <span class="number">16360</span></div><div class="line">  TCP    <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">53443</span>        <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">4000</span>         ESTABLISHED     <span class="number">14256</span></div><div class="line">  TCP    <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">63485</span>        <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">4000</span>         FIN_WAIT_2      <span class="number">14256</span></div><div class="line"></div><div class="line"><span class="comment"># 4000端口被占用，查找进程号对应的程序</span></div><div class="line">tasklist | findstr <span class="string">"16360"</span></div><div class="line">FoxitProtect.exe             <span class="number">16360</span> Services                   <span class="number">0</span>     <span class="number">11</span>,<span class="number">628</span> K</div><div class="line"></div><div class="line"><span class="comment"># 结束该进程</span></div><div class="line">taskkill /f /t /im FoxitProtect.exe</div></pre></td></tr></table></figure></p>
-<p>启动本地服务器<br><figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">hexo <span class="keyword">s</span></div><div class="line"><span class="comment">#---------------------------------------------------------------------</span></div><div class="line">INFO  Start processing</div><div class="line">INFO  Hexo is running at http:<span class="regexp">//localhost</span>:<span class="number">4000</span>/. Press Ctrl+C to stop.</div><div class="line"><span class="comment">#---------------------------------------------------------------------</span></div></pre></td></tr></table></figure></p>
-<h3 id="本地预览博客"><a href="#本地预览博客" class="headerlink" title="本地预览博客"></a>本地预览博客</h3><p>打开浏览器，输入<a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a><br><img src="/img/2017/hexo_init.png" alt="hexo_init.png"></p>
-<h3 id="配置博客网站基本信息"><a href="#配置博客网站基本信息" class="headerlink" title="配置博客网站基本信息"></a>配置博客网站基本信息</h3><p>编辑修改根目录下的<code>_config.yml</code>文件<br><figure class="highlight perl"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 站点基本信息修改</span></div><div class="line"><span class="comment"># Site</span></div><div class="line">title: 一个DBA的工作学习笔记</div><div class="line">subtitle: 欲事之无繁，则必劳于始而逸于终</div><div class="line">author: 刘雅君</div><div class="line"></div><div class="line"><span class="comment"># 设置网站url</span></div><div class="line"><span class="comment"># URL</span></div><div class="line">url: http:<span class="regexp">//dbanote</span>.github.io</div><div class="line"></div><div class="line"><span class="comment"># 取消代码段行号显示</span></div><div class="line"><span class="comment"># Writing</span></div><div class="line">highlight:</div><div class="line">  enable: true</div><div class="line">  line_number: false</div></pre></td></tr></table></figure></p>
+<p>安装成功后，可通过以下命令查看安装版本：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ node -v</span>
+<span class="line">v6.9.4</span>
+<span class="line"></span>
+<span class="line">$ git --version</span>
+<span class="line">git version 2.11.1.windows.1</span>
+</pre></td></tr></table></figure></p>
+<h3 id="配置git-bash样式可选"><a href="#配置Git-Bash样式（可选）" class="headerlink" title="配置Git Bash样式（可选）"></a>配置Git Bash样式（可选）</h3><p>新建<code>D:\08_dbanote</code>目录做为博客根目录，进入目录，右键选择Git Bash Here<br><img src="http://oligvdnzp.bkt.clouddn.com/git-bash-here.jpg" alt="git-bash-here.jpg"></p>
+<p>在弹出的窗口上右键选择Options，设置窗口样式<br><img src="http://oligvdnzp.bkt.clouddn.com/git-bash-01.png" alt="git-bash-01.jpg"></p>
+<p>设置显示字体<br><img src="http://oligvdnzp.bkt.clouddn.com/git-bash-02.jpg" alt="git-bash-02.jpg"></p>
+<p>设置窗口大小(需重新开启Git Bash方可生效)<br><img src="http://oligvdnzp.bkt.clouddn.com/git-bash-03.jpg" alt="git-bash-03.jpg"></p>
+<p>设置鼠标右健直接粘贴<br><img src="http://oligvdnzp.bkt.clouddn.com/git-bash-04.jpg" alt="git-bash-04.jpg"></p>
+<h3 id="安装淘宝的cnpm源"><a href="#安装淘宝的cnpm源" class="headerlink" title="安装淘宝的cnpm源"></a>安装淘宝的cnpm源</h3><p>访问国外源速度较慢，建议安装淘宝的cnpm源，以后使用<code>cnpm</code>命令代替<code>npm</code><br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span>
+</pre></td></tr></table></figure></p>
+<h3 id="安装hexo-g-是全局化安装"><a href="#安装hexo-g-是全局化安装" class="headerlink" title="安装hexo (-g 是全局化安装)"></a>安装hexo (-g 是全局化安装)</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-cli -g</span>
+</pre></td></tr></table></figure>
+<h3 id="初始化hexo博客"><a href="#初始化hexo博客" class="headerlink" title="初始化hexo博客"></a>初始化hexo博客</h3><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 确保当前目录为博客根目录</span></span>
+<span class="line">cd D:\08_dbanote</span>
+<span class="line">hexo init</span>
+<span class="line">cnpm install</span>
+</pre></td></tr></table></figure>
+<h3 id="安装git部署包"><a href="#安装git部署包" class="headerlink" title="安装git部署包"></a>安装git部署包</h3><p>作用：通过<code>hexo d</code>这一条命令，将博客部署到git服务器上，如github<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-deployer-git --save</span>
+</pre></td></tr></table></figure></p>
+<h3 id="生成博客静态文件"><a href="#生成博客静态文件" class="headerlink" title="生成博客静态文件"></a>生成博客静态文件</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo g</span>
+</pre></td></tr></table></figure>
+<h3 id="启动本地服务器"><a href="#启动本地服务器" class="headerlink" title="启动本地服务器"></a>启动本地服务器</h3><p>确保4000端口没有被占用<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在windows命令行下执行</span></span>
+<span class="line">netstat -ano | findstr <span class="string">"4000"</span></span>
+<span class="line">  TCP    <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">4000</span>         <span class="number">0</span>.<span class="number">0</span>.<span class="number">0</span>.<span class="number">0</span>:<span class="number">0</span>              LISTENING       <span class="number">16360</span></span>
+<span class="line">  TCP    <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">4000</span>         <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">53443</span>        ESTABLISHED     <span class="number">16360</span></span>
+<span class="line">  TCP    <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">4000</span>         <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">63485</span>        CLOSE_WAIT      <span class="number">16360</span></span>
+<span class="line">  TCP    <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">53443</span>        <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">4000</span>         ESTABLISHED     <span class="number">14256</span></span>
+<span class="line">  TCP    <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">63485</span>        <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>:<span class="number">4000</span>         FIN_WAIT_2      <span class="number">14256</span></span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 4000端口被占用，查找进程号对应的程序</span></span>
+<span class="line">tasklist | findstr <span class="string">"16360"</span></span>
+<span class="line">FoxitProtect.exe             <span class="number">16360</span> Services                   <span class="number">0</span>     <span class="number">11</span>,<span class="number">628</span> K</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 结束该进程</span></span>
+<span class="line">taskkill /f /t /im FoxitProtect.exe</span>
+</pre></td></tr></table></figure></p>
+<p>启动本地服务器<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">hexo <span class="keyword">s</span></span>
+<span class="line"><span class="comment">#---------------------------------------------------------------------</span></span>
+<span class="line">INFO  Start processing</span>
+<span class="line">INFO  Hexo is running at http:<span class="regexp">//localhost</span>:<span class="number">4000</span>/. Press Ctrl+C to stop.</span>
+<span class="line"><span class="comment">#---------------------------------------------------------------------</span></span>
+</pre></td></tr></table></figure></p>
+<h3 id="本地预览博客"><a href="#本地预览博客" class="headerlink" title="本地预览博客"></a>本地预览博客</h3><p>打开浏览器，输入<a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a><br><img src="http://oligvdnzp.bkt.clouddn.com/hexo_init.png" alt="hexo_init.png"></p>
+<h3 id="配置博客网站基本信息"><a href="#配置博客网站基本信息" class="headerlink" title="配置博客网站基本信息"></a>配置博客网站基本信息</h3><p>编辑修改根目录下的<code>_config.yml</code>文件<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 站点基本信息修改</span></span>
+<span class="line"><span class="comment"># Site</span></span>
+<span class="line">title: 一个DBA的工作学习笔记</span>
+<span class="line">subtitle: 欲事之无繁，则必劳于始而逸于终</span>
+<span class="line">author: 刘雅君</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 设置网站url</span></span>
+<span class="line"><span class="comment"># URL</span></span>
+<span class="line">url: http:<span class="regexp">//dbanote</span>.github.io</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 取消代码段行号显示</span></span>
+<span class="line"><span class="comment"># Writing</span></span>
+<span class="line">highlight:</span>
+<span class="line">  enable: true</span>
+<span class="line">  line_number: false</span>
+</pre></td></tr></table></figure></p>
 <h2 id="部署远程博客"><a href="#部署远程博客" class="headerlink" title="部署远程博客"></a>部署远程博客</h2><h3 id="注册github账号"><a href="#注册Github账号" class="headerlink" title="注册Github账号"></a>注册Github账号</h3><p>因为是托管到<a href="https://github.com/" target="_blank" rel="external">Github</a>上，所以第一步需要注册一个账号。这里我新注册了一个dbanote的帐号，步骤很简单，这里不做赘述。</p>
-<h3 id="建立和用户名对应的仓库"><a href="#建立和用户名对应的仓库" class="headerlink" title="建立和用户名对应的仓库"></a>建立和用户名对应的仓库</h3><p>建立和用户名相对应的仓库，这是什么意思呢？以我的例子来说，我的用户名是dbanote,那么我的博客仓库就必须是dbanote.github.io。<br><img src="/img/2017/github_01.png" alt="创建新仓库"><br><img src="/img/2017/github_02.png" alt="创建新仓库"></p>
+<h3 id="建立和用户名对应的仓库"><a href="#建立和用户名对应的仓库" class="headerlink" title="建立和用户名对应的仓库"></a>建立和用户名对应的仓库</h3><p>建立和用户名相对应的仓库，这是什么意思呢？以我的例子来说，我的用户名是dbanote,那么我的博客仓库就必须是dbanote.github.io。<br><img src="http://oligvdnzp.bkt.clouddn.com/github_01.png" alt="创建新仓库"><br><img src="http://oligvdnzp.bkt.clouddn.com/github_02.png" alt="创建新仓库"></p>
 <h3 id="配置ssh公钥"><a href="#配置SSH公钥" class="headerlink" title="配置SSH公钥"></a>配置SSH公钥</h3><p>远程代码是基于SSH的，所以需要SSH的相关配置。方法是现在本地生成SSH公钥，然后添加到Github上面。打开<code>git bash</code>，具体的操作如下：</p>
-<h4 id="1-设置你的邮箱和用户名"><a href="#1-设置你的邮箱和用户名" class="headerlink" title="1. 设置你的邮箱和用户名"></a>1. 设置你的邮箱和用户名</h4><figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">git config --global user.name <span class="string">"dbanote"</span></div><div class="line">git config --global user.email <span class="string">"15004618839@139.com"</span></div></pre></td></tr></table></figure>
-<h4 id="2-生成密钥设置密码输入的密码不显示也可以不设置按三次回车密码为空"><a href="#2-生成密钥，设置密码，输入的密码不显示（也可以不设置，按三次回车，密码为空）" class="headerlink" title="2. 生成密钥，设置密码，输入的密码不显示（也可以不设置，按三次回车，密码为空）"></a>2. 生成密钥，设置密码，输入的密码不显示（也可以不设置，按三次回车，密码为空）</h4><figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">ssh-keygen -t rsa -C <span class="string">"15004618839@139.com"</span></div></pre></td></tr></table></figure>
+<h4 id="1-设置你的邮箱和用户名"><a href="#1-设置你的邮箱和用户名" class="headerlink" title="1. 设置你的邮箱和用户名"></a>1. 设置你的邮箱和用户名</h4><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">"dbanote"</span></span>
+<span class="line">git config --global user.email <span class="string">"15004618839@139.com"</span></span>
+</pre></td></tr></table></figure>
+<h4 id="2-生成密钥设置密码输入的密码不显示也可以不设置按三次回车密码为空"><a href="#2-生成密钥，设置密码，输入的密码不显示（也可以不设置，按三次回车，密码为空）" class="headerlink" title="2. 生成密钥，设置密码，输入的密码不显示（也可以不设置，按三次回车，密码为空）"></a>2. 生成密钥，设置密码，输入的密码不显示（也可以不设置，按三次回车，密码为空）</h4><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">"15004618839@139.com"</span></span>
+</pre></td></tr></table></figure>
 <p>上述的命令成功后，会得到<code>id_rsa</code>和<code>id_rsa.pub</code>两个文件，一般在<code>C:\Users\&lt;用户名&gt;\.ssh</code>文件夹里，没有的话，就用Everything搜一下。</p>
-<h4 id="3-把ssh密钥添加到github上"><a href="#3-把SSH密钥添加到Github上" class="headerlink" title="3. 把SSH密钥添加到Github上"></a>3. 把SSH密钥添加到Github上</h4><p>登陆<code>Github</code>后，点击<code>settings</code>，然后进入<code>SSH keys</code>，把<code>id_rsa.pub</code>文件里内容添加进去就好了。 测试配置是否正确<br><figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">$ ssh -T git@github.com</div><div class="line">Hi dbanote! You’ve successfully authenticated, but GitHub does <span class="keyword">not</span> provide shell access.</div></pre></td></tr></table></figure></p>
-<h3 id="部署远程博客"><a href="#部署远程博客-1" class="headerlink" title="部署远程博客"></a>部署远程博客</h3><h4 id="1-编辑修改根目录下的_configyml文件"><a href="#1-编辑修改根目录下的-config-yml文件" class="headerlink" title="1. 编辑修改根目录下的_config.yml文件"></a>1. 编辑修改根目录下的<code>_config.yml</code>文件</h4><figure class="highlight perl"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 设置部署到github(https方式出现错误，使用ssh方式成功)</span></div><div class="line"><span class="comment"># Deployment</span></div><div class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repository: git@github.com:dbanote/dbanote.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
-<h4 id="2-部署远程博客输入以下命令"><a href="#2-部署远程博客，输入以下命令" class="headerlink" title="2. 部署远程博客，输入以下命令"></a>2. 部署远程博客，输入以下命令</h4><figure class="highlight perl"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 生成静态页</span></div><div class="line">hexo g</div><div class="line"></div><div class="line"><span class="comment"># 部署到github上</span></div><div class="line">hexo d</div></pre></td></tr></table></figure>
+<h4 id="3-把ssh密钥添加到github上"><a href="#3-把SSH密钥添加到Github上" class="headerlink" title="3. 把SSH密钥添加到Github上"></a>3. 把SSH密钥添加到Github上</h4><p>登陆<code>Github</code>后，点击<code>settings</code>，然后进入<code>SSH keys</code>，把<code>id_rsa.pub</code>文件里内容添加进去就好了。 测试配置是否正确<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">$ ssh -T git@github.com</span>
+<span class="line">Hi dbanote! You’ve successfully authenticated, but GitHub does <span class="keyword">not</span> provide shell access.</span>
+</pre></td></tr></table></figure></p>
+<h3 id="部署远程博客"><a href="#部署远程博客-1" class="headerlink" title="部署远程博客"></a>部署远程博客</h3><h4 id="1-编辑修改根目录下的_configyml文件"><a href="#1-编辑修改根目录下的-config-yml文件" class="headerlink" title="1. 编辑修改根目录下的_config.yml文件"></a>1. 编辑修改根目录下的<code>_config.yml</code>文件</h4><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 设置部署到github(https方式出现错误，使用ssh方式成功)</span></span>
+<span class="line"><span class="comment"># Deployment</span></span>
+<span class="line"><span class="comment">## Docs: https://hexo.io/docs/deployment.html</span></span>
+<span class="line">deploy:</span>
+<span class="line">  type: git</span>
+<span class="line">  repository: git@github.com:dbanote/dbanote.github.io.git</span>
+<span class="line">  branch: master</span>
+</pre></td></tr></table></figure>
+<h4 id="2-部署远程博客输入以下命令"><a href="#2-部署远程博客，输入以下命令" class="headerlink" title="2. 部署远程博客，输入以下命令"></a>2. 部署远程博客，输入以下命令</h4><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 生成静态页</span></span>
+<span class="line">hexo g</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 部署到github上</span></span>
+<span class="line">hexo d</span>
+</pre></td></tr></table></figure>
 <p>部署好了后，在浏览器地址栏中输入你的仓库名来访问，我的是<a href="http://dbanote.github.io">dbanote.github.io</a>。注意一点，第一次部署的话，可能需要等待一会（一般不到10分钟就好了）才能生效，以后每次部署就可以直接访问。到这里基本的博客就搭建好了。</p>
 <h2 id="tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><ol>
 <li>注意一定要验证Github的验证邮件。</li>
 <li><p>出现其他任何的问题，先删除博客目录下的<code>db.json</code>文件，然后清理再部署远程博客，操作时输入以下的命令</p>
-<figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">hexo clean</div><div class="line">hexo d -g</div></pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">hexo clean</span>
+<span class="line">hexo d -g</span>
+</pre></td></tr></table></figure>
 </li>
 <li><p>Hexo的基本命令</p>
-<figure class="highlight perl"><table><tr><td class="code"><pre><div class="line">hexo g = hexo generate  <span class="comment">#生成</span></div><div class="line">hexo <span class="keyword">s</span> = hexo server  <span class="comment">#启动本地预览</span></div><div class="line">hexo d = hexo deploy  <span class="comment">#远程部署</span></div><div class="line">hexo n <span class="string">"文章标题"</span> = hexo new <span class="string">"文章标题"</span>  <span class="comment">#新建一篇博文</span></div><div class="line"></div><div class="line">hexo <span class="keyword">s</span> -g  <span class="comment">#等同先输入hexo g，再输入hexo s</span></div><div class="line">hexo d -g  <span class="comment">#等同先输入hexo g，再输入hexo d</span></div></pre></td></tr></table></figure></li>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">hexo g = hexo generate  <span class="comment">#生成</span></span>
+<span class="line">hexo <span class="keyword">s</span> = hexo server  <span class="comment">#启动本地预览</span></span>
+<span class="line">hexo d = hexo deploy  <span class="comment">#远程部署</span></span>
+<span class="line">hexo n <span class="string">"文章标题"</span> = hexo new <span class="string">"文章标题"</span>  <span class="comment">#新建一篇博文</span></span>
+<span class="line"></span>
+<span class="line">hexo <span class="keyword">s</span> -g  <span class="comment">#等同先输入hexo g，再输入hexo s</span></span>
+<span class="line">hexo d -g  <span class="comment">#等同先输入hexo g，再输入hexo d</span></span>
+</pre></td></tr></table></figure></li>
 </ol>
 
       
@@ -396,8 +469,8 @@
         .left-col .switch-area {
             display: none;
         }
-        .toc-level-3 i,
-        .toc-level-3 ol {
+        .toc-level-4 i,
+        .toc-level-4 ol {
             display: none !important;
         }
     </style>
@@ -431,7 +504,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo博客添加常用插件/">hexo博客添加常用插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo更换主题并个性化定制/">hexo更换主题并个性化定制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/tools/Sublime常用快捷键/">Sublime Text 常用快捷键</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/tools/git常用命令整理/">GIT常用命令整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/课程学习/02-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-02 MySQL标准化、自动化部署</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/课程学习/01-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-01 MySQL 高级DBA职业规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/23/mysql/课程学习/03-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-03 深入MySQL体系结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/tools/hexo+github搭建个人博客/">hexo+github搭建个人博客</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/16/oracle/那些在11gR2中可能惹祸的新特性/">那些在11gR2中可能惹祸的新特性</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/tools/hexo解决代码块空行自动删除问题/">hexo解决代码块空行自动删除问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/mysql/课程学习/04-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-04 揭密MySQL databock and binlog的格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo博客添加常用插件/">hexo博客添加常用插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo更换主题并个性化定制/">hexo更换主题并个性化定制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/tools/Sublime常用快捷键/">Sublime Text 常用快捷键</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/tools/git常用命令整理/">GIT常用命令整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/课程学习/02-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-02 MySQL标准化、自动化部署</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/课程学习/01-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-01 MySQL 高级DBA职业规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/23/mysql/课程学习/03-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-03 深入MySQL体系结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/tools/hexo+github搭建个人博客/">hexo+github搭建个人博客</a></li></ul>
 
 
 

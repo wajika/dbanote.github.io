@@ -483,7 +483,7 @@
 <span class="line">Threads: <span class="number">2</span>  Questions: <span class="number">16</span>  Slow queries: <span class="number">0</span>  Opens: <span class="number">70</span>  Flush tables: <span class="number">1</span>  Open tables: <span class="number">63</span>  Queries per second avg: <span class="number">0</span>.<span class="number">067</span></span>
 <span class="line">--------------</span>
 </pre></td></tr></table></figure>
-<h3 id="升级数据库字典报错"><a href="#升级数据库字典（报错）" class="headerlink" title="升级数据库字典（报错）"></a>升级数据库字典（报错）</h3><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">mysql_upgrade -S /u01/run/<span class="number">3306</span>/mysql.sock</span>
+<h3 id="升级数据库字典"><a href="#升级数据库字典" class="headerlink" title="升级数据库字典"></a>升级数据库字典</h3><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">mysql_upgrade -S /u01/run/<span class="number">3306</span>/mysql.sock</span>
 <span class="line">--------------</span>
 <span class="line">Checking <span class="keyword">if</span> update is needed.</span>
 <span class="line">Checking server version.</span>
@@ -498,6 +498,83 @@
 <span class="line">Running queries to upgrade MySQL server.</span>
 <span class="line">mysql_upgrade: [ERROR] <span class="number">1726</span>: Storage engine <span class="string">'InnoDB'</span> does <span class="keyword">not</span> support <span class="keyword">system</span> tables. [mysql.plugin]</span>
 <span class="line">--------------</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 重启下数据库</span></span>
+<span class="line">mysqld_multi stop</span>
+<span class="line">mysqld --defaults-file=<span class="regexp">/u01/conf</span><span class="regexp">/my3306.cnf &amp;</span>
+<span class="line">mysql_upgrade -S /u</span>01/run/<span class="number">3306</span>/mysql.sock --skip-version-check</span>
+<span class="line">--------------</span>
+<span class="line">Checking <span class="keyword">if</span> update is needed.</span>
+<span class="line">Running queries to upgrade MySQL server.</span>
+<span class="line">Checking <span class="keyword">system</span> database.</span>
+<span class="line">mysql.columns_priv                                 OK</span>
+<span class="line">mysql.db                                           OK</span>
+<span class="line">mysql.engine_cost                                  OK</span>
+<span class="line">mysql.event                                        OK</span>
+<span class="line">mysql.func                                         OK</span>
+<span class="line">mysql.general_log                                  OK</span>
+<span class="line">mysql.gtid_executed                                OK</span>
+<span class="line">mysql.help_category                                OK</span>
+<span class="line">mysql.help_keyword                                 OK</span>
+<span class="line">mysql.help_relation                                OK</span>
+<span class="line">mysql.help_topic                                   OK</span>
+<span class="line">mysql.innodb_index_stats                           OK</span>
+<span class="line">mysql.innodb_table_stats                           OK</span>
+<span class="line">mysql.ndb_binlog_index                             OK</span>
+<span class="line">mysql.plugin                                       OK</span>
+<span class="line">......</span>
+<span class="line">Repairing tables</span>
+<span class="line">mysql_old.innodb_index_stats</span>
+<span class="line">Error    : Unknown error <span class="number">1146</span></span>
+<span class="line">status   : Operation failed</span>
+<span class="line">mysql_old.innodb_table_stats</span>
+<span class="line">Error    : Unknown error <span class="number">1146</span></span>
+<span class="line">status   : Operation failed</span>
+<span class="line">mysql_old.slave_master_info</span>
+<span class="line">Error    : Unknown error <span class="number">1146</span></span>
+<span class="line">status   : Operation failed</span>
+<span class="line">mysql_old.slave_relay_log_info</span>
+<span class="line">Error    : Unknown error <span class="number">1146</span></span>
+<span class="line">status   : Operation failed</span>
+<span class="line">mysql_old.slave_worker_info</span>
+<span class="line">Error    : Unknown error <span class="number">1146</span></span>
+<span class="line">status   : Operation failed</span>
+<span class="line">Upgrade process completed successfully.</span>
+<span class="line">Checking <span class="keyword">if</span> update is needed.</span>
+<span class="line">--------------</span>
+</pre></td></tr></table></figure>
+<h3 id="再查看mysql版本信息升级完成"><a href="#再查看mysql版本信息，升级完成" class="headerlink" title="再查看mysql版本信息，升级完成"></a>再查看mysql版本信息，升级完成</h3><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">mysql -S /u01/run/<span class="number">3306</span>/mysql.sock</span>
+<span class="line"></span>
+<span class="line">mysql&gt; status;</span>
+<span class="line">--------------</span>
+<span class="line">mysql  Ver <span class="number">14.14</span> Distrib <span class="number">5.7</span>.<span class="number">17</span>, <span class="keyword">for</span> linux-glibc2.<span class="number">5</span> (x86_64) using  EditLine wrapper</span>
+<span class="line"></span>
+<span class="line">Connection id:          <span class="number">4</span></span>
+<span class="line">Current database:</span>
+<span class="line">Current user:           root@localhost</span>
+<span class="line">SSL:                    Not in <span class="keyword">use</span></span>
+<span class="line">Current pager:          stdout</span>
+<span class="line">Using outfile:          <span class="string">''</span></span>
+<span class="line">Using delimiter:        ;</span>
+<span class="line">Server version:         <span class="number">5.7</span>.<span class="number">17</span>-<span class="keyword">log</span> MySQL Community Server (GPL)</span>
+<span class="line">Protocol version:       <span class="number">10</span></span>
+<span class="line">Connection:             Localhost via UNIX <span class="keyword">socket</span></span>
+<span class="line">Server characterset:    latin1</span>
+<span class="line">Db     characterset:    latin1</span>
+<span class="line">Client characterset:    utf8</span>
+<span class="line">Conn.  characterset:    utf8</span>
+<span class="line">UNIX <span class="keyword">socket</span>:            <span class="regexp">/u01/run</span><span class="regexp">/3306/mysql</span>.sock</span>
+<span class="line">Uptime:                 <span class="number">6</span> min <span class="number">3</span> sec</span>
+<span class="line"></span>
+<span class="line">Threads: <span class="number">1</span>  Questions: <span class="number">3174</span>  Slow queries: <span class="number">0</span>  Opens: <span class="number">368</span>  Flush tables: <span class="number">1</span>  Open tables: <span class="number">25</span>  Queries per second avg: <span class="number">8.743</span></span>
+<span class="line">--------------</span>
+<span class="line"></span>
+<span class="line">mysql&gt; <span class="keyword">select</span> version();</span>
+<span class="line">+------------+</span>
+<span class="line">| version()  |</span>
+<span class="line">+------------+</span>
+<span class="line">| <span class="number">5.7</span>.<span class="number">17</span>-<span class="keyword">log</span> |</span>
+<span class="line">+------------+</span>
 </pre></td></tr></table></figure>
 <h2 id="课堂笔记整理"><a href="#课堂笔记整理" class="headerlink" title="课堂笔记整理"></a>课堂笔记整理</h2><h3 id="mysql启动"><a href="#MySQL启动" class="headerlink" title="MySQL启动"></a>MySQL启动</h3><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 推荐启动方式</span></span>
 <span class="line">mysqld_safe --defaults-file=<span class="regexp">/u01/conf</span><span class="regexp">/my3306.cnf &amp;</span>

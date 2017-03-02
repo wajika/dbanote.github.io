@@ -18,7 +18,7 @@
 <meta name="description" content="使用mydumper工具全库备份
 mydumper是针对mysql数据库备份的一个轻量级第三方的开源工具，备份方式采用逻辑备份。mydumper支持多线程，备份速度远高于原生态的mysqldump。
 
-下载mydumper下载地址： https://launchpad.net/mydumper">
+下载mydumper下载地址：https://launchpad.net/mydumper">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL DBA从小白到大神实战-06 深入浅出MySQL备份与恢复">
 <meta property="og:url" content="http://dbanote.github.io/2017/02/27/mysql/课程学习/06-MySQL-DBA从小白到大神实战/index.html">
@@ -26,15 +26,15 @@ mydumper是针对mysql数据库备份的一个轻量级第三方的开源工具�
 <meta property="og:description" content="使用mydumper工具全库备份
 mydumper是针对mysql数据库备份的一个轻量级第三方的开源工具，备份方式采用逻辑备份。mydumper支持多线程，备份速度远高于原生态的mysqldump。
 
-下载mydumper下载地址： https://launchpad.net/mydumper">
+下载mydumper下载地址：https://launchpad.net/mydumper">
 <meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0301_xtrabackup_01.png">
-<meta property="og:updated_time" content="2017-03-02T06:10:49.311Z">
+<meta property="og:updated_time" content="2017-03-02T06:33:18.155Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL DBA从小白到大神实战-06 深入浅出MySQL备份与恢复">
 <meta name="twitter:description" content="使用mydumper工具全库备份
 mydumper是针对mysql数据库备份的一个轻量级第三方的开源工具，备份方式采用逻辑备份。mydumper支持多线程，备份速度远高于原生态的mysqldump。
 
-下载mydumper下载地址： https://launchpad.net/mydumper">
+下载mydumper下载地址：https://launchpad.net/mydumper">
 <meta name="twitter:image" content="http://oligvdnzp.bkt.clouddn.com/0301_xtrabackup_01.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -319,7 +319,7 @@ mydumper是针对mysql数据库备份的一个轻量级第三方的开源工具�
         <h2 id="使用mydumper工具全库备份"><a href="#使用mydumper工具全库备份" class="headerlink" title="使用mydumper工具全库备份"></a>使用mydumper工具全库备份</h2><blockquote>
 <p>mydumper是针对mysql数据库备份的一个轻量级第三方的开源工具，备份方式采用逻辑备份。<br>mydumper支持多线程，备份速度远高于原生态的mysqldump。</p>
 </blockquote>
-<h3 id="下载mydumper"><a href="#下载mydumper" class="headerlink" title="下载mydumper"></a>下载mydumper</h3><p>下载地址：<a href="https://launchpad.net/mydumper" target="_blank" rel="external"> https://launchpad.net/mydumper </a><br><a id="more"></a></p>
+<h3 id="下载mydumper"><a href="#下载mydumper" class="headerlink" title="下载mydumper"></a>下载mydumper</h3><p>下载地址：<a href="https://launchpad.net/mydumper" target="_blank" rel="external">https://launchpad.net/mydumper </a><br><a id="more"></a></p>
 <h3 id="编译安装"><a href="#编译安装" class="headerlink" title="编译安装"></a>编译安装</h3><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 安装编译所需的依赖包(参照：https://answers.launchpad.net/mydumper/+faq/349)</span></span>
 <span class="line">yum install -<span class="keyword">y</span> glib2-devel mysql-devel zlib-devel pcre-devel</span>
 <span class="line"></span>
@@ -475,7 +475,7 @@ mydumper是针对mysql数据库备份的一个轻量级第三方的开源工具�
 <span class="line">+------+--------+</span>
 </pre></td></tr></table></figure>
 <h2 id="利用innobackupex的备份和binlog日志对mysql数据库做完全恢复"><a href="#利用Innobackupex的备份和binlog日志对MySQL数据库做完全恢复" class="headerlink" title="利用Innobackupex的备份和binlog日志对MySQL数据库做完全恢复"></a>利用Innobackupex的备份和binlog日志对MySQL数据库做完全恢复</h2><blockquote>
-<p><code>Xtrabackup</code>是一个对InnoDB做数据备份的工具，支持在线热备份（备份时不影响数据读写），是商业备份工具InnoDB Hotbackup的一个很好的替代品。<br>Xtrabackup有两个主要的工具：<code>xtrabackup</code>、<code>innobackupex</code>。<br>（1）xtrabackup只能备份InnoDB和XtraDB两种数据表，而不能备份MyISAM数据表<br>（2）innobackupex则封装了xtrabackup，是用perl脚本封装，能同时备份处理innodb和myisam，但在处理myisam时需要加一个读锁<br>（3）相关帮助文档：<a href="https://www.percona.com/docs/wiki/index.html" target="_blank" rel="external">https://www.percona.com/docs/wiki/index.html </a></p>
+<p><code>Xtrabackup</code>是一个对InnoDB做数据备份的工具，支持在线热备份（备份时不影响数据读写），是商业备份工具InnoDB Hotbackup的一个很好的替代品。Xtrabackup有两个主要的工具：<code>xtrabackup</code>、<code>innobackupex</code>。<br>（1）xtrabackup只能备份InnoDB和XtraDB两种数据表，而不能备份MyISAM数据表<br>（2）innobackupex是用perl脚本封装了xtrabackup，能同时备份处理innodb和myisam，但在处理myisam时需要加一个读锁<br>（3）相关帮助文档：<a href="https://www.percona.com/docs/wiki/index.html" target="_blank" rel="external">https://www.percona.com/docs/wiki/index.html </a></p>
 </blockquote>
 <h3 id="下载安装xtrabackup二进制"><a href="#下载安装Xtrabackup（二进制）" class="headerlink" title="下载安装Xtrabackup（二进制）"></a>下载安装Xtrabackup（二进制）</h3><p><a href="https://www.percona.com/downloads/XtraBackup/LATEST/" target="_blank" rel="external">https://www.percona.com/downloads/XtraBackup/LATEST/ </a><br><img src="http://oligvdnzp.bkt.clouddn.com/0301_xtrabackup_01.png" alt="下载Xtrabackup"></p>
 <p>上传并解压缩安装软件包<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">cd /tmp</span>
@@ -485,7 +485,7 @@ mydumper是针对mysql数据库备份的一个轻量级第三方的开源工具�
 <span class="line">cd /tmp/percona-xtrabackup-<span class="number">2.4</span>.<span class="number">6</span>-Linux-x86_64/man/man1</span>
 <span class="line">cp * <span class="regexp">/usr/share</span><span class="regexp">/man/man</span>1</span>
 <span class="line"></span>
-<span class="line"><span class="comment"># 查看帮助</span></span>
+<span class="line"><span class="comment"># 可以使用以下命令查看帮助</span></span>
 <span class="line">xtrabackup --help</span>
 <span class="line">innobackupex --help</span>
 <span class="line">man xtrabackup</span>
@@ -738,8 +738,8 @@ mydumper是针对mysql数据库备份的一个轻量级第三方的开源工具�
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/02/28/mysql/课程学习/06-MySQL-DBA从小白到大神实战/">
-                    
+                <a href="/2017/02/28/tools/vim常用命令/">
+                    VIM常用命令
                 </a>
             </div>
         
@@ -789,7 +789,7 @@ mydumper是针对mysql数据库备份的一个轻量级第三方的开源工具�
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/02/28/mysql/课程学习/06-MySQL-DBA从小白到大神实战/" title="上一篇: ">
+            <a href="/2017/02/28/tools/vim常用命令/" title="上一篇: VIM常用命令">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -803,7 +803,7 @@ mydumper是针对mysql数据库备份的一个轻量级第三方的开源工具�
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/28/tools/vim常用命令/">VIM常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/28/mysql/课程学习/06-MySQL-DBA从小白到大神实战/">mysql/课程学习/06-MySQL-DBA从小白到大神实战</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/27/mysql/课程学习/06-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-06 深入浅出MySQL备份与恢复</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/mysql/课程学习/05-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-05 MySQL DBA日常操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/16/oracle/那些在11gR2中可能惹祸的新特性/">那些在11gR2中可能惹祸的新特性</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/tools/hexo解决代码块空行自动删除问题/">hexo解决代码块空行自动删除问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/mysql/课程学习/04-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-04 揭密MySQL databock and binlog的格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo博客添加常用插件/">hexo博客添加常用插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo更换主题并个性化定制/">hexo更换主题并个性化定制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/tools/Sublime常用快捷键/">Sublime Text 常用快捷键</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/tools/git常用命令整理/">GIT常用命令整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/课程学习/02-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-02 MySQL标准化、自动化部署</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/课程学习/01-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-01 MySQL 高级DBA职业规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/23/mysql/课程学习/03-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-03 深入MySQL体系结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/tools/hexo+github搭建个人博客/">hexo+github搭建个人博客</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/02/28/tools/vim常用命令/">VIM常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/27/mysql/课程学习/06-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-06 深入浅出MySQL备份与恢复</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/mysql/课程学习/05-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-05 MySQL DBA日常操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/16/oracle/那些在11gR2中可能惹祸的新特性/">那些在11gR2中可能惹祸的新特性</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/tools/hexo解决代码块空行自动删除问题/">hexo解决代码块空行自动删除问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/mysql/课程学习/04-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-04 揭密MySQL databock and binlog的格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo博客添加常用插件/">hexo博客添加常用插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo更换主题并个性化定制/">hexo更换主题并个性化定制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/tools/Sublime常用快捷键/">Sublime Text 常用快捷键</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/tools/git常用命令整理/">GIT常用命令整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/课程学习/02-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-02 MySQL标准化、自动化部署</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/课程学习/01-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-01 MySQL 高级DBA职业规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/23/mysql/课程学习/03-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-03 深入MySQL体系结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/tools/hexo+github搭建个人博客/">hexo+github搭建个人博客</a></li></ul>
 
 
 

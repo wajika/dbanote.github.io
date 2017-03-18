@@ -4,6 +4,385 @@
   
     
     <entry>
+      <title><![CDATA[CentOS7.3安装图解]]></title>
+      <url>http://dbanote.github.io/2017/03/18/linux/20170318_CentOS7.3%E5%AE%89%E8%A3%85%E5%9B%BE%E8%A7%A3/</url>
+      <content type="html"><![CDATA[<p>光标向上移动，选择<code>Install CentOS Linux</code>不测试安装光盘，节省安装时间<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_01.png" alt=""><br>直接回车开始<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_02.png" alt=""><br><a id="more"></a><br>选择语言，这里我就使用英文<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_03.png" alt=""><br>这里是跟CentOS6.X区别比较大的地方，所有的配置项都集中在一起，可以根据需要进行配置<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_05.png" alt=""><br>点击<code>DATE&amp;TIME</code>配置时区和时间<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_04.png" alt=""><br><code>KEYBOARD</code>和<code>LANGUAGE SUPPORT</code>前面已经设置过了，点击<code>SOFTWARE SELECTION</code>，选择服务器部署的类型（即都安装哪些软件包），我这里默认选择<code>Minimal Install</code>，如果你需要安装图形化界面，可以选择<code>Server with GUI</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_06.png" alt=""><br>点击<code>INSTALLATION DESTINATION</code>配置硬盘分区<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_07.png" alt=""><br>手动配置<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_08.png" alt=""><br>选<code>Click here to create them automatically</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_09.png" alt=""><br>在自动创建的分区上按业务(测试)需要进行修改，无误后点左上方的<code>Done</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_10.png" alt=""><br>同意变更<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_11.png" alt=""><br>点击<code>NETWORK&amp;HOSTNAME</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_12.png" alt=""><br>可在此界面进行网络和主机名配置，这里我先默认，不配置<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_13.png" alt=""><br>完成后，回到之前的配置集中页面，点击下方的<code>Begin Installation</code>，开始安装<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_14.png" alt=""><br>在安装的过程中，点击<code>ROOT PASSWORD</code>配置root用户密码<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_15.png" alt=""><br>设置完root密码后点<code>Done</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_16.png" alt=""><br>红色警告已标志已清除，等待软件包安装完成<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_17.png" alt=""><br>安装完成后，点击<code>Reboot</code>会重启服务器<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_18.png" alt=""><br>进入到字符界面，完成安装<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_19.png" alt=""></p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[MySQL DBA从小白到大神实战-08 MySQL监控系统之Zabbix]]></title>
+      <url>http://dbanote.github.io/2017/03/13/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/08-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
+      <content type="html"><![CDATA[<h2 id="部署zabbix监控"><a href="#部署zabbix监控" class="headerlink" title="部署zabbix监控"></a>部署zabbix监控</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>zabbix（音同 zbix）是一个基于WEB界面的提供分布式系统监视以及网络监视功能的企业级的开源解决方案。<br>zabbix能监视各种网络参数，保证服务器系统的安全运营；并提供灵活的通知机制以让系统管理员快速定位/解决存在的各种问题。<br>zabbix由2部分构成，zabbix server与可选组件zabbix agent。zabbix server可以通过SNMP，zabbix agent，ping，端口监视等方法提供对远程服务器/网络状态的监视，数据收集等功能，它可以运行在Linux，Solaris，HP-UX，AIX，Free BSD，Open BSD，OS X等平台上。</p>
+<p>为了使用最新3.2版本的Zabbix，本次部署选用的Linux OS是最新的CentOS7.3（php版本为5.4）。<br>CentOS6.X和CentOS7.X的安装和使用均有较大变化，为便于今后的学习和工作，下面将CentOS7.3的安装和基本配置也记录到本文中。</p>
+<h3 id="安装centos73"><a href="#安装CentOS7-3" class="headerlink" title="安装CentOS7.3"></a>安装CentOS7.3</h3><p>详见：<a href="">CentOS7.3安装图解</a><br><a id="more"></a></p>
+<h3 id="centos7x系统的基本配置和使用"><a href="#CentOS7-X系统的基本配置和使用" class="headerlink" title="CentOS7.X系统的基本配置和使用"></a>CentOS7.X系统的基本配置和使用</h3><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看系统版本</span></span>
+<span class="line">cat /etc/redhat-release</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">CentOS Linux release <span class="number">7.3</span>.<span class="number">1611</span> (Core) </span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 配置IP</span></span>
+<span class="line">vi /etc/sysconfig/network-scripts/ifcfg-ens16<span class="number">0</span></span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">TYPE=Ethernet</span>
+<span class="line">BOOTPROTO=static</span>
+<span class="line">DEFROUTE=yes</span>
+<span class="line">PEERDNS=yes</span>
+<span class="line">PEERROUTES=yes</span>
+<span class="line">IPV4_FAILURE_FATAL=yes</span>
+<span class="line">IPV6INIT=<span class="keyword">no</span></span>
+<span class="line">NAME=ens16<span class="number">0</span></span>
+<span class="line">UUID=<span class="number">38</span>e983c8-b6ad-<span class="number">40</span>cf-<span class="number">9592</span>-<span class="number">3</span>a3652cf8c6d</span>
+<span class="line">DEVICE=ens16<span class="number">0</span></span>
+<span class="line">ONBOOT=yes</span>
+<span class="line">IPADDR=<span class="number">10.245</span>.<span class="number">231.202</span></span>
+<span class="line">PREFIX=<span class="number">24</span></span>
+<span class="line">GATEWAY=<span class="number">10.245</span>.<span class="number">231.254</span></span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 重启网络，使配置生效</span></span>
+<span class="line">service network restart</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 配置主机名</span></span>
+<span class="line">hostnamectl status</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">   Static hostname: localhost.localdomain</span>
+<span class="line">         Icon name: computer-vm</span>
+<span class="line">           Chassis: vm</span>
+<span class="line">        Machine ID: <span class="number">5</span>f66fc1b61374082a7e6e595fc7669c5</span>
+<span class="line">           Boot ID: <span class="number">269679</span>da89c54fd4a736c6968b8644f3</span>
+<span class="line">    Virtualization: vmware</span>
+<span class="line">  Operating System: CentOS Linux <span class="number">7</span> (Core)</span>
+<span class="line">       CPE OS Name: cpe:<span class="regexp">/o:centos:centos:7</span>
+<span class="line">            Kernel: Linux 3.10.0-514.el7.x86_64</span>
+<span class="line">      Architecture: x86-64</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">hostnamectl --static set-hostname zabbix</span>
+<span class="line"></span>
+<span class="line"># 禁用SELINUX</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">vi /etc</span><span class="regexp">/selinux/config</span></span>
+<span class="line">SELINUX=disabled</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 禁用防火墙</span></span>
+<span class="line">systemctl disable firewalld</span>
+<span class="line">systemctl status firewalld</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 设置内核参数(mysql需要)</span></span>
+<span class="line">vi /etc/sysctl.d/<span class="number">99</span>-sysctl.conf</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">kernel.shmmax = <span class="number">2199023255552</span></span>
+<span class="line">fs.file-max = <span class="number">6815744</span></span>
+<span class="line">kernel.sem = <span class="number">250</span> <span class="number">32000</span> <span class="number">100</span> <span class="number">128</span></span>
+<span class="line">kernel.shmmni = <span class="number">4096</span></span>
+<span class="line">kernel.panic_on_oops = <span class="number">1</span></span>
+<span class="line">net.core.rmem_default = <span class="number">262144</span></span>
+<span class="line">net.core.rmem_max = <span class="number">4194304</span></span>
+<span class="line">net.core.wmem_default = <span class="number">262144</span></span>
+<span class="line">net.core.wmem_max = <span class="number">1048576</span></span>
+<span class="line">fs.aio-max-nr = <span class="number">1048576</span></span>
+<span class="line">net.ipv4.ip_local_port_range = <span class="number">9000</span> <span class="number">65500</span></span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 使内核参数生效</span></span>
+<span class="line">sysctl -p</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 常用CentOS7.x命令</span></span>
+<span class="line"><span class="comment">## 查看所有系统服务状态</span></span>
+<span class="line">systemctl list-unit-files -t service </span>
+<span class="line"></span>
+<span class="line"><span class="comment">## 查看系统启动以来的message信息(类似dmesg)</span></span>
+<span class="line">journalctl -b</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 查看网络配置</span></span>
+<span class="line">ip a</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"><span class="number">1</span>: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu <span class="number">65536</span> qdisc noqueue <span class="keyword">state</span> UNKNOWN qlen <span class="number">1</span></span>
+<span class="line">    <span class="keyword">link</span>/loopback <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span> brd <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span></span>
+<span class="line">    inet <span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span>/<span class="number">8</span> scope host lo</span>
+<span class="line">       valid_lft forever preferred_lft forever</span>
+<span class="line">    inet6 ::<span class="number">1</span>/<span class="number">128</span> scope host </span>
+<span class="line">       valid_lft forever preferred_lft forever</span>
+<span class="line"><span class="number">2</span>: ens16<span class="number">0</span>: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu <span class="number">1500</span> qdisc mq <span class="keyword">state</span> UP qlen <span class="number">1000</span></span>
+<span class="line">    <span class="keyword">link</span>/ether <span class="number">00</span>:<span class="number">50</span>:<span class="number">56</span>:a<span class="number">0</span>:<span class="number">1</span>d:b1 brd ff:ff:ff:ff:ff:ff</span>
+<span class="line">    inet <span class="number">10.245</span>.<span class="number">231.202</span>/<span class="number">24</span> brd <span class="number">10.245</span>.<span class="number">231.255</span> scope global ens16<span class="number">0</span></span>
+<span class="line">       valid_lft forever preferred_lft forever</span>
+<span class="line">    inet6 fe8<span class="number">0</span>::<span class="number">250</span>:<span class="number">56</span>ff:fea<span class="number">0</span>:<span class="number">1</span>db1/<span class="number">64</span> scope <span class="keyword">link</span> </span>
+<span class="line">       valid_lft forever preferred_lft forever</span>
+<span class="line">-----------------------------------------------</span>
+</pre></td></tr></table></figure>
+<h3 id="源码编译安装mysql"><a href="#源码编译安装mysql" class="headerlink" title="源码编译安装mysql"></a>源码编译安装mysql</h3><p>参见博文：<a href="https://dbanote.github.io/2017/01/26/mysql/课程学习/02-MySQL-DBA从小白到大神实战/#详细描述mysql编译安装的过程截图安装步骤">MySQL DBA从小白到大神实战-02 MySQL标准化、自动化部署</a></p>
+<h3 id="安装和配置zabbix-server"><a href="#安装和配置zabbix-server" class="headerlink" title="安装和配置zabbix server"></a>安装和配置zabbix server</h3><h4 id="建zabbix用户-组和安装目录"><a href="#建zabbix用户、组和安装目录" class="headerlink" title="建zabbix用户、组和安装目录"></a>建zabbix用户、组和安装目录</h4><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">groupadd zabbix</span>
+<span class="line">useradd -g zabbix zabbix</span>
+<span class="line">echo <span class="string">"zabbix"</span> | passwd --stdin zabbix</span>
+<span class="line"></span>
+<span class="line"><span class="keyword">mkdir</span> -p /u01/zabbix</span>
+<span class="line"><span class="keyword">chown</span> -R zabbix:zabbix /u01/zabbix</span>
+</pre></td></tr></table></figure>
+<h4 id="安装编译基础依赖包"><a href="#安装编译基础依赖包" class="headerlink" title="安装编译基础依赖包"></a>安装编译基础依赖包</h4><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">mkdir</span> /media/disk</span>
+<span class="line">mount /dev/cdrom /media/disk</span>
+<span class="line"></span>
+<span class="line">cd /etc/yum.repos.d/</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">cp CentOS-Base.repo CentOS-Base.repo.bak</span>
+<span class="line">vi /etc/yum.repos.d/CentOS-Base.repo</span>
+<span class="line">[base]</span>
+<span class="line">name=CentOS-$releasever - Base</span>
+<span class="line">baseurl=file:<span class="regexp">//</span><span class="regexp">/media/disk</span></span>
+<span class="line">gpgcheck=<span class="number">0</span></span>
+<span class="line">enabled=<span class="number">1</span></span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"></span>
+<span class="line">yum -<span class="keyword">y</span> install wget unzip libxml2 libxml2-devel httpd php php-mysql php-common php-gd \</span>
+<span class="line">php-odbc php-pear curl curl-devel net-snmp net-snmp-devel perl-DBI php-xml ntpdate  \</span>
+<span class="line">zlib-devel glibc-devel curl-devel gcc automake openssl-devel net-snmp-devel rpm-devel \</span>
+<span class="line">lrzsz ncurses-devel <span class="keyword">readline</span>-devel</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># http://mirrors.sohu.com/centos/7.3.1611/os/x86_64/Packages/ 下载以下包并上传到服务器/tmp目录下</span></span>
+<span class="line">-rw-r--r--. <span class="number">1</span> root root <span class="number">126576</span> Mar <span class="number">14</span> <span class="number">11</span>:<span class="number">58</span> libidn-devel-<span class="number">1.28</span>-<span class="number">4</span>.el7.x86_64.rpm</span>
+<span class="line">-rw-r--r--. <span class="number">1</span> root root <span class="number">176988</span> Mar <span class="number">14</span> <span class="number">13</span>:<span class="number">46</span> OpenIPMI-<span class="number">2.0</span>.<span class="number">19</span>-<span class="number">15</span>.el7.x86_64.rpm</span>
+<span class="line">-rw-r--r--. <span class="number">1</span> root root <span class="number">136452</span> Mar <span class="number">14</span> <span class="number">11</span>:<span class="number">58</span> OpenIPMI-devel-<span class="number">2.0</span>.<span class="number">19</span>-<span class="number">15</span>.el7.x86_64.rpm</span>
+<span class="line">-rw-r--r--. <span class="number">1</span> root root <span class="number">513864</span> Mar <span class="number">14</span> <span class="number">13</span>:<span class="number">42</span> OpenIPMI-libs-<span class="number">2.0</span>.<span class="number">19</span>-<span class="number">15</span>.el7.x86_64.rpm</span>
+<span class="line">-rw-r--r--. <span class="number">1</span> root root  <span class="number">15440</span> Mar <span class="number">14</span> <span class="number">13</span>:<span class="number">45</span> OpenIPMI-modalias-<span class="number">2.0</span>.<span class="number">19</span>-<span class="number">15</span>.el7.x86_64.rpm</span>
+<span class="line">-rw-r--r--. <span class="number">1</span> root root  <span class="number">58488</span> Mar <span class="number">14</span> <span class="number">11</span>:<span class="number">57</span> php-bcmath-<span class="number">5.4</span>.<span class="number">16</span>-<span class="number">42</span>.el7.x86_64.rpm</span>
+<span class="line">-rw-r--r--. <span class="number">1</span> root root <span class="number">516620</span> Mar <span class="number">14</span> <span class="number">11</span>:<span class="number">57</span> php-mbstring-<span class="number">5.4</span>.<span class="number">16</span>-<span class="number">42</span>.el7.x86_64.rpm</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 手动安装包</span></span>
+<span class="line">cd /tmp</span>
+<span class="line">rpm -ivh libidn*.rpm</span>
+<span class="line">rpm -ivh php*.rpm</span>
+<span class="line">rpm -ivh OpenIPMI-modalias-<span class="number">2.0</span>.<span class="number">19</span>-<span class="number">15</span>.el7.x86_64.rpm</span>
+<span class="line">rpm -ivh OpenIPMI-libs-<span class="number">2.0</span>.<span class="number">19</span>-<span class="number">15</span>.el7.x86_64.rpm</span>
+<span class="line">rpm -ivh OpenIPMI-<span class="number">2.0</span>.<span class="number">19</span>-<span class="number">15</span>.el7.x86_64.rpm</span>
+<span class="line">rpm -ivh OpenIPMI-devel-<span class="number">2.0</span>.<span class="number">19</span>-<span class="number">15</span>.el7.x86_64.rpm</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 查看php和apache版本</span></span>
+<span class="line">php --version</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">PHP <span class="number">5.4</span>.<span class="number">16</span> (cli) (built: Nov  <span class="number">6</span> <span class="number">2016</span> <span class="number">00</span>:<span class="number">29</span>:<span class="number">02</span>) </span>
+<span class="line">Copyright (c) <span class="number">1997</span>-<span class="number">2013</span> The PHP Group</span>
+<span class="line">Zend Engine v2.<span class="number">4.0</span>, Copyright (c) <span class="number">1998</span>-<span class="number">2013</span> Zend Technologies</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"></span>
+<span class="line">httpd -version</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">Server version: Apache/<span class="number">2.4</span>.<span class="number">6</span> (CentOS)</span>
+<span class="line">Server built:   Nov <span class="number">14</span> <span class="number">2016</span> <span class="number">18</span>:<span class="number">04</span>:<span class="number">44</span></span>
+<span class="line">-----------------------------------------------</span>
+</pre></td></tr></table></figure>
+<h4 id="源码编译安装zabbix"><a href="#源码编译安装zabbix" class="headerlink" title="源码编译安装zabbix"></a>源码编译安装zabbix</h4><p>从官岗下载zabbix源码包：<a href="http://www.zabbix.com/download" target="_blank" rel="external">http://www.zabbix.com/download </a><br>上传到服务器/tmp目录后解压<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">cd /tmp/</span>
+<span class="line">tar -zxvf zabbix-<span class="number">3.2</span>.<span class="number">4</span>.tar.gz</span>
+</pre></td></tr></table></figure></p>
+<p>编译安装，相关步骤参考<a href="https://www.zabbix.com/documentation/3.2/manual/installation/install" target="_blank" rel="external">官网安装手册</a><br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">cd /tmp/zabbix-<span class="number">3.2</span>.<span class="number">4</span></span>
+<span class="line">./configure --prefix=<span class="regexp">/u01/zabbix</span> --enable-server --enable-agent \</span>
+<span class="line">--with-mysql=<span class="regexp">/u01/mysql</span><span class="regexp">/bin/mysql</span>_config \</span>
+<span class="line">--with-net-snmp --with-libcurl --with-libxml2</span>
+<span class="line"></span>
+<span class="line">make &amp;&amp; make install</span>
+</pre></td></tr></table></figure></p>
+<h4 id="创建所需数据库并授权用户"><a href="#创建所需数据库并授权用户" class="headerlink" title="创建所需数据库并授权用户"></a>创建所需数据库并授权用户</h4><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">su - mysql</span>
+<span class="line">mysql</span>
+<span class="line"></span>
+<span class="line">create database zabbix default character set utf8;</span>
+<span class="line">grant all privileges on *.* to <span class="string">'zabbix'</span>@'%' identified by <span class="string">'zabbix'</span>;</span>
+<span class="line">grant all privileges on *.* to <span class="string">'zabbix'</span>@'localhost<span class="string">' identified by '</span>zabbix<span class="string">';</span>
+<span class="line"></span>
+<span class="line">show databases;</span>
+<span class="line">+--------------------+</span>
+<span class="line">| Database           |</span>
+<span class="line">+--------------------+</span>
+<span class="line">| information_schema |</span>
+<span class="line">| mysql              |</span>
+<span class="line">| performance_schema |</span>
+<span class="line">| test               |</span>
+<span class="line">| zabbix             |</span>
+<span class="line">+--------------------+</span>
+<span class="line"></span>
+<span class="line">use zabbix</span>
+<span class="line">select database();</span>
+<span class="line">+------------+</span>
+<span class="line">| database() |</span>
+<span class="line">+------------+</span>
+<span class="line">| zabbix     |</span>
+<span class="line">+------------+</span></span>
+</pre></td></tr></table></figure>
+<h4 id="导入zabbix定义的表结构和数据"><a href="#导入zabbix定义的表结构和数据" class="headerlink" title="导入zabbix定义的表结构和数据"></a>导入zabbix定义的表结构和数据</h4><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">source /tmp/zabbix-<span class="number">3.2</span>.<span class="number">4</span>/database/mysql/schema.sql</span>
+<span class="line">source /tmp/zabbix-<span class="number">3.2</span>.<span class="number">4</span>/database/mysql/data.sql</span>
+<span class="line">source /tmp/zabbix-<span class="number">3.2</span>.<span class="number">4</span>/database/mysql/images.sql</span>
+</pre></td></tr></table></figure>
+<h4 id="修改相关配置文件"><a href="#修改相关配置文件" class="headerlink" title="修改相关配置文件"></a>修改相关配置文件</h4><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># root用户下</span></span>
+<span class="line"><span class="comment"># 修改zabbix server配置文件</span></span>
+<span class="line">vi /u01/zabbix/etc/zabbix_server.conf</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">ListenPort=<span class="number">10051</span></span>
+<span class="line">DBHost=<span class="number">10.245</span>.<span class="number">231.202</span></span>
+<span class="line">DBName=zabbix</span>
+<span class="line">DBUser=zabbix</span>
+<span class="line">DBPassword=zabbix</span>
+<span class="line">DBPort=<span class="number">3306</span></span>
+<span class="line">PidFile=<span class="regexp">/tmp/zabbix</span>_server.pid</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 修改php配置文件</span></span>
+<span class="line">cp /etc/php.ini /etc/php.ini.zabbixbak</span>
+<span class="line">sed -i <span class="string">'s/max_execution_time = 30/max_execution_time = 300/g'</span> /etc/php.ini</span>
+<span class="line">sed -i <span class="string">'/date.timezone =/a\date.timezone = Asia/Shanghai'</span> /etc/php.ini</span>
+<span class="line">sed -i <span class="string">'/max_input_time =/s/60/300/'</span> /etc/php.ini</span>
+<span class="line">sed -i <span class="string">'/mbstring.func_overload = 0/a\mbstring.func_overload = 1'</span> /etc/php.ini</span>
+<span class="line">sed -i <span class="string">'/post_max_size =/s/8M/32M/'</span> /etc/php.ini</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 修改apache配置文件</span></span>
+<span class="line">sed -i <span class="string">'/ServerName/a\ServerName zabbix:80'</span> /etc/httpd/conf/httpd.conf</span>
+</pre></td></tr></table></figure>
+<h4 id="拷贝zabbix的web界面程序文件"><a href="#拷贝zabbix的web界面程序文件" class="headerlink" title="拷贝zabbix的web界面程序文件"></a>拷贝zabbix的web界面程序文件</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir /var/www/html/zabbix</span>
+<span class="line">cp -rf /tmp/zabbix-3.2.4/frontends/php/* /var/www/html/zabbix</span>
+</pre></td></tr></table></figure>
+<h4 id="启动apache和zabbix-server"><a href="#启动apache和zabbix-server" class="headerlink" title="启动apache和zabbix server"></a>启动apache和zabbix server</h4><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">systemctl start httpd</span>
+<span class="line">systemctl status httpd</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">● httpd.service - The Apache HTTP Server</span>
+<span class="line">   Loaded: loaded (<span class="regexp">/usr/lib</span><span class="regexp">/systemd/system</span><span class="regexp">/httpd.service; enabled; vendor preset: disabled)</span>
+<span class="line">   Active: active (running) since Thu 2017-03-16 15:12:59 CST; 15s ago</span>
+<span class="line">     Docs: man:httpd(8)</span>
+<span class="line">           man:apachectl(8)</span>
+<span class="line">  Process: 762 ExecStop=/bin</span><span class="regexp">/kill -WINCH $&#123;MAINPID&#125; (code=exited, status=0/</span>SUCCESS)</span>
+<span class="line"> Main PID: <span class="number">773</span> (httpd)</span>
+<span class="line">   Status: <span class="string">"Total requests: 0; Current requests/sec: 0; Current traffic:   0 B/sec"</span></span>
+<span class="line">   CGroup: <span class="regexp">/system.slice/httpd</span>.service</span>
+<span class="line">           ├─<span class="number">773</span> /usr/sbin/httpd -DFOREGROUND</span>
+<span class="line">           ├─<span class="number">775</span> /usr/sbin/httpd -DFOREGROUND</span>
+<span class="line">           ├─<span class="number">776</span> /usr/sbin/httpd -DFOREGROUND</span>
+<span class="line">           ├─<span class="number">777</span> /usr/sbin/httpd -DFOREGROUND</span>
+<span class="line">           ├─<span class="number">779</span> /usr/sbin/httpd -DFOREGROUND</span>
+<span class="line">           └─<span class="number">780</span> /usr/sbin/httpd -DFOREGROUND</span>
+<span class="line"></span>
+<span class="line">Mar <span class="number">16</span> <span class="number">15</span>:<span class="number">12</span>:<span class="number">59</span> zabbix systemd[<span class="number">1</span>]: Starting The Apache HTTP Server...</span>
+<span class="line">Mar <span class="number">16</span> <span class="number">15</span>:<span class="number">12</span>:<span class="number">59</span> zabbix systemd[<span class="number">1</span>]: Started The Apache HTTP Server.</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 启动zabbix server</span></span>
+<span class="line">/u01/zabbix/sbin/zabbix_server -c /u01/zabbix/etc/zabbix_server.conf</span>
+</pre></td></tr></table></figure>
+<h4 id="通过web界面安装配置zabbix"><a href="#通过WEB界面安装配置zabbix" class="headerlink" title="通过WEB界面安装配置zabbix"></a>通过WEB界面安装配置zabbix</h4><p>在浏览器中输入：<a href="http://10.245.231.202/zabbix" target="_blank" rel="external">http://10.245.231.202/zabbix</a>，打开图形界面 -&gt; 下一步<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_01.png" alt=""><br>确保所有项都是OK状态 -&gt; 下一步<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_02.png" alt=""><br>配置数据库连接 -&gt; 下一步<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_03.png" alt=""><br>配置zabbix server信息 -&gt; 下一步<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_04.png" alt=""><br>确认信息 -&gt; 下一步<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_05.png" alt=""><br>下载配置文件，按要求保存到指定位置<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_06.png" alt=""><br>配置文件内容如下：<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">vi /var/www/html/zabbix/conf/zabbix.conf.php</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">&lt;?php</span>
+<span class="line">// Zabbix GUI configuration file.</span>
+<span class="line">global $DB;</span>
+<span class="line"></span>
+<span class="line">$DB[<span class="string">'TYPE'</span>]     = <span class="string">'MYSQL'</span>;</span>
+<span class="line">$DB[<span class="string">'SERVER'</span>]   = <span class="string">'10.245.231.202'</span>;</span>
+<span class="line">$DB[<span class="string">'PORT'</span>]     = <span class="string">'3306'</span>;</span>
+<span class="line">$DB[<span class="string">'DATABASE'</span>] = <span class="string">'zabbix'</span>;</span>
+<span class="line">$DB[<span class="string">'USER'</span>]     = <span class="string">'zabbix'</span>;</span>
+<span class="line">$DB[<span class="string">'PASSWORD'</span>] = <span class="string">'zabbix'</span>;</span>
+<span class="line"></span>
+<span class="line"><span class="regexp">//</span> Schema name. Used <span class="keyword">for</span> IBM DB2 <span class="keyword">and</span> PostgreSQL.</span>
+<span class="line">$DB[<span class="string">'SCHEMA'</span>] = <span class="string">''</span>;</span>
+<span class="line"></span>
+<span class="line">$ZBX_SERVER      = <span class="string">'10.245.231.202'</span>;</span>
+<span class="line">$ZBX_SERVER_PORT = <span class="string">'10051'</span>;</span>
+<span class="line">$ZBX_SERVER_NAME = <span class="string">'zabbix'</span>;</span>
+<span class="line"></span>
+<span class="line">$IMAGE_FORMAT_DEFAULT = IMAGE_FORMAT_PNG;</span>
+<span class="line"></span>
+<span class="line">systemctl restart httpd</span>
+<span class="line">The default user name is Admin, password zabbix.</span>
+<span class="line">-----------------------------------------------</span>
+</pre></td></tr></table></figure></p>
+<p>结束安装<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_07.png" alt=""><br>默认的用户名是<code>admin</code>，密码是<code>zabbix</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_08.png" alt=""><br>登陆后，可以将显示语言设置为中文(英文好的，不建议修改，而且zabbix汉化不是很完全和准确)<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_09.png" alt=""><br>选择中文，点update<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_10.png" alt=""></p>
+<h3 id="配置启动zabbix-agent"><a href="#配置启动zabbix-agent" class="headerlink" title="配置启动zabbix agent"></a>配置启动zabbix agent</h3><p>修改配置文件并启动agent<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">vi /u01/zabbix/etc/zabbix_agentd.conf</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">Server=<span class="number">10.245</span>.<span class="number">231.202</span></span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"><span class="comment"># 启动</span></span>
+<span class="line">/u01/zabbix/sbin/zabbix_agentd</span>
+</pre></td></tr></table></figure></p>
+<p>在zabbix web界面中配置主机中，点击【停用的】<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_11.png" alt=""><br>确定，启用主机<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_12.png" alt=""><br>这时状态已变为【启用】，但可用状态异常<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_16.png" alt=""><br>点击主机名<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_14.png" alt=""><br>将主机IP变更为实际的 -&gt; 更新<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_15.png" alt=""><br>重新刷新页面，稍等一会可用性状态正常了<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_17.png" alt=""></p>
+<h2 id="自定义监控mysql实例状态"><a href="#自定义监控MySQL实例状态" class="headerlink" title="自定义监控MySQL实例状态"></a>自定义监控MySQL实例状态</h2><blockquote>
+<p><strong>监控思路：</strong><br>在要监控的MySQL服务器上安装zabbix agent，然后在zabbix主机web界面里配置要监控的MySQL服务器的信息，添加zabbix自带的Template App MySQL模版，若者创建自定义模板和相关的mysql监控脚本。</p>
+</blockquote>
+<h3 id="在监控的mysql服务器上安装并启动zabbix-agent"><a href="#在监控的mysql服务器上安装并启动zabbix-agent" class="headerlink" title="在监控的mysql服务器上安装并启动zabbix agent"></a>在监控的mysql服务器上安装并启动zabbix agent</h3><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 添加zabbix帐号</span></span>
+<span class="line">groupadd zabbix</span>
+<span class="line">useradd zabbix -g zabbix -<span class="keyword">s</span> /sbin/nologin</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 上传rpm包到/tmp目录后开始安装</span></span>
+<span class="line">rpm -ivh zabbix-agent-<span class="number">3.2</span>.<span class="number">4</span>-<span class="number">1</span>.el6.x86_64.rpm</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 修改agent配置文件</span></span>
+<span class="line">vi /u01/zabbix/etc/zabbix_agentd.conf</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">Server=<span class="number">10.245</span>.<span class="number">231.202</span></span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 启动agent</span></span>
+<span class="line">/usr/sbin/zabbix_agentd -c /etc/zabbix/zabbix_agentd.conf</span>
+</pre></td></tr></table></figure>
+<h3 id="建立mysql-host-groups组"><a href="#建立mysql-host-groups组" class="headerlink" title="建立mysql host groups组"></a>建立mysql host groups组</h3><p>模板是zabbix系统提供的，进入zabbix web后台，Configuration–&gt;Hosts groups–&gt;点击Create host group–&gt;选择template选项卡，选择模板TemplateApp MySQL，Templdate OS Linux，Group name设置成Mysql_Servers，最后点击add<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_01.png" alt=""></p>
+<h3 id="建立hosts"><a href="#建立hosts" class="headerlink" title="建立hosts"></a>建立hosts</h3><p>configuration–&gt;hosts–&gt;Create hosts，然后按图配置<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_02.png" alt=""><br>选择template选项卡–&gt;select–&gt;选择模板Template App MySQL,Templdate OS Linux，最后点击下边的Add按钮<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_03.png" alt=""><br>确认模板已添加，点Add按钮<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_04.png" alt=""><br>稍等一会，确保状态和可用性都正常<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_05.png" alt=""></p>
+<h3 id="使用自带模板监控mysql"><a href="#使用自带模板监控mysql" class="headerlink" title="使用自带模板监控mysql"></a>使用自带模板监控mysql</h3><p>在监控的mysql服务器上给zabbix agent配置数据库账号<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">GRANT PROCESS,SUPER,REPLICATION CLIENT ON *.* TO zabbix@'<span class="number">127.0</span>.<span class="number">0</span>.<span class="number">1</span><span class="string">' IDENTIFIED BY '</span>zabbix123456<span class="string">';</span>
+<span class="line">GRANT PROCESS,SUPER,REPLICATION CLIENT ON *.* TO zabbix@'</span>localhost<span class="string">' IDENTIFIED BY '</span>zabbix123456<span class="string">';</span></span>
+</pre></td></tr></table></figure></p>
+<p>创建/etc/zabbix/.my.cnf,并在里面写入mysql服务器的密码<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">vi /etc/zabbix/.my.cnf</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">[mysql]</span>
+<span class="line">user=zabbix</span>
+<span class="line">password=zabbix123456</span>
+<span class="line"></span>
+<span class="line">[mysqladmin]</span>
+<span class="line">user=zabbix</span>
+<span class="line">password=zabbix123456</span>
+<span class="line">-----------------------------------------------</span>
+</pre></td></tr></table></figure></p>
+<p>修改监控mysql相关的用户参数文件<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">cd /etc/zabbix/zabbix_agentd.d/</span>
+<span class="line">vi userparameter_mysql.conf</span>
+<span class="line"><span class="comment"># 修改以下方面：</span></span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">HOME=<span class="regexp">/var/lib</span><span class="regexp">/zabbix    替换成     HOME=/etc</span><span class="regexp">/zabbix</span>
+<span class="line">mysql                   补全路径   /u</span>01/mysql/bin/mysql</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 重启zabbix agent</span></span>
+<span class="line">ps -ef | <span class="keyword">grep</span> <span class="string">'zabbix_agentd'</span> | <span class="keyword">grep</span> -v <span class="keyword">grep</span> | awk <span class="string">'&#123;print $2&#125;'</span> | xargs <span class="keyword">kill</span> -<span class="number">9</span></span>
+<span class="line">/usr/sbin/zabbix_agentd -c /etc/zabbix/zabbix_agentd.conf</span>
+</pre></td></tr></table></figure></p>
+<p>然后在zabbix-server服务器上测试是否可以获取到mysql的status信息<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">cd /u01/zabbix/bin/</span>
+<span class="line">./zabbix_get -<span class="keyword">s</span> <span class="number">10.245</span>.<span class="number">231.201</span> -p1005<span class="number">0</span> -k mysql.ping</span>
+<span class="line"><span class="number">1</span></span>
+<span class="line"></span>
+<span class="line">./zabbix_get -<span class="keyword">s</span> <span class="number">10.245</span>.<span class="number">231.201</span> -p1005<span class="number">0</span> -k mysql.version</span>
+<span class="line">/u01/mysql/bin/mysql  Ver <span class="number">14.14</span> Distrib <span class="number">5.6</span>.<span class="number">35</span>, <span class="keyword">for</span> Linux (x86_64) using  EditLine wrapper</span>
+<span class="line"></span>
+<span class="line">./zabbix_get -<span class="keyword">s</span> <span class="number">10.245</span>.<span class="number">231.201</span> -p1005<span class="number">0</span> -k mysql.status[Com_insert]</span>
+<span class="line"><span class="number">3</span></span>
+</pre></td></tr></table></figure></p>
+<p>zabbix自带的mysql模板共可监测以下14项<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_06.png" alt=""><br>按下图可以查看监控mysql的情况，也可以图形化显示<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_07.png" alt=""><br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_08.png" alt=""></p>
+<h3 id="自定义zabbix模板监控mysql"><a href="#自定义zabbix模板监控mysql" class="headerlink" title="自定义zabbix模板监控mysql"></a>自定义zabbix模板监控mysql</h3><p>点击Configuration–&gt;Templates–&gt;create template，参照下图中配置<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_09.png" alt=""></p>
+<h2 id="模拟mysql实例crash后监控告警发邮件到邮箱"><a href="#模拟MySQL实例crash后，监控告警发邮件到邮箱。" class="headerlink" title="模拟MySQL实例crash后，监控告警发邮件到邮箱。"></a>模拟MySQL实例crash后，监控告警发邮件到邮箱。</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"></span>
+<span class="line"></span>
+</pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"></span>
+<span class="line"></span>
+</pre></td></tr></table></figure>
+<p>zabbix 企业级分布式开源监控系统，<br>任意服务器 物理服务器，虚拟服务器，云部署的复合环境，网络设备<br>性能监控 CPU，进程负载，内存磁盘I/O，网络负载<br>实时反馈<br>实时报警<br>历史信息</p>
+<p>mysql </p>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"></span>
+<span class="line"></span>
+</pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"></span>
+<span class="line"></span>
+</pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"></span>
+<span class="line"></span>
+</pre></td></tr></table></figure>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"></span>
+<span class="line"></span>
+</pre></td></tr></table></figure>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[MySQL DBA从小白到大神实战-07 MySQL锁机制与事务机制实现]]></title>
       <url>http://dbanote.github.io/2017/03/10/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/07-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<h2 id="mysql参数autocommit生产环境设1还是0为什么"><a href="#MySQL参数autocommit生产环境设1还是0？为什么？" class="headerlink" title="MySQL参数autocommit生产环境设1还是0？为什么？"></a>MySQL参数autocommit生产环境设1还是0？为什么？</h2><p>MySQL参数autocommit生产环境设成0，即不自动提交。 设置成不自动提交，事务能做rollback，以满足事务的原子性Atomicity的要求，设置方法：<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">set autocommit=<span class="number">0</span>;</span>

@@ -15,12 +15,36 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="一个DBA的工作学习笔记">
-<meta property="og:url" content="http://dbanote.github.io/archives/2017/03/index.html">
+<meta name="description" content="光标向上移动，选择Install CentOS Linux不测试安装光盘，节省安装时间直接回车开始">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS7.3安装图解">
+<meta property="og:url" content="http://dbanote.github.io/2017/03/18/linux/20170318_CentOS7.3安装图解/index.html">
 <meta property="og:site_name" content="一个DBA的工作学习笔记">
+<meta property="og:description" content="光标向上移动，选择Install CentOS Linux不测试安装光盘，节省安装时间直接回车开始">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_01.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_02.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_03.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_05.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_04.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_06.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_07.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_08.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_09.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_10.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_11.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_12.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_13.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_14.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_15.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_16.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_17.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_18.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_19.png">
+<meta property="og:updated_time" content="2017-03-18T05:27:45.875Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一个DBA的工作学习笔记">
+<meta name="twitter:title" content="CentOS7.3安装图解">
+<meta name="twitter:description" content="光标向上移动，选择Install CentOS Linux不测试安装光盘，节省安装时间直接回车开始">
+<meta name="twitter:image" content="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_01.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -47,7 +71,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Archives: 2017/3 | 一个DBA的工作学习笔记</title>
+<title>CentOS7.3安装图解 | 一个DBA的工作学习笔记</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -57,8 +81,8 @@
         fancybox: true,
         animate: false,
         isHome: false,
-        isPost: false,
-        isArchive: true,
+        isPost: true,
+        isArchive: false,
         isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
@@ -261,122 +285,124 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-linux/20170318_CentOS7.3安装图解" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2017/03/18/linux/20170318_CentOS7.3安装图解/" class="archive-article-date">
-      <time datetime="2017-03-17T16:00:00.000Z" itemprop="datePublished">03-18</time>
+    <div class="article-meta">
+      <a href="/2017/03/18/linux/20170318_CentOS7.3安装图解/" class="article-date">
+      <time datetime="2017-03-17T16:00:00.000Z" itemprop="datePublished">2017-03-18</time>
 </a>
 
 
-        </div>
-         
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/18/linux/20170318_CentOS7.3安装图解/">CentOS7.3安装图解</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CentOS7.3安装图解
     </h1>
   
 
-        <div class="article-info info-on-archive">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
 
-          
+        
     <div class="article-tag tagcloud">
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Centos/">Centos</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
     </div>
 
-        </div>
         <div class="clearfix"></div>
-    </header>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>光标向上移动，选择<code>Install CentOS Linux</code>不测试安装光盘，节省安装时间<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_01.png" alt=""><br>直接回车开始<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_02.png" alt=""><br><a id="more"></a><br>选择语言，这里我就使用英文<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_03.png" alt=""><br>这里是跟CentOS6.X区别比较大的地方，所有的配置项都集中在一起，可以根据需要进行配置<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_05.png" alt=""><br>点击<code>DATE&amp;TIME</code>配置时区和时间<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_04.png" alt=""><br><code>KEYBOARD</code>和<code>LANGUAGE SUPPORT</code>前面已经设置过了，点击<code>SOFTWARE SELECTION</code>，选择服务器部署的类型（即都安装哪些软件包），我这里默认选择<code>Minimal Install</code>，如果你需要安装图形化界面，可以选择<code>Server with GUI</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_06.png" alt=""><br>点击<code>INSTALLATION DESTINATION</code>配置硬盘分区<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_07.png" alt=""><br>手动配置<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_08.png" alt=""><br>选<code>Click here to create them automatically</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_09.png" alt=""><br>在自动创建的分区上按业务(测试)需要进行修改，无误后点左上方的<code>Done</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_10.png" alt=""><br>同意变更<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_11.png" alt=""><br>点击<code>NETWORK&amp;HOSTNAME</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_12.png" alt=""><br>可在此界面进行网络和主机名配置，这里我先默认，不配置<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_13.png" alt=""><br>完成后，回到之前的配置集中页面，点击下方的<code>Begin Installation</code>，开始安装<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_14.png" alt=""><br>在安装的过程中，点击<code>ROOT PASSWORD</code>配置root用户密码<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_15.png" alt=""><br>设置完root密码后点<code>Done</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_16.png" alt=""><br>红色警告已标志已清除，等待软件包安装完成<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_17.png" alt=""><br>安装完成后，点击<code>Reboot</code>会重启服务器<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_18.png" alt=""><br>进入到字符界面，完成安装<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_19.png" alt=""></p>
+
+      
+    </div>
+    
   </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/03/13/mysql/课程学习/08-MySQL-DBA从小白到大神实战/">
+                    MySQL DBA从小白到大神实战-08 MySQL监控系统之Zabbix
+                </a>
+            </div>
+        
+    </nav>
+
+  
 </article>
-  
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-4 i,
+        .toc-level-4 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+
+
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2017/03/13/mysql/课程学习/08-MySQL-DBA从小白到大神实战/" class="archive-article-date">
-      <time datetime="2017-03-13T05:49:18.572Z" itemprop="datePublished">03-13</time>
-</a>
 
 
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/13/mysql/课程学习/08-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-08 MySQL监控系统之Zabbix</a>
-    </h1>
-  
 
-        <div class="article-info info-on-archive">
-          
 
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/03/13/mysql/课程学习/08-MySQL-DBA从小白到大神实战/" title="下一篇: MySQL DBA从小白到大神实战-08 MySQL监控系统之Zabbix">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
     </div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2017/03/10/mysql/课程学习/07-MySQL-DBA从小白到大神实战/" class="archive-article-date">
-      <time datetime="2017-03-09T16:00:00.000Z" itemprop="datePublished">03-10</time>
-</a>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/18/linux/20170318_CentOS7.3安装图解/">CentOS7.3安装图解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/13/mysql/课程学习/08-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-08 MySQL监控系统之Zabbix</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/mysql/课程学习/07-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-07 MySQL锁机制与事务机制实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/27/mysql/课程学习/06-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-06 深入浅出MySQL备份与恢复</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/mysql/课程学习/05-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-05 MySQL DBA日常操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/16/oracle/那些在11gR2中可能惹祸的新特性/">那些在11gR2中可能惹祸的新特性</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/tools/hexo解决代码块空行自动删除问题/">hexo解决代码块空行自动删除问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/mysql/课程学习/04-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-04 揭密MySQL databock and binlog的格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo博客添加常用插件/">hexo博客添加常用插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo更换主题并个性化定制/">hexo更换主题并个性化定制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/tools/Sublime常用快捷键/">Sublime Text 常用快捷键</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/mysql/课程学习/03-MySQL-DBA从小白到大神实战 /">MySQL DBA从小白到大神实战-03 深入MySQL体系结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/tools/vim常用命令/">VIM常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/tools/git常用命令整理/">GIT常用命令整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/课程学习/02-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-02 MySQL标准化、自动化部署</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/课程学习/01-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-01 MySQL 高级DBA职业规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/tools/hexo+github搭建个人博客/">hexo+github搭建个人博客</a></li></ul>
 
 
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/10/mysql/课程学习/07-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-07 MySQL锁机制与事务机制实现</a>
-    </h1>
-  
 
-        <div class="article-info info-on-archive">
-          
 
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
-    </div>
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">

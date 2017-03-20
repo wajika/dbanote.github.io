@@ -46,7 +46,11 @@
 <meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_07.png">
 <meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_08.png">
 <meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_09.png">
-<meta property="og:updated_time" content="2017-03-18T05:30:26.540Z">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_10.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_11.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_12.png">
+<meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_13.png">
+<meta property="og:updated_time" content="2017-03-20T02:58:05.788Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL DBA从小白到大神实战-08 MySQL监控系统之Zabbix">
 <meta name="twitter:description" content="部署zabbix监控简介zabbix（音同 zbix）是一个基于WEB界面的提供分布式系统监视以及网络监视功能的企业级的开源解决方案。zabbix能监视各种网络参数，保证服务器系统的安全运营；并提供灵活的通知机制以让系统管理员快速定位/解决存在的各种问题。zabbix由2部分构成，zabbix server与可选组件zabbix agent。zabbix server可以通过SNMP，zabbix">
@@ -333,7 +337,7 @@
           
         <h2 id="部署zabbix监控"><a href="#部署zabbix监控" class="headerlink" title="部署zabbix监控"></a>部署zabbix监控</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>zabbix（音同 zbix）是一个基于WEB界面的提供分布式系统监视以及网络监视功能的企业级的开源解决方案。<br>zabbix能监视各种网络参数，保证服务器系统的安全运营；并提供灵活的通知机制以让系统管理员快速定位/解决存在的各种问题。<br>zabbix由2部分构成，zabbix server与可选组件zabbix agent。zabbix server可以通过SNMP，zabbix agent，ping，端口监视等方法提供对远程服务器/网络状态的监视，数据收集等功能，它可以运行在Linux，Solaris，HP-UX，AIX，Free BSD，Open BSD，OS X等平台上。</p>
 <p>为了使用最新3.2版本的Zabbix，本次部署选用的Linux OS是最新的CentOS7.3（php版本为5.4）。<br>CentOS6.X和CentOS7.X的安装和使用均有较大变化，为便于今后的学习和工作，下面将CentOS7.3的安装和基本配置也记录到本文中。</p>
-<h3 id="安装centos73"><a href="#安装CentOS7-3" class="headerlink" title="安装CentOS7.3"></a>安装CentOS7.3</h3><p>详见：<a href="">CentOS7.3安装图解</a><br><a id="more"></a></p>
+<h3 id="安装centos73"><a href="#安装CentOS7-3" class="headerlink" title="安装CentOS7.3"></a>安装CentOS7.3</h3><p>详见：<a href="https://dbanote.github.io/2017/03/18/linux/20170318_CentOS7.3安装图解/">CentOS7.3安装图解</a><br><a id="more"></a></p>
 <h3 id="centos7x系统的基本配置和使用"><a href="#CentOS7-X系统的基本配置和使用" class="headerlink" title="CentOS7.X系统的基本配置和使用"></a>CentOS7.X系统的基本配置和使用</h3><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看系统版本</span></span>
 <span class="line">cat /etc/redhat-release</span>
 <span class="line">-----------------------------------------------</span>
@@ -379,8 +383,9 @@
 <span class="line">hostnamectl --static set-hostname zabbix</span>
 <span class="line"></span>
 <span class="line"># 禁用SELINUX</span>
-<span class="line">-----------------------------------------------</span>
+<span class="line">setenforce 0</span>
 <span class="line">vi /etc</span><span class="regexp">/selinux/config</span></span>
+<span class="line">-----------------------------------------------</span>
 <span class="line">SELINUX=disabled</span>
 <span class="line">-----------------------------------------------</span>
 <span class="line"></span>
@@ -556,9 +561,11 @@
 </pre></td></tr></table></figure>
 <h4 id="拷贝zabbix的web界面程序文件"><a href="#拷贝zabbix的web界面程序文件" class="headerlink" title="拷贝zabbix的web界面程序文件"></a>拷贝zabbix的web界面程序文件</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir /var/www/html/zabbix</span>
 <span class="line">cp -rf /tmp/zabbix-3.2.4/frontends/php/* /var/www/html/zabbix</span>
+<span class="line">chown -R apache.apache /var/www/html/zabbix</span>
 </pre></td></tr></table></figure>
-<h4 id="启动apache和zabbix-server"><a href="#启动apache和zabbix-server" class="headerlink" title="启动apache和zabbix server"></a>启动apache和zabbix server</h4><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">systemctl start httpd</span>
-<span class="line">systemctl status httpd</span>
+<h4 id="启动apache和zabbix-server"><a href="#启动apache和zabbix-server" class="headerlink" title="启动apache和zabbix server"></a>启动apache和zabbix server</h4><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">systemctl enable httpd.service</span>
+<span class="line">systemctl start httpd.service</span>
+<span class="line">systemctl status httpd.service</span>
 <span class="line">-----------------------------------------------</span>
 <span class="line">● httpd.service - The Apache HTTP Server</span>
 <span class="line">   Loaded: loaded (<span class="regexp">/usr/lib</span><span class="regexp">/systemd/system</span><span class="regexp">/httpd.service; enabled; vendor preset: disabled)</span>
@@ -582,6 +589,29 @@
 <span class="line"></span>
 <span class="line"><span class="comment"># 启动zabbix server</span></span>
 <span class="line">/u01/zabbix/sbin/zabbix_server -c /u01/zabbix/etc/zabbix_server.conf</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 添加到系统启动</span></span>
+<span class="line">cd /tmp/zabbix-<span class="number">3.2</span>.<span class="number">4</span></span>
+<span class="line">cp misc/init.d/fedora/core/zabbix_server /etc/init.d/zabbix_server</span>
+<span class="line">cp misc/init.d/fedora/core/zabbix_agentd /etc/init.d/zabbix_agentd</span>
+<span class="line"></span>
+<span class="line">chkconfig --add zabbix_server</span>
+<span class="line">chkconfig --add zabbix_agentd</span>
+<span class="line">chkconfig zabbix_server on</span>
+<span class="line">chkconfig zabbix_agentd on</span>
+<span class="line"></span>
+<span class="line">vi /etc/init.d/zabbix_server</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">BASEDIR=<span class="regexp">/u01/zabbix</span></span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"></span>
+<span class="line">vi /etc/init.d/zabbix_agentd</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">BASEDIR=<span class="regexp">/u01/zabbix</span></span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 启动zabbix_server</span></span>
+<span class="line">systemctl start zabbix_server.service</span>
 </pre></td></tr></table></figure>
 <h4 id="通过web界面安装配置zabbix"><a href="#通过WEB界面安装配置zabbix" class="headerlink" title="通过WEB界面安装配置zabbix"></a>通过WEB界面安装配置zabbix</h4><p>在浏览器中输入：<a href="http://10.245.231.202/zabbix" target="_blank" rel="external">http://10.245.231.202/zabbix</a>，打开图形界面 -&gt; 下一步<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_01.png" alt=""><br>确保所有项都是OK状态 -&gt; 下一步<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_02.png" alt=""><br>配置数据库连接 -&gt; 下一步<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_03.png" alt=""><br>配置zabbix server信息 -&gt; 下一步<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_04.png" alt=""><br>确认信息 -&gt; 下一步<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_05.png" alt=""><br>下载配置文件，按要求保存到指定位置<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_06.png" alt=""><br>配置文件内容如下：<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">vi /var/www/html/zabbix/conf/zabbix.conf.php</span>
 <span class="line">-----------------------------------------------</span>
@@ -611,27 +641,53 @@
 </pre></td></tr></table></figure></p>
 <p>结束安装<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_07.png" alt=""><br>默认的用户名是<code>admin</code>，密码是<code>zabbix</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_08.png" alt=""><br>登陆后，可以将显示语言设置为中文(英文好的，不建议修改，而且zabbix汉化不是很完全和准确)<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_09.png" alt=""><br>选择中文，点update<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_10.png" alt=""></p>
 <h3 id="配置启动zabbix-agent"><a href="#配置启动zabbix-agent" class="headerlink" title="配置启动zabbix agent"></a>配置启动zabbix agent</h3><p>修改配置文件并启动agent<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">vi /u01/zabbix/etc/zabbix_agentd.conf</span>
+<span class="line"><span class="comment"># 修改以下内容</span></span>
 <span class="line">-----------------------------------------------</span>
 <span class="line">Server=<span class="number">10.245</span>.<span class="number">231.202</span></span>
+<span class="line">ServerActive=<span class="number">10.245</span>.<span class="number">231.202</span></span>
+<span class="line">Hostname=zabbix</span>
 <span class="line">-----------------------------------------------</span>
 <span class="line"><span class="comment"># 启动</span></span>
 <span class="line">/u01/zabbix/sbin/zabbix_agentd</span>
+<span class="line"><span class="comment"># 或者</span></span>
+<span class="line">systemctl restart zabbix_agentd.service</span>
 </pre></td></tr></table></figure></p>
 <p>在zabbix web界面中配置主机中，点击【停用的】<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_11.png" alt=""><br>确定，启用主机<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_12.png" alt=""><br>这时状态已变为【启用】，但可用状态异常<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_16.png" alt=""><br>点击主机名<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_14.png" alt=""><br>将主机IP变更为实际的 -&gt; 更新<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_15.png" alt=""><br>重新刷新页面，稍等一会可用性状态正常了<br><img src="http://oligvdnzp.bkt.clouddn.com/0316_zabbix_17.png" alt=""></p>
-<h2 id="自定义监控mysql实例状态"><a href="#自定义监控MySQL实例状态" class="headerlink" title="自定义监控MySQL实例状态"></a>自定义监控MySQL实例状态</h2><blockquote>
-<p><strong>监控思路：</strong><br>在要监控的MySQL服务器上安装zabbix agent，然后在zabbix主机web界面里配置要监控的MySQL服务器的信息，添加zabbix自带的Template App MySQL模版，若者创建自定义模板和相关的mysql监控脚本。</p>
+<h2 id="监控mysql实例状态"><a href="#监控MySQL实例状态" class="headerlink" title="监控MySQL实例状态"></a>监控MySQL实例状态</h2><blockquote>
+<p><strong>监控思路：</strong><br>在要监控的MySQL服务器上安装zabbix agent，然后在zabbix主机web界面里配置要监控的MySQL服务器的信息，添加zabbix自带的Template App MySQL模版。</p>
 </blockquote>
-<h3 id="在监控的mysql服务器上安装并启动zabbix-agent"><a href="#在监控的mysql服务器上安装并启动zabbix-agent" class="headerlink" title="在监控的mysql服务器上安装并启动zabbix agent"></a>在监控的mysql服务器上安装并启动zabbix agent</h3><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 添加zabbix帐号</span></span>
+<h3 id="在监控的mysql服务器上安装并启动zabbix-agent"><a href="#在监控的mysql服务器上安装并启动zabbix-agent" class="headerlink" title="在监控的mysql服务器上安装并启动zabbix agent"></a>在监控的mysql服务器上安装并启动zabbix agent</h3><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 系统环境</span></span>
+<span class="line">yum -<span class="keyword">y</span> install gcc* make vim</span>
+<span class="line">setenforce <span class="number">0</span></span>
+<span class="line">systemctl stop firewalld.service</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 添加zabbix帐号</span></span>
 <span class="line">groupadd zabbix</span>
 <span class="line">useradd zabbix -g zabbix -<span class="keyword">s</span> /sbin/nologin</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 配置hosts(非必须)</span></span>
+<span class="line">vi /etc/hosts</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"><span class="number">10.245</span>.<span class="number">231.201</span> mysql</span>
+<span class="line"><span class="number">10.245</span>.<span class="number">231.202</span> zabbix</span>
+<span class="line">-----------------------------------------------</span>
 <span class="line"></span>
 <span class="line"><span class="comment"># 上传rpm包到/tmp目录后开始安装</span></span>
 <span class="line">rpm -ivh zabbix-agent-<span class="number">3.2</span>.<span class="number">4</span>-<span class="number">1</span>.el6.x86_64.rpm</span>
 <span class="line"></span>
-<span class="line"><span class="comment"># 修改agent配置文件</span></span>
-<span class="line">vi /u01/zabbix/etc/zabbix_agentd.conf</span>
+<span class="line"><span class="comment"># 也可以按以下步骤在解压后的源码目录编译安装</span></span>
+<span class="line">./configure --enable-agent</span>
+<span class="line">make &amp;&amp; make install</span>
+<span class="line">cp misc/init.d/fedora/core/zabbix_agentd /etc/init.d/zabbix_agentd</span>
+<span class="line">chkconfig --add zabbix_agentd</span>
+<span class="line">chkconfig zabbix_agentd on</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 修改agent配置文件(注意下面都是zabbix_agent rpm包安装后的目录，源码安装的话请注意修改)</span></span>
+<span class="line">vi /etc/zabbix/zabbix_agentd.conf</span>
 <span class="line">-----------------------------------------------</span>
 <span class="line">Server=<span class="number">10.245</span>.<span class="number">231.202</span></span>
+<span class="line">ServerActive=<span class="number">10.245</span>.<span class="number">231.202</span></span>
+<span class="line">Hostname=zabbix</span>
 <span class="line">-----------------------------------------------</span>
 <span class="line"></span>
 <span class="line"><span class="comment"># 启动agent</span></span>
@@ -676,27 +732,54 @@
 <span class="line"><span class="number">3</span></span>
 </pre></td></tr></table></figure></p>
 <p>zabbix自带的mysql模板共可监测以下14项<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_06.png" alt=""><br>按下图可以查看监控mysql的情况，也可以图形化显示<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_07.png" alt=""><br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_08.png" alt=""></p>
-<h3 id="自定义zabbix模板监控mysql"><a href="#自定义zabbix模板监控mysql" class="headerlink" title="自定义zabbix模板监控mysql"></a>自定义zabbix模板监控mysql</h3><p>点击Configuration–&gt;Templates–&gt;create template，参照下图中配置<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_09.png" alt=""></p>
-<h2 id="模拟mysql实例crash后监控告警发邮件到邮箱"><a href="#模拟MySQL实例crash后，监控告警发邮件到邮箱。" class="headerlink" title="模拟MySQL实例crash后，监控告警发邮件到邮箱。"></a>模拟MySQL实例crash后，监控告警发邮件到邮箱。</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"></span>
+<h3 id="自定义zabbix模板监控mysql"><a href="#自定义zabbix模板监控mysql" class="headerlink" title="自定义zabbix模板监控mysql"></a>自定义zabbix模板监控mysql</h3><p>点击Configuration–&gt;Templates–&gt;create template，参照下图中配置<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_09.png" alt=""><br>点Applications–&gt;Create Applications<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_10.png" alt=""><br>输入监控的应用名称Mysql<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_11.png" alt=""><br>添加成功，点【Items】，然后点击左上的【Create Items】<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_12.png" alt=""><br>按下图所示填写后点下方add<br><img src="http://oligvdnzp.bkt.clouddn.com/0317_zabbix_mysql_13.png" alt=""><br>创建监控脚本文件并参数文件<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">mkdir</span> /etc/zabbix/scripts</span>
+<span class="line">vi /etc/zabbix/scripts/check_mysql_status_3306.sh</span>
+<span class="line">-----------------------------------------------</span>
+<span class="line"><span class="comment">#!/bin/bash</span></span>
+<span class="line">host=localhost</span>
+<span class="line">username=zabbix</span>
+<span class="line">password=zabbix</span>
+<span class="line">port=<span class="number">3306</span></span>
+<span class="line">CHECK_TIME=<span class="number">3</span></span>
+<span class="line"><span class="comment">#mysql  is working MYSQL_IS_OK is 1 , mysql down MYSQL_IS_OK is 0</span></span>
+<span class="line">MYSQL_IS_OK=<span class="number">1</span></span>
+<span class="line">function check_mysql_status ()&#123;</span>
+<span class="line">    $MYSQL -u$username -p<span class="string">"$password"</span> -P$port -e <span class="string">"select user();"</span> &gt;<span class="regexp">/dev/null</span> <span class="number">2</span>&gt;&amp;<span class="number">1</span></span>
+<span class="line">    <span class="keyword">if</span> [ $? = <span class="number">0</span> ] ;then</span>
+<span class="line">    MYSQL_IS_OK=<span class="number">1</span></span>
+<span class="line">    <span class="keyword">else</span></span>
+<span class="line">    MYSQL_IS_OK=<span class="number">0</span></span>
+<span class="line">    fi</span>
+<span class="line">    <span class="keyword">return</span> $MYSQL_IS_OK </span>
+<span class="line">&#125;</span>
+<span class="line"><span class="keyword">while</span> [ $CHECK_TIME -<span class="keyword">ne</span> <span class="number">0</span> ]</span>
+<span class="line"><span class="keyword">do</span></span>
+<span class="line">    let <span class="string">"CHECK_TIME -= 1"</span></span>
+<span class="line">    </span>
+<span class="line">    check_mysql_status</span>
+<span class="line"><span class="keyword">if</span> [ $MYSQL_IS_OK = <span class="number">1</span> ] ; then</span>
+<span class="line">    CHECK_TIME=<span class="number">0</span></span>
+<span class="line">    echo <span class="number">0</span></span>
+<span class="line">    <span class="keyword">exit</span> <span class="number">0</span></span>
+<span class="line">fi</span>
+<span class="line"><span class="keyword">if</span> [ $MYSQL_IS_OK -eq <span class="number">0</span> ] &amp;&amp;  [ $CHECK_TIME -eq <span class="number">0</span> ]</span>
+<span class="line">then</span>
+<span class="line">    echo <span class="number">1</span></span>
+<span class="line">    <span class="keyword">exit</span> <span class="number">1</span></span>
+<span class="line">fi</span>
+<span class="line"><span class="keyword">sleep</span> <span class="number">3</span></span>
+<span class="line">done</span>
+<span class="line">-----------------------------------------------</span>
 <span class="line"></span>
-</pre></td></tr></table></figure>
-<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"></span>
-<span class="line"></span>
-</pre></td></tr></table></figure>
-<p>zabbix 企业级分布式开源监控系统，<br>任意服务器 物理服务器，虚拟服务器，云部署的复合环境，网络设备<br>性能监控 CPU，进程负载，内存磁盘I/O，网络负载<br>实时反馈<br>实时报警<br>历史信息</p>
-<p>mysql </p>
-<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"></span>
-<span class="line"></span>
-</pre></td></tr></table></figure>
-<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"></span>
-<span class="line"></span>
-</pre></td></tr></table></figure>
-<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"></span>
-<span class="line"></span>
-</pre></td></tr></table></figure>
-<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"></span>
-<span class="line"></span>
-</pre></td></tr></table></figure>
+<span class="line"><span class="keyword">chmod</span> +<span class="keyword">x</span> /etc/zabbix/scripts/check_mysql_status_3306.sh</span>
+<span class="line">cd /etc/zabbix/zabbix_agentd.d/</span>
+<span class="line">vi userparameter_mysql.conf</span>
+<span class="line"><span class="comment"># 添加以下内容</span></span>
+<span class="line">-----------------------------------------------</span>
+<span class="line">UserParameter=my3306.check_mysql_status,<span class="regexp">/etc/zabbix</span><span class="regexp">/scripts/check</span>_mysql_status_3306.sh</span>
+<span class="line">-----------------------------------------------</span>
+</pre></td></tr></table></figure></p>
+<p>参考：<a href="http://www.iyunv.com/forum.php?mod=viewthread&amp;tid=351608&amp;highlight=zabbix" target="_blank" rel="external">Centos7.2下搭建Zabbix3.2</a></p>
 
       
     </div>
@@ -729,7 +812,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#部署zabbix监控"><span class="toc-number">1.</span> <span class="toc-text">部署zabbix监控</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装centos73"><span class="toc-number">1.2.</span> <span class="toc-text">安装CentOS7.3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#centos7x系统的基本配置和使用"><span class="toc-number">1.3.</span> <span class="toc-text">CentOS7.X系统的基本配置和使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码编译安装mysql"><span class="toc-number">1.4.</span> <span class="toc-text">源码编译安装mysql</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装和配置zabbix-server"><span class="toc-number">1.5.</span> <span class="toc-text">安装和配置zabbix server</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#建zabbix用户-组和安装目录"><span class="toc-number">1.5.1.</span> <span class="toc-text">建zabbix用户、组和安装目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装编译基础依赖包"><span class="toc-number">1.5.2.</span> <span class="toc-text">安装编译基础依赖包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#源码编译安装zabbix"><span class="toc-number">1.5.3.</span> <span class="toc-text">源码编译安装zabbix</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建所需数据库并授权用户"><span class="toc-number">1.5.4.</span> <span class="toc-text">创建所需数据库并授权用户</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导入zabbix定义的表结构和数据"><span class="toc-number">1.5.5.</span> <span class="toc-text">导入zabbix定义的表结构和数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改相关配置文件"><span class="toc-number">1.5.6.</span> <span class="toc-text">修改相关配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#拷贝zabbix的web界面程序文件"><span class="toc-number">1.5.7.</span> <span class="toc-text">拷贝zabbix的web界面程序文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#启动apache和zabbix-server"><span class="toc-number">1.5.8.</span> <span class="toc-text">启动apache和zabbix server</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过web界面安装配置zabbix"><span class="toc-number">1.5.9.</span> <span class="toc-text">通过WEB界面安装配置zabbix</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置启动zabbix-agent"><span class="toc-number">1.6.</span> <span class="toc-text">配置启动zabbix agent</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义监控mysql实例状态"><span class="toc-number">2.</span> <span class="toc-text">自定义监控MySQL实例状态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在监控的mysql服务器上安装并启动zabbix-agent"><span class="toc-number">2.1.</span> <span class="toc-text">在监控的mysql服务器上安装并启动zabbix agent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建立mysql-host-groups组"><span class="toc-number">2.2.</span> <span class="toc-text">建立mysql host groups组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建立hosts"><span class="toc-number">2.3.</span> <span class="toc-text">建立hosts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用自带模板监控mysql"><span class="toc-number">2.4.</span> <span class="toc-text">使用自带模板监控mysql</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义zabbix模板监控mysql"><span class="toc-number">2.5.</span> <span class="toc-text">自定义zabbix模板监控mysql</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#模拟mysql实例crash后监控告警发邮件到邮箱"><span class="toc-number">3.</span> <span class="toc-text">模拟MySQL实例crash后，监控告警发邮件到邮箱。</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#部署zabbix监控"><span class="toc-number">1.</span> <span class="toc-text">部署zabbix监控</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#简介"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装centos73"><span class="toc-number">1.2.</span> <span class="toc-text">安装CentOS7.3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#centos7x系统的基本配置和使用"><span class="toc-number">1.3.</span> <span class="toc-text">CentOS7.X系统的基本配置和使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码编译安装mysql"><span class="toc-number">1.4.</span> <span class="toc-text">源码编译安装mysql</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装和配置zabbix-server"><span class="toc-number">1.5.</span> <span class="toc-text">安装和配置zabbix server</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#建zabbix用户-组和安装目录"><span class="toc-number">1.5.1.</span> <span class="toc-text">建zabbix用户、组和安装目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#安装编译基础依赖包"><span class="toc-number">1.5.2.</span> <span class="toc-text">安装编译基础依赖包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#源码编译安装zabbix"><span class="toc-number">1.5.3.</span> <span class="toc-text">源码编译安装zabbix</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建所需数据库并授权用户"><span class="toc-number">1.5.4.</span> <span class="toc-text">创建所需数据库并授权用户</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#导入zabbix定义的表结构和数据"><span class="toc-number">1.5.5.</span> <span class="toc-text">导入zabbix定义的表结构和数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#修改相关配置文件"><span class="toc-number">1.5.6.</span> <span class="toc-text">修改相关配置文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#拷贝zabbix的web界面程序文件"><span class="toc-number">1.5.7.</span> <span class="toc-text">拷贝zabbix的web界面程序文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#启动apache和zabbix-server"><span class="toc-number">1.5.8.</span> <span class="toc-text">启动apache和zabbix server</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#通过web界面安装配置zabbix"><span class="toc-number">1.5.9.</span> <span class="toc-text">通过WEB界面安装配置zabbix</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#配置启动zabbix-agent"><span class="toc-number">1.6.</span> <span class="toc-text">配置启动zabbix agent</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#监控mysql实例状态"><span class="toc-number">2.</span> <span class="toc-text">监控MySQL实例状态</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#在监控的mysql服务器上安装并启动zabbix-agent"><span class="toc-number">2.1.</span> <span class="toc-text">在监控的mysql服务器上安装并启动zabbix agent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建立mysql-host-groups组"><span class="toc-number">2.2.</span> <span class="toc-text">建立mysql host groups组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#建立hosts"><span class="toc-number">2.3.</span> <span class="toc-text">建立hosts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用自带模板监控mysql"><span class="toc-number">2.4.</span> <span class="toc-text">使用自带模板监控mysql</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#自定义zabbix模板监控mysql"><span class="toc-number">2.5.</span> <span class="toc-text">自定义zabbix模板监控mysql</span></a></li></ol></li></ol>
         
     </div>
     <style>

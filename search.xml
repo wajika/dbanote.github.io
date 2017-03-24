@@ -4,6 +4,151 @@
   
     
     <entry>
+      <title><![CDATA[VMWare CentOS 虚拟机根分区磁盘扩容(基于LVM)]]></title>
+      <url>http://dbanote.github.io/2017/03/24/linux/20170324_Vmware_centos_%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%B9%E5%88%86%E5%8C%BA%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9(%E5%9F%BA%E4%BA%8ELVM)/</url>
+      <content type="html"><![CDATA[<h2 id="关闭虚拟机并修改虚拟机配置增大磁盘大小"><a href="#关闭虚拟机并修改虚拟机配置，增大磁盘大小" class="headerlink" title="关闭虚拟机并修改虚拟机配置，增大磁盘大小"></a>关闭虚拟机并修改虚拟机配置，增大磁盘大小</h2><p><img src="http://oligvdnzp.bkt.clouddn.com/0324_lvm_resize_01.png" alt=""></p>
+<h2 id="启动虚拟机后查看磁盘状态"><a href="#启动虚拟机后查看磁盘状态" class="headerlink" title="启动虚拟机后查看磁盘状态"></a>启动虚拟机后查看磁盘状态</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">df -hT</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line">Filesystem           Type   Size  Used Avail Use% Mounted on</span>
+<span class="line">/dev/mapper/VolGroup-lv_root</span>
+<span class="line">                     ext4    <span class="number">43</span>G  <span class="number">3.2</span>G   <span class="number">38</span>G   <span class="number">8</span>% <span class="regexp">/</span>
+<span class="line">tmpfs                tmpfs  3.9G     0  3.9G   0% /dev</span><span class="regexp">/shm</span>
+<span class="line">/dev</span><span class="regexp">/sda1            ext4   477M   82M  366M  19% /boot</span></span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line"></span>
+<span class="line">fdisk -l /dev/sda</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line">Disk /dev/sda: <span class="number">214.7</span> GB, <span class="number">214748364800</span> bytes             <span class="comment"># 磁盘sda已扩展到200G</span></span>
+<span class="line"><span class="number">255</span> heads, <span class="number">63</span> sectors/track, <span class="number">26108</span> cylinders</span>
+<span class="line">Units = cylinders of <span class="number">16065</span> * <span class="number">512</span> = <span class="number">8225280</span> bytes</span>
+<span class="line">Sector size (logical/physical): <span class="number">512</span> bytes / <span class="number">512</span> bytes</span>
+<span class="line">I/O size (minimum/optimal): <span class="number">512</span> bytes / <span class="number">512</span> bytes</span>
+<span class="line">Disk identifier: <span class="number">0x00070abb</span></span>
+<span class="line"></span>
+<span class="line">   Device Boot      Start         End      Blocks   Id  System</span>
+<span class="line">/dev/sda1   *           <span class="number">1</span>          <span class="number">64</span>      <span class="number">512000</span>   <span class="number">83</span>  Linux</span>
+<span class="line">Partition <span class="number">1</span> does <span class="keyword">not</span> end on cylinder boundary.</span>
+<span class="line">/dev/sda2              <span class="number">64</span>        <span class="number">7833</span>    <span class="number">62401536</span>   <span class="number">8</span>e  Linux LVM</span>
+<span class="line">------------------------------------------------------------</span>
+</pre></td></tr></table></figure>
+<h2 id="查看lvm状态"><a href="#查看lvm状态" class="headerlink" title="查看lvm状态"></a>查看lvm状态</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">pvs</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line">  PV         VG       Fmt  Attr PSize  PFree</span>
+<span class="line">  /dev/sda2  VolGroup lvm2 a--u <span class="number">59.51</span>g    <span class="number">0</span> </span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line"></span>
+<span class="line">vgs</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line">  VG       <span class="comment">#PV #LV #SN Attr   VSize  VFree</span></span>
+<span class="line">  VolGroup   <span class="number">1</span>   <span class="number">2</span>   <span class="number">0</span> wz--n- <span class="number">59.51</span>g    <span class="number">0</span> </span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line"></span>
+<span class="line">lvs</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line">  LV      VG       Attr       LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert</span>
+<span class="line">  lv_root VolGroup -wi-ao---- <span class="number">43.74</span>g                                                    </span>
+<span class="line">  lv_swap VolGroup -wi-ao---- <span class="number">15.77</span>g </span>
+<span class="line">------------------------------------------------------------</span>
+</pre></td></tr></table></figure>
+<h2 id="创建新分区"><a href="#创建新分区" class="headerlink" title="创建新分区"></a>创建新分区</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">fdisk /dev/sda</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line">WARNING: DOS-compatible mode is deprecated. Its strongly recommended to</span>
+<span class="line">         switch off the mode (command <span class="string">'c'</span>) <span class="keyword">and</span> change display units to</span>
+<span class="line">         sectors (command <span class="string">'u'</span>).</span>
+<span class="line"></span>
+<span class="line">Command (<span class="keyword">m</span> <span class="keyword">for</span> help): n       <span class="comment"># 输入n开始创建分区</span></span>
+<span class="line">Command action</span>
+<span class="line">   e   extended</span>
+<span class="line">   p   primary partition (<span class="number">1</span>-<span class="number">4</span>)</span>
+<span class="line">p</span>
+<span class="line">Partition number (<span class="number">1</span>-<span class="number">4</span>): <span class="number">3</span>     <span class="comment"># 输入3创建sda3</span></span>
+<span class="line">First cylinder (<span class="number">7833</span>-<span class="number">26108</span>, default <span class="number">7833</span>): </span>
+<span class="line">Using default value <span class="number">7833</span></span>
+<span class="line">Last cylinder, +cylinders <span class="keyword">or</span> +size&#123;K,M,G&#125; (<span class="number">7833</span>-<span class="number">26108</span>, default <span class="number">26108</span>): </span>
+<span class="line">Using default value <span class="number">26108</span></span>
+<span class="line"></span>
+<span class="line">Command (<span class="keyword">m</span> <span class="keyword">for</span> help): w       <span class="comment"># 写入分区表</span></span>
+<span class="line">The partition table has been altered!</span>
+<span class="line"></span>
+<span class="line">Calling ioctl() to re-<span class="keyword">read</span> partition table.</span>
+<span class="line"></span>
+<span class="line">WARNING: Re-reading the partition table failed with error <span class="number">16</span>: Device <span class="keyword">or</span> resource busy.</span>
+<span class="line">The kernel still uses the old table. The new table will be used at</span>
+<span class="line">the <span class="keyword">next</span> reboot <span class="keyword">or</span> after you run partprobe(<span class="number">8</span>) <span class="keyword">or</span> kpartx(<span class="number">8</span>)</span>
+<span class="line">Syncing disks.    <span class="comment"># 需要重启后才能生效</span></span>
+<span class="line">------------------------------------------------------------</span>
+</pre></td></tr></table></figure>
+<h2 id="重启虚拟机-格式化新分区"><a href="#重启虚拟机-格式化新分区" class="headerlink" title="重启虚拟机 格式化新分区"></a>重启虚拟机 格式化新分区</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">fdisk -l /dev/sda</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line">Disk /dev/sda: <span class="number">214.7</span> GB, <span class="number">214748364800</span> bytes</span>
+<span class="line"><span class="number">255</span> heads, <span class="number">63</span> sectors/track, <span class="number">26108</span> cylinders</span>
+<span class="line">Units = cylinders of <span class="number">16065</span> * <span class="number">512</span> = <span class="number">8225280</span> bytes</span>
+<span class="line">Sector size (logical/physical): <span class="number">512</span> bytes / <span class="number">512</span> bytes</span>
+<span class="line">I/O size (minimum/optimal): <span class="number">512</span> bytes / <span class="number">512</span> bytes</span>
+<span class="line">Disk identifier: <span class="number">0x00070abb</span></span>
+<span class="line"></span>
+<span class="line">   Device Boot      Start         End      Blocks   Id  System</span>
+<span class="line">/dev/sda1   *           <span class="number">1</span>          <span class="number">64</span>      <span class="number">512000</span>   <span class="number">83</span>  Linux</span>
+<span class="line">Partition <span class="number">1</span> does <span class="keyword">not</span> end on cylinder boundary.</span>
+<span class="line">/dev/sda2              <span class="number">64</span>        <span class="number">7833</span>    <span class="number">62401536</span>   <span class="number">8</span>e  Linux LVM</span>
+<span class="line">/dev/sda3            <span class="number">7833</span>       <span class="number">26108</span>   <span class="number">146797950</span>   <span class="number">83</span>  Linux</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line"></span>
+<span class="line">mkfs.ext4 /dev/sda3</span>
+</pre></td></tr></table></figure>
+<h2 id="lvm扩容"><a href="#lvm扩容" class="headerlink" title="lvm扩容"></a>lvm扩容</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">pvcreate /dev/sda3</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line">  Physical volume <span class="string">"/dev/sda3"</span> successfully created</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line"></span>
+<span class="line">pvs</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line">  PV         VG       Fmt  Attr PSize   PFree  </span>
+<span class="line">  /dev/sda2  VolGroup lvm2 a--u  <span class="number">59.51</span>g      <span class="number">0</span> </span>
+<span class="line">  /dev/sda3           lvm2 ---- <span class="number">140.00</span>g <span class="number">140.00</span>g</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line"></span>
+<span class="line">ll /dev/mapper/</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line">total <span class="number">0</span></span>
+<span class="line">crw-rw----. <span class="number">1</span> root root <span class="number">10</span>, <span class="number">236</span> Mar <span class="number">24</span> <span class="number">11</span>:<span class="number">49</span> control</span>
+<span class="line">lrwxrwxrwx. <span class="number">1</span> root root       <span class="number">7</span> Mar <span class="number">24</span> <span class="number">11</span>:<span class="number">49</span> VolGroup-lv_root -&gt; ../dm-<span class="number">0</span></span>
+<span class="line">lrwxrwxrwx. <span class="number">1</span> root root       <span class="number">7</span> Mar <span class="number">24</span> <span class="number">11</span>:<span class="number">49</span> VolGroup-lv_swap -&gt; ../dm-<span class="number">1</span></span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line"></span>
+<span class="line">vgextend /dev/mapper/VolGroup /dev/sda3</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line">  Volume group <span class="string">"VolGroup"</span> successfully extended</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line"></span>
+<span class="line">lvextend -l +<span class="number">100</span>%FREE /dev/VolGroup/lv_root /dev/sda3</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line">  Size of logical volume VolGroup/lv_root changed from <span class="number">43.74</span> GiB (<span class="number">11198</span> extents) to <span class="number">183.74</span> GiB (<span class="number">47037</span> extents).</span>
+<span class="line">  Logical volume lv_root successfully resized.</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line"></span>
+<span class="line">resize2fs /dev/VolGroup/lv_root</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line">resize2fs <span class="number">1.43</span>-WIP (<span class="number">20</span>-Jun-<span class="number">2013</span>)</span>
+<span class="line">Filesystem at /dev/VolGroup/lv_root is mounted on /; on-line resizing required</span>
+<span class="line">old_desc_blocks = <span class="number">3</span>, new_desc_blocks = <span class="number">12</span></span>
+<span class="line">The filesystem on /dev/VolGroup/lv_root is now <span class="number">48165888</span> blocks long.</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 扩容后查看磁盘使用情况</span></span>
+<span class="line">df -h</span>
+<span class="line">------------------------------------------------------------</span>
+<span class="line">Filesystem            Size  Used Avail Use% Mounted on</span>
+<span class="line">/dev/mapper/VolGroup-lv_root</span>
+<span class="line">                      <span class="number">181</span>G  <span class="number">3.3</span>G  <span class="number">170</span>G   <span class="number">2</span>% <span class="regexp">/</span>
+<span class="line">tmpfs                 3.9G     0  3.9G   0% /dev</span><span class="regexp">/shm</span>
+<span class="line">/dev</span><span class="regexp">/sda1             477M   82M  366M  19% /boot</span></span>
+<span class="line">------------------------------------------------------------</span>
+</pre></td></tr></table></figure>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[MySQL DBA从小白到大神实战-09 MySQL性能优化的关键点]]></title>
       <url>http://dbanote.github.io/2017/03/20/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/09-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<h2 id="服务器参数调优有哪些关键点"><a href="#服务器参数调优，有哪些关键点？" class="headerlink" title="服务器参数调优，有哪些关键点？"></a>服务器参数调优，有哪些关键点？</h2><ol>

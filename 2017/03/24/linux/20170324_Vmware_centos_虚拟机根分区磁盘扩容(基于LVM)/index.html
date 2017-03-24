@@ -15,29 +15,17 @@
 
 
 
-<meta name="description" content="关闭虚拟机并修改虚拟机配置，增大磁盘大小
-启动虚拟机后查看磁盘状态df -hT
-------------------------------------------------------------
-Filesystem           Type   Size  Used Avail Use% Mounted on
-/dev/mapper/VolGroup-lv_root">
+<meta name="description" content="关闭虚拟机并修改虚拟机配置，增大磁盘大小">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VMWare CentOS 虚拟机根分区磁盘扩容(基于LVM)">
 <meta property="og:url" content="http://dbanote.github.io/2017/03/24/linux/20170324_Vmware_centos_虚拟机根分区磁盘扩容(基于LVM)/index.html">
 <meta property="og:site_name" content="一个DBA的工作学习笔记">
-<meta property="og:description" content="关闭虚拟机并修改虚拟机配置，增大磁盘大小
-启动虚拟机后查看磁盘状态df -hT
-------------------------------------------------------------
-Filesystem           Type   Size  Used Avail Use% Mounted on
-/dev/mapper/VolGroup-lv_root">
+<meta property="og:description" content="关闭虚拟机并修改虚拟机配置，增大磁盘大小">
 <meta property="og:image" content="http://oligvdnzp.bkt.clouddn.com/0324_lvm_resize_01.png">
-<meta property="og:updated_time" content="2017-03-24T05:43:35.814Z">
+<meta property="og:updated_time" content="2017-03-24T07:45:06.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VMWare CentOS 虚拟机根分区磁盘扩容(基于LVM)">
-<meta name="twitter:description" content="关闭虚拟机并修改虚拟机配置，增大磁盘大小
-启动虚拟机后查看磁盘状态df -hT
-------------------------------------------------------------
-Filesystem           Type   Size  Used Avail Use% Mounted on
-/dev/mapper/VolGroup-lv_root">
+<meta name="twitter:description" content="关闭虚拟机并修改虚拟机配置，增大磁盘大小">
 <meta name="twitter:image" content="http://oligvdnzp.bkt.clouddn.com/0324_lvm_resize_01.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -320,6 +308,7 @@ Filesystem           Type   Size  Used Avail Use% Mounted on
       
           
         <h2 id="关闭虚拟机并修改虚拟机配置增大磁盘大小"><a href="#关闭虚拟机并修改虚拟机配置，增大磁盘大小" class="headerlink" title="关闭虚拟机并修改虚拟机配置，增大磁盘大小"></a>关闭虚拟机并修改虚拟机配置，增大磁盘大小</h2><p><img src="http://oligvdnzp.bkt.clouddn.com/0324_lvm_resize_01.png" alt=""></p>
+<a id="more"></a>
 <h2 id="启动虚拟机后查看磁盘状态"><a href="#启动虚拟机后查看磁盘状态" class="headerlink" title="启动虚拟机后查看磁盘状态"></a>启动虚拟机后查看磁盘状态</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">df -hT</span>
 <span class="line">------------------------------------------------------------</span>
 <span class="line">Filesystem           Type   Size  Used Avail Use% Mounted on</span>

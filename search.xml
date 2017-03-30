@@ -4,8 +4,196 @@
   
     
     <entry>
+      <title><![CDATA[GoldenGate 12.1.2 新特性参数部分解释]]></title>
+      <url>/2017/03/30/oracle/goldengate/GoldenGate%2012.1.2%20%E6%96%B0%E7%89%B9%E6%80%A7%E5%8F%82%E6%95%B0%E9%83%A8%E5%88%86%E8%A7%A3%E9%87%8A/</url>
+      <content type="html"><![CDATA[<h2 id="logallsupcols"><a href="#LOGALLSUPCOLS" class="headerlink" title="LOGALLSUPCOLS"></a>LOGALLSUPCOLS</h2><p>Writes all supplementally logged columns to the trail, including those required for conflict detection and resolution and the scheduling columns required to support integrated Replicat. (Scheduling columns are primary key, unique index, and foreign key columns.) You configure the database to log these columns with GGSCI commands.<br>使用该参数可以记录所有附加日志信息并写入trail文件中。</p>
+<h2 id="updaterecordformat-compact"><a href="#UPDATERECORDFORMAT-COMPACT" class="headerlink" title="UPDATERECORDFORMAT COMPACT"></a>UPDATERECORDFORMAT COMPACT</h2><p>Combines the before and after images of an UPDATE operation into a single record in the trail. This parameter is valid for Oracle databases version 12c and later to support Replicat in integrated mode. Although not a required parameter, UPDATERECORDFORMAT COMPACT is a best practice and significantly improves Replicat performance.<br>UPDATERECORDFORMAT参数可以控制抽取进程兼容更新操作的前镜像和后镜像信息并写入到一个trail文件中，但是一定要注意的是该参数必须在数据库版本是11.2.0.4或者12c版本。</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Oracle expdp中INCLUDE参数限制4000个字符的解决办法]]></title>
+      <url>/2017/03/29/oracle/Oracle_DataPump_INCLUDE_%E5%8F%82%E6%95%B0%E9%99%90%E5%88%B64000%E4%B8%AA%E5%AD%97%E7%AC%A6%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/</url>
+      <content type="html"><![CDATA[<p>使用expdp的include参数，当需要包含大量表时，一旦字符超4000时就会报错<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">expdp DADM/passwd DIRECTORY=DMP_DIR SCHEMAS=DADM</span>
+<span class="line">DUMPFILE=dadm_tables_data.dmp CONTENT=DATA_ONLY </span>
+<span class="line">INCLUDE=TABLE:<span class="string">"IN ('CBTRFCC','CBTFCCN','CGTGCDD','CGDSALC',</span>
+<span class="line">...</span>
+<span class="line">'CGTRSGR','CBTFCCE','CGTREPD','CPDORPG')"</span></span>
+<span class="line"></span>
+<span class="line">UDE-<span class="number">00014</span> : invalid value <span class="keyword">for</span> parameter, <span class="string">'include'</span>.</span>
+</pre></td></tr></table></figure></p>
+<p>使用以下技巧可以解决<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">CREATE TABLE list_of_tables ( tbl_name VARCHAR2(<span class="number">30</span>) );</span>
+<span class="line">INSERT INTO list_of_tables ( <span class="string">'CBTRFCC'</span> );</span>
+<span class="line">INSERT INTO list_of_tables ( <span class="string">'CBTFCCN'</span> );</span>
+<span class="line">...</span>
+<span class="line">INSERT INTO list_of_tables ( <span class="string">'CPDORPG'</span> );</span>
+<span class="line">COMMIT;</span>
+<span class="line"></span>
+<span class="line">expdp DADM/passwd DIRECTORY=DMP_DIR SCHEMAS=DADM DUMPFILE=dadm_data.dmp </span>
+<span class="line">CONTENT=DATA_ONLY include=TABLE:<span class="string">"IN (SELECT tbl_name FROM list_of_tables)"</span></span>
+</pre></td></tr></table></figure></p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Oracle Database 11g工作中常用的命令和脚本整理]]></title>
+      <url>/2017/03/28/oracle/Oracle%2011g%E5%B7%A5%E4%BD%9C%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4%E5%92%8C%E8%84%9A%E6%9C%AC%E6%95%B4%E7%90%86/</url>
+      <content type="html"><![CDATA[<h2 id="设置oracle用户密码永不过期"><a href="#设置Oracle用户密码永不过期" class="headerlink" title="设置Oracle用户密码永不过期"></a>设置Oracle用户密码永不过期</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">alter profile default limit PASSWORD_LIFE_TIME unlimited;</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 查看设置</span></span>
+<span class="line"><span class="keyword">select</span> * from dba_profiles where resource_name like <span class="string">'PASSWORD_LIFE_TIME%'</span>;</span>
+</pre></td></tr></table></figure>
+<h2 id="设置oracle用户登陆失败次数限制"><a href="#设置Oracle用户登陆失败次数限制" class="headerlink" title="设置Oracle用户登陆失败次数限制"></a>设置Oracle用户登陆失败次数限制</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 设置登陆失败次数限制为100，错误登陆数超过100会导致用户被锁</span></span>
+<span class="line">alter profile default limit FAILED_LOGIN_ATTEMPTS <span class="number">100</span>;</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 无限制</span></span>
+<span class="line">alter profile default limit FAILED_LOGIN_ATTEMPTS unlimited;</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 查看登陆失败限制设置</span></span>
+<span class="line"><span class="keyword">select</span> * from dba_profiles where resource_name like <span class="string">'FAILED_LOGIN_ATTEMPTS%'</span>;</span>
+</pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="系统进程pid查找对应sqltext"><a href="#系统进程PID查找对应SQLTEXT" class="headerlink" title="系统进程PID查找对应SQLTEXT"></a>系统进程PID查找对应SQLTEXT</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> sql_text <span class="keyword">FROM</span> v$sqltext a </span>
+<span class="line">  <span class="keyword">WHERE</span> (a.hash_value, a.address) <span class="keyword">IN</span> (<span class="keyword">SELECT</span> <span class="keyword">DECODE</span> (sql_hash_value,<span class="number">0</span>, prev_hash_value,sql_hash_value),</span>
+<span class="line">        <span class="keyword">DECODE</span> (sql_hash_value, <span class="number">0</span>, prev_sql_addr, sql_address)</span>
+<span class="line">    <span class="keyword">FROM</span> v$<span class="keyword">session</span> b <span class="keyword">WHERE</span> b.paddr = (<span class="keyword">SELECT</span> addr <span class="keyword">FROM</span> v$process c <span class="keyword">WHERE</span> c.spid =&amp;pid)) <span class="keyword">ORDER</span> <span class="keyword">BY</span> piece <span class="keyword">ASC</span>;</span>
+</pre></td></tr></table></figure>
+<h2 id="查找长事务对应的sqltext"><a href="#查找长事务对应的SQLTEXT" class="headerlink" title="查找长事务对应的SQLTEXT"></a>查找长事务对应的SQLTEXT</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">with ltr as ( </span>
+<span class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'YYYYMMDDHH24MISS'</span>) TM, </span>
+<span class="line">       s.sid, </span>
+<span class="line">       s.sql_id, </span>
+<span class="line">       s.sql_child_number, </span>
+<span class="line">       s.prev_sql_id, </span>
+<span class="line">       xid, </span>
+<span class="line">       to_char(t.start_date,<span class="string">'YYYYMMDDHH24MISS'</span>) start_time, </span>
+<span class="line">       e.TYPE,e.block, </span>
+<span class="line">       e.ctime, </span>
+<span class="line">       <span class="keyword">decode</span>(e.CTIME, <span class="number">0</span>, (<span class="keyword">sysdate</span> - t.start_date) * <span class="number">3600</span>*<span class="number">24</span>, e.ctime) el_second </span>
+<span class="line">  <span class="keyword">from</span> v$<span class="keyword">transaction</span> t, v$<span class="keyword">session</span> s,v$transaction_enqueue e</span>
+<span class="line"> <span class="keyword">where</span> t.start_date &lt;= <span class="keyword">sysdate</span> - <span class="built_in">interval</span> <span class="string">'200'</span> <span class="keyword">second</span></span>
+<span class="line">   <span class="keyword">and</span> t.addr = s.taddr </span>
+<span class="line">   <span class="keyword">and</span> t.addr = e.addr(+) ) </span>
+<span class="line">  <span class="keyword">select</span> ltr.* , (<span class="keyword">select</span> q1.sql_text <span class="keyword">from</span> v$<span class="keyword">sql</span> q1 <span class="keyword">where</span> ltr.prev_sql_id = q1.sql_id(+)</span>
+<span class="line">   <span class="keyword">and</span> <span class="keyword">rownum</span> = <span class="number">1</span>) prev_sql_text , </span>
+<span class="line">  (<span class="keyword">select</span> q1.sql_text <span class="keyword">from</span> v$<span class="keyword">sql</span> q1 <span class="keyword">where</span> ltr.sql_id = q1.sql_id(+) </span>
+<span class="line">   <span class="keyword">and</span> ltr.sql_child_number = q1.CHILD_NUMBER(+)) sql_text </span>
+<span class="line">   <span class="keyword">from</span> ltr ltr;</span>
+</pre></td></tr></table></figure>
+<h2 id="永久设置sqlplus的环境变量"><a href="#永久设置sql-plus的环境变量" class="headerlink" title="永久设置sql*plus的环境变量"></a>永久设置sql*plus的环境变量</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">echo <span class="string">"set pagesize 9999"</span> &gt;&gt; $ORACLE_HOME/sqlplus/admin/glogin.sql</span>
+<span class="line">echo <span class="string">"set line 150"</span> &gt;&gt; $ORACLE_HOME/sqlplus/admin/glogin.sql</span>
+<span class="line">echo <span class="string">"set long 5000"</span> &gt;&gt; $ORACLE_HOME/sqlplus/admin/glogin.sql</span>
+</pre></td></tr></table></figure>
+<h2 id="查找非系统用户中无主键表"><a href="#查找非系统用户中无主键表" class="headerlink" title="查找非系统用户中无主键表"></a>查找非系统用户中无主键表</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">distinct</span> at.TABLE_NAME, at.OWNER, at.NUM_ROWS</span>
+<span class="line"><span class="keyword">from</span> </span>
+<span class="line">  (<span class="keyword">SELECT</span> owner,table_name <span class="keyword">FROM</span> all_tables <span class="keyword">WHERE</span> owner <span class="keyword">in</span> </span>
+<span class="line">   (<span class="keyword">select</span> username <span class="keyword">from</span> dba_users <span class="keyword">where</span> account_status=<span class="string">'OPEN'</span> <span class="keyword">and</span> username <span class="keyword">not</span> <span class="keyword">in</span> (<span class="string">'SYSTEM'</span>,<span class="string">'SYS'</span>,<span class="string">'GOLDENGATE'</span>))</span>
+<span class="line"><span class="keyword">MINUS</span></span>
+<span class="line">  <span class="keyword">SELECT</span> owner,table_name <span class="keyword">FROM</span> all_constraints <span class="keyword">WHERE</span> owner <span class="keyword">in</span> </span>
+<span class="line">   (<span class="keyword">select</span> username <span class="keyword">from</span> dba_users <span class="keyword">where</span> account_status=<span class="string">'OPEN'</span> <span class="keyword">and</span> username <span class="keyword">not</span> <span class="keyword">in</span> (<span class="string">'SYSTEM'</span>,<span class="string">'SYS'</span>,<span class="string">'GOLDENGATE'</span>)) </span>
+<span class="line">  <span class="keyword">AND</span> constraint_type = <span class="string">'P'</span> ) vn, all_tables <span class="keyword">at</span></span>
+<span class="line"><span class="keyword">where</span> vn.TABLE_NAME=at.TABLE_NAME <span class="keyword">and</span> vn.OWNER=at.OWNER <span class="keyword">and</span> at.TABLE_NAME <span class="keyword">not</span> <span class="keyword">like</span> <span class="string">'%$%'</span> <span class="keyword">order</span> <span class="keyword">by</span> <span class="number">2</span>,<span class="number">1</span>;</span>
+</pre></td></tr></table></figure>]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Hexo文章的密码访问]]></title>
+      <url>/2017/03/28/tools/Hexo%E6%96%87%E7%AB%A0%E7%9A%84%E5%AF%86%E7%A0%81%E8%AE%BF%E9%97%AE/</url>
+      <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工作中有些文档中的部分内容，虽然机密性不高，但也不便在网上直接公开发布。 这时可以通过以下的小技巧来实现<code>简单</code>的文档密码保护。</p>
+<h2 id="方法实现"><a href="#方法实现" class="headerlink" title="方法实现"></a>方法实现</h2><p>因Hexo中Markdown语言和html是混用的，所以可直接在Markdown中直接插入以下这段<code>script</code>(建议放到<code>&lt;!-- more --&gt;</code>段后面)。<br>这里用到了windows对象的<code>alert()</code>方法和<code>prompt()</code>方法。<code>prompt()</code>方法的作用即是显示一个可提示用户输入的对话框，而其本身的返回值就是你输入的那个字符串。因此只需要将其与你默认的密码比较一下就好，如果不正确，则直接将当前页面的loaction属性设为上一个页面即可。<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span>
+<span class="line">    <span class="keyword">if</span>(<span class="string">"123"</span>==prompt(<span class="string">"请输入文档密码"</span>))</span>
+<span class="line">    &#123;</span>
+<span class="line">        alert(<span class="string">"密码正确"</span>);</span>
+<span class="line">    &#125;</span>
+<span class="line">    <span class="keyword">else</span></span>
+<span class="line">    &#123;</span>
+<span class="line">        alert(<span class="string">"密码错误返回主页"</span>);</span>
+<span class="line">        location=<span class="string">"/"</span>;</span>
+<span class="line">    &#125;</span>
+<span class="line">&lt;<span class="regexp">/script&gt;</span></span>
+</pre></td></tr></table></figure></p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[数据库GI PSU，SPU(CPU)，Bundle Patches 和 Patchsets 补丁号码快速参考 (文档 ID 1922396.1)]]></title>
+      <url>/2017/03/28/oracle/Oracle%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A5%E4%B8%81%E5%8F%B7%E7%A0%81%E5%BF%AB%E9%80%9F%E5%8F%82%E8%80%83%20(%E6%96%87%E6%A1%A3%20ID%201922396.1)/</url>
+      <content type="html"><![CDATA[<p>原文件地址(需登陆MOS)：<br><a href="https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=247921994816714&amp;id=1922396.1" target="_blank" rel="external">https://support.oracle.com/epmos/faces/DocumentDisplay?_afrLoop=247921994816714&amp;id=1922396.1 </a></p>
+<h2 id="base-releases"><a href="#Base-Releases" class="headerlink" title="Base Releases"></a>Base Releases</h2><blockquote>
+<p>12.2.0.1.0  12.2.0.1.0 Download Page<br>12.1.0.1.0  开一个非技术SR来获取物理介质或下载链接,根据Doc ID 1071023.1<br>11.2.0.1.0  11.2.0.1.0 Download Page<br>Older Versions  开一个非技术SR来获取物理介质或下载链接,根据Doc ID 1071023.1<br> 注意: 对于11.2.0.2或者更高的patchsets, 请参照patch的readme中”Software Availability”部分下的”Table 1 Installation Types and Associated Zip Files”来查找具体哪些zip文件需要下载。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="patchsets"><a href="#Patchsets" class="headerlink" title="Patchsets"></a>Patchsets</h2><p> l12.1.0.2 (12.1.0.2.0 PATCH SET FOR ORACLE DATABASE SERVER)     21419221<br> 11.2.0.4 (11.2.0.4.0 PATCH SET FOR ORACLE DATABASE SERVER)  13390677<br> 11.2.0.3 (11.2.0.3.0 PATCH SET FOR ORACLE DATABASE SERVER)  10404530<br> 11.2.0.2 (11.2.0.2.0 PATCH SET FOR ORACLE DATABASE SERVER)  10098816<br> 11.1.0.7 (11.1.0.7.0 PATCH SET FOR ORACLE DATABASE SERVER)  6890831<br> 10.2.0.5 (10.2.0.5 PATCH SET FOR ORACLE DATABASE SERVER)    8202632<br> d10.2.0.4 (10.2.0.4.0 PATCH SET FOR ORACLE DATABASE SERVER)     6810189<br> e10.2.0.3 (10.2.0.3 PATCH SET FOR ORACLE DATABASE SERVER)   5337014<br> 10.2.0.2 (10.2.0.2 PATCH SET FOR ORACLE DATABASE SERVER)    4547817<br> 10.1.0.5 (10.1.0.5 PATCH SET FOR ORACLE DATABASE SERVER)<br> 4505133<br> 10.1.0.4 (10.1.0.4 PATCH SET FOR ORACLE DATABASE SERVER)<br> 4163362<br> 10.1.0.3 (10.1.0.3 PATCH SET FOR ORACLE DATABASE SERVER)<br> 3761843<br> 9.2.0.8 (9.2.0.8 PATCH SET FOR ORACLE DATABASE SERVER)<br> 4547809<br> 9.2.0.7 (9.2.0.7 PATCH SET FOR ORACLE DATABASE SERVER)<br> 4163445<br> 9.2.0.6 (9.2.0.6 PATCH SET FOR ORACLE DATABASE SERVER)<br> 3948480<br> 9.2.0.5 (ORACLE 9I DATABASE SERVER RELEASE 2 - PATCH SET 4 VERSION 9.2.0.5.0)<br> 3501955<br> 9.2.0.4 (9.2.0.4 PATCH SET FOR ORACLE DATABASE SERVER)<br> 3095277<br> 9.2.0.3 (9.2.0.3 PATCH SET FOR ORACLE DATABASE SERVER)<br> 2761332<br> 9.2.0.2 (9.2.0.2 PATCH SET FOR ORACLE DATABASE SERVER)<br> 2632931<br> 9.0.1.5 (9.0.1.5 PATCHSET)<br> 3301544<br> 9.0.1.4 (9.0.1.4 PATCH SET FOR ORACLE DATABASE SERVER)<br> 2517300<br> 9.0.1.3 (9.0.1.3. PATCH SET FOR ORACLE DATA SERVER)<br> 2271678<br> 8.1.7.4 (8.1.7.4 PATCH SET FOR ORACLE DATA SERVER)<br> 2376472<br> 8.1.7.3 (8.1.7.3 PATCH SET FOR ORACLE DATA SERVER)<br> 2189751<br> 8.1.7.2 (8.1.7.2.1 PATCH SET FOR ORACLE DATA SERVER)<br> 1909158</p>
+<p>PSU, SPU(CPU), Bundle Patches</p>
+<p>12.1.0.2</p>
+<p> Description     PSU       GI PSU   Proactive Bundle Patch   Bundle Patch (Windows 32bit &amp; 64bit)<br> JAN2017     24732082 (12.1.0.2.170117)  24917825 (12.1.0.2.170117)  24968615 (12.1.0.2.170117)  25115951 (12.1.0.2.170117)<br> OCT2016     24006101 (12.1.0.2.161018)  24412235 (12.1.0.2.161018)  24448103 (12.1.0.2.161018)  24591642 (12.1.0.2.161018)<br> JUL2016     23054246 (12.1.0.2.160719)  23273629 (12.1.0.2.160719)  23273686 (12.1.0.2.160719)  23530387 (12.1.0.2.160719)<br> APR2016     22291127 (12.1.0.2.160419)  22646084 (12.1.0.2.160419)  22899531    22809813 (12.1.0.2.160419)<br> JAN2016     21948354 (12.1.0.2.160119)  22191349 (12.1.0.2.160119)  22243551    22310559 (12.1.0.2.160119)<br> OCT2015     21359755 (12.1.0.2.5)   21523234 (12.1.0.2.5)   21744410 (12.1.0.2.13)  21821214 (12.1.0.2.10)<br> JUL2015     20831110 (12.1.0.2.4)   20996835 (12.1.0.2.4)   21188742 (12.1.0.2.10)  21126814 (12.1.0.2.7)<br> APR2015     20299023 (12.1.0.2.3)   20485724 (12.1.0.2.3)   20698050 (12.1.0.2.7)   20684004 (12.1.0.2.4)<br> JAN2015     19769480 (12.1.0.2.2)   19954978 (12.1.0.2.2)   20141343 (12.1.0.2.4)   19720843 (12.1.0.2.1)<br> OCT2014     19303936 (12.1.0.2.1)   19392646 (12.1.0.2.1)   19404326 (12.1.0.2.1)   N/A</p>
+<p>12.1.0.1</p>
+<p> Description     PSU     GI PSU   Bundle Patch (Windows64bit)    Bundle Patch (Windows32bit)<br> JUL2016     23054354 (12.1.0.1.160719)  i23273935 / k23273958  (12.1.0.1.160719)   23530410 (12.1.0.1.160719)<br> APR2016     22291141 (12.1.0.1.160419)  i22654153 / k22654166 (12.1.0.1.160419)    22617408 (12.1.0.1.160419)<br> JAN2016     21951844 (12.1.0.1.160119)  j22191492 / k22191511 (12.1.0.1.160119)    22494866 (12.1.0.2.160119)<br> OCT2015     21352619 (12.1.0.1.9)   j21551666 / k21551685 (12.1.0.1.9) 21744907 (12.1.0.1.21)<br> JUL2015     20831107 (12.1.0.1.8)    j20996901 / k20996911 (12.1.0.1.8)    21076681  (12.1.0.1.20)<br> APR2015     20299016 (12.1.0.1.7)    j20485762 / k19971331 (12.1.0.1.7)    20558101 (12.1.0.1.18)<br> JAN2015     19769486 (12.1.0.1.6)   j19971324 / k19971331 (12.1.0.1.6) 20160748 (12.1.0.1.16)<br> OCT2014     19121550 (12.1.0.1.5)   j19392372 / k19392451 (12.1.0.1.5) 19542943 (12.1.0.1.14)<br> JUL2014     18522516 (12.1.0.1.4)   j18705901 / k18705972 (12.1.0.1.4) 19062327 (12.1.0.1.11)<br> APR2014     18031528 (12.1.0.1.3)   j18139660 / k18413105  (12.1.0.1.3)    18448604 (12.1.0.1.7)<br> JAN2014     17552800 (12.1.0.1.2)   17735306 (12.1.0.1.2)  17977915 (12.1.0.1.3)<br> OCT2013     17027533 (12.1.0.1.1)   17272829 (12.1.0.1.1)   17363796 (12.1.0.1.1)   17363795 (12.1.0.1.1)</p>
+<p>11.2.0.4</p>
+<p> Description     PSU     SPU(CPU)    GI PSU  Bundle Patch (Windows 32bit &amp; 64bit)<br> mJAN2017    N/A     N/A     N/A     N/A<br> OCT2016     24006111 (11.2.0.4.161018)  24433711 (11.2.0.4.161018)  24436338 (11.2.0.4.161018)  24922870 (11.2.0.4.161118)<br> JUL2016     23054359 (11.2.0.4.160719)  23177648 (11.2.0.4.160719)  23274134 (11.2.0.4.160719)  23530402 (11.2.0.4.160719)<br> APR2016     22502456 (11.2.0.4.160419)  22502493 (11.2.0.4.160419)  22646198 (11.2.0.4.160419)  22839608 (11.2.0.4.160419)<br> JAN2016     21948347 (11.2.0.4.160119)  21972320 (11.2.0.4.160119)  22191577 (11.2.0.4.160119)  22310544 (11.2.0.4.160119)<br> OCT2015     21352635 (11.2.0.4.8)   21352646    21523375 (11.2.0.4.8)   21821802 (11.2.0.4.20)<br> JUL2015     20760982 (11.2.0.4.7)   20803583    20996923 (11.2.0.4.7)   21469106 (11.2.0.4.18)<br> APR2015     20299013 (11.2.0.4.6)   20299015    20485808 (11.2.0.4.6)   20544696 (11.2.0.4.15)<br> JAN2015     19769489 (11.2.0.4.5)   19854503    19955028 (11.2.0.4.5)   20127071 (11.2.0.4.12)<br> OCT2014     19121551 (11.2.0.4.4)   19271443    19380115 (11.2.0.4.4)   19651773 (11.2.0.4.10)<br> JUL2014     18522509 (11.2.0.4.3)   18681862    18706472 (11.2.0.4.3)   18842982 (11.2.0.4.7)<br> APR2014     18031668 (11.2.0.4.2)   18139690    18139609 (11.2.0.4.2)   18296644 (11.2.0.4.4)<br> JAN2014     17478514 (11.2.0.4.1)   17551709    N/A     17987366 (11.2.0.4.1)</p>
+<p>11.2.0.3</p>
+<p> Description     PSU     SPU(CPU)    GI PSU  Bundle Patch (Windows64bit)     Bundle Patch (Windows32bit)<br> aJUL2015    20760997 (11.2.0.3.15)  20803576    20996944 (11.2.0.3.15)  21104036    21104035<br> APR2015     20299017 (11.2.0.3.14)  20299010    20485830 (11.2.0.3.14)  20420395    20420394<br> JAN2015     19769496 (11.2.0.3.13)  19854461    19971343 (11.2.0.3.13)  20233168    20233167<br> OCT2014     19121548 (11.2.0.3.12)  19271438    19440385 (11.2.0.3.12)  19618575    19618574<br> JUL2014     18522512 (11.2.0.3.11)  18681866    18706488 (11.2.0.3.11)  18940194    18940193<br> APR2014     18031683 (11.2.0.3.10)  18139695    18139678 (11.2.0.3.10)  18372244    18372243<br> JAN2014     17540582 (11.2.0.3.9)   17478415    17735354 (11.2.0.3.9)   18075406    17906981<br> OCT2013     16902043 (11.2.0.3.8)   17082364    17272731 (11.2.0.3.8)   17363850    17363844<br> JUL2013     16619892 (11.2.0.3.7)   16742095    16742216 (11.2.0.3.7)   16803775    16803774<br> APR2013     16056266 (11.2.0.3.6)   16294378    16083653 (11.2.0.3.6)   16345834    16345833<br> JAN2013     14727310 (11.2.0.3.5)   14841409    14727347 (11.2.0.3.5)   16042648    16042647<br> OCT2012     14275605 (11.2.0.3.4)   14390252    14275572 (11.2.0.3.4)   14613223    14613222<br> JUL2012     13923374 (11.2.0.3.3)   14038787    13919095 (11.2.0.3.3)   14223718    14223717<br> APR2012     13696216 (11.2.0.3.2)   13632717    13696251 (11.2.0.3.2)   13885389    13885388<br> JAN2012     13343438 (11.2.0.3.1)   13466801    13348650 (11.2.0.3.1)   13413168    13413167</p>
+<p>11.2.0.2</p>
+<p> Description     PSU      SPU(CPU)   GI PSU  Bundle Patch (Windows64bit)     Bundle Patch (Windows32bit)<br> aOCT2013    17082367 (11.2.0.2.12)  17082375    17272753 (11.2.0.2.12)  17363838    17363837<br> JUL2013     16619893 (11.2.0.2.11)  16742100    16742320 (11.2.0.2.11)  16345852    16345851<br> APR2013     16056267 (11.2.0.2.10)  16294412    16166868 (11.2.0.2.10)  16345846    16345845<br> JAN2013     14727315 (11.2.0.2.9)   14841437    14841385 (11.2.0.2.9)   16100399    16100398<br> OCT2012     14275621 (11.2.0.2.8)   14390377    14390437 (11.2.0.2.8)   14672268    14672267<br> JUL2012     13923804 (11.2.0.2.7)   14038791    14192201 (11.2.0.2.7)   14134043    14134042<br> APR2012     13696224 (11.2.0.2.6)   13632725    13696242 (11.2.0.2.6)   13697074    13697073<br> JAN2012     13343424 (11.2.0.2.5)   13343244    13653086 (11.2.0.2.5)   13413155    13413154<br> OCT2011     12827726 (11.2.0.2.4)   12828071    12827731 (11.2.0.2.4)   13038788    13038787<br> JUL2011     12419331 (11.2.0.2.3)   12419321    12419353 (11.2.0.2.3)   12714463    12714462<br> APR2011     11724916 (11.2.0.2.2)   11724984    12311357 (11.2.0.2.2)   11896292    11896290<br> JAN2011     10248523 (11.2.0.2.1)   N/A     N/A     10432053    10432052</p>
+<p>11.2.0.1</p>
+<p> Description     PSU     CPU     Bundle Patch (Windows64bit)     Bundle Patch (Windows32bit)<br> aJUL2011    12419378 (11.2.0.1.6)   12419278    12429529    12429528<br> APR2011     11724930 (11.2.0.1.5)   11724991    11731176    11883240<br> JAN2011     10248516 (11.2.0.1.4)   10249532    10432045    10432044<br> OCT2010     9952216 (11.2.0.1.3)    9952260     10100101    10100100<br> JUL2010     9654983 (11.2.0.1.2)    9655013     9736865     9736864<br> APR2010     9352237 (11.2.0.1.1)    9369797     N/A     N/A</p>
+<p>11.1.0.7</p>
+<p> Description     PSU     SPU(CPU)    Bundle Patch (Windows64bit)     Bundle Patch (Windows32bit)<br>JUL2015  20761024 (11.1.0.7.24)  20803573    21104030    21104029<br>APR2015  20299012 (11.1.0.7.23)  20299020    20420391    20420390<br>JAN2015  19769499 (11.1.0.7.22)  19854433    20126915    20126914<br>OCT2014  19152553 (11.1.0.7.21)  19274522    19609034    19609032<br>JUL2014  18522513 (11.1.0.7.20)  18681875    18944208    18944207<br>APR2014  18031726 (11.1.0.7.19)  18139703    18372258    18372257<br>JAN2014  17465583 (11.1.0.7.18)  17551415    17906936    17906935<br>OCT2013  17082366 (11.1.0.7.17)  17082374    17363760    17363759<br>JUL2013  16619896 (11.1.0.7.16)  16742110    16803788    16803787<br>APR2013  16056268 (11.1.0.7.15)  16308394    16345862    16345861<br>JAN2013  14739378 (11.1.0.7.14)  14841452    15848067    15848066<br>OCT2012  14275623 (11.1.0.7.13)  14390384    14672313    14672312<br> JUL2012     13923474 (11.1.0.7.12)  14038803    14109868    14109867<br> APR2012     13621679 (11.1.0.7.11)  13632731    13715810    13715809<br> JAN2012     13343461 (11.1.0.7.10)  13343453    13460956    13460955<br> OCT2011     12827740 (11.1.0.7.9)   12828097    12914916    12914915<br> JUL2011     12419384 (11.1.0.7.8)   12419265    12695278    12695277<br> APR2011     11724936 (11.1.0.7.7)   11724999    11741170    11741169<br> JAN2011     10248531 (11.1.0.7.6)   10249534    10350788    10350787<br> OCT2010     9952228  (11.1.0.7.5)   9952269     9773825     9773817<br> JUL2010     9654987 (11.1.0.7.4)    9655014     9869912     9869911<br> APR2010     9352179 (11.1.0.7.3)    9369783     9392335     9392331<br> JAN2010     9209238 (11.1.0.7.2)    9114072     9166861     9166858<br> OCT2009     8833297 (11.1.0.7.1)    8836375     8928977     8928976<br> JUL2009     N/A     8534338     8553515     8553512<br> APR2009     N/A     8290478     8343070     8343061</p>
+<p>11.1.0.6</p>
+<p> Description     CPU     Bundle Patch (Windows64bit)     Bundle Patch (Windows32bit)<br> aJUL2009    8534378     8563155     8563154<br> APR2009     8290402     8333657     8333655<br> JAN2009     7592335     7631981     7631980<br> OCT2008     7375639     7378393     7378392<br> JUL2008     7150417     7210197     7210195<br> APR2008     6864063     6867180     6867178 </p>
+<p>10.2.0.5</p>
+<p> Description     PSU     SPU(CPU)    Bundle Patch (Windows64bit)     Bundle Patch (Windows32bit)     Bundle Patch (WindowsItanium)<br> bJUL2015    20299014 (10.2.0.5.19)  20299021    20420387    20420386    N/A<br> APR2015     N/A     N/A     N/A     N/A     N/A<br> JAN2015     19769505 (10.2.0.5.18)  19854436    20126868    20126867    N/A<br> OCT2014     19274523 (10.2.0.5.17)  19274521    19618565    19618563    N/A<br> JUL2014     18522511 (10.2.0.5.16)  18681879    18940198    18940196    N/A<br> APR2014     18031728 (10.2.0.5.15)  18139709    18372261    18372259    N/A<br> JAN2014     17465584 (10.2.0.5.14)  17551414    17906974    17906972    N/A<br> OCT2014     17082365 (10.2.0.5.13)  17082371    N/A     17363822    N/A<br> JUL2013     16619894 (10.2.0.5.12)  16742123    16803782    16803780    16803781<br> APR2013     16056270 (10.2.0.5.11)  16270946    16345857    16345855    16345856<br> JAN2013     14727319 (10.2.0.5.10)  14841459    15848062    15848060    15848061<br> OCT2012     14275629 (10.2.0.5.9)   14390396    14553358    14553356    14553357<br> JUL2012     13923855 (10.2.0.5.8)   14038805    14134053    14134051    14134052<br> APR2012     13632743 (10.2.0.5.7)   13632738    13654815    13654814    13870404<br> JAN2012     13343471 (10.2.0.5.6)   13343467    13460968   13460967     N/A<br> OCT2011     12827745 (10.2.0.5.5)   12828105    c12914913   12914911    N/A<br> JUL2011     12419392 (10.2.0.5.4)   12419258    12429524    12429523    N/A<br> APR2011     11724962 (10.2.0.5.3)   11725006    12328269    12328268    N/A<br> JAN2011     10248542 (10.2.0.5.2)   10249537    10352673    10352672    N/A<br> OCT2010     9952230 (10.2.0.5.1)    9952270     10099855    10058290    N/A</p>
+<p>10.2.0.4</p>
+<p> Description     PSU     SPU(CPU)    Bundle Patch (Windows32bit)     Bundle Patch (Windows64bit)     Bundle Patch (WindowsItanium)<br> gJUL2013    16619897 (10.2.0.4.17)  16742253    N/A     N/A     N/A<br> gAPR2013    16056269 (10.2.0.4.16)  16270931    N/A     N/A     N/A<br> gJAN2013    14736542 (10.2.0.4.15)  14841471    N/A     N/A     N/A<br>gOCT2012     14275630 (10.2.0.4.14)  14390410    N/A     N/A     N/A<br>gJUL2012     13923851 (10.2.0.4.13)  14038814    N/A     N/A     N/A<br> aAPR2012    12879933 (10.2.0.4.12)  12879926    13928775    13928776    N/A<br> JAN2012     12879929 (10.2.0.4.11)  12879912    b13654060   N/A     N/A<br> OCT2011     12827778 (10.2.0.4.10)  12828112    12914908    12914910    12914909<br> JUL2011     12419397 (10.2.0.4.9)   12419249    12429519    12429521    12429520<br> APR2011     11724977 (10.2.0.4.8)   11725015    12328501    12328503    12328502<br> JAN2011     10248636 (10.2.0.4.7)   10249540    10349197    10349200    10349198<br> OCT2010     9952234 (10.2.0.4.6)    9952272     10084980    10084982    10084981<br> JUL2010     9654991 (10.2.0.4.5)    9655017     9777076     9777078     9777077<br> APR2010     9352164 (10.2.0.4.4)    9352191     9393548     9393550     9393549<br> JAN2010     9119284 (10.2.0.4.3)    9119226     9169457     9169460     9169458<br> OCT2009     8833280 (10.2.0.4.2)    8836308     8880857     8880861     8880858<br> JUL2009     8576156 (10.2.0.4.1)    8534387     8559466     8559467     8541782<br> APR2009     N/A     8290506     8307237     8307238     8333678<br> JAN2009     N/A     7592346     7584866     7584867     N/A<br> OCT2008     N/A     7375644     7386320     7386321     N/A<br> JUL2008     N/A     7150470     7218676     7218677     N/A</p>
+<p>10.2.0.3</p>
+<p> Description     CPU (Unix/Linux)    Bundle Patch (Windows32bit)     Bundle Patch (WindowsItanium)   Bundle Patch (Windows64bit)<br> aJAN2009    7592354     7631956     7631958     7631957<br> OCT2008     7369190     7353782     7353784     7353785<br> JUL2008     7150622     7252496     7252497     7252498<br> APR2008     6864068     6867054     6867055     6867056<br> JAN2008     6646853     6637237     6637238     6637239<br> OCT2007     6394981     6430171     6430173     6430174<br> JUL2007     6079591     6116131     6038242     6116139<br> APR2007     5901891     5948242     5916262     5948243<br> JAN2007     5881721     5846376     5846377     5846378</p>
+<p>10.2.0.2</p>
+<p> Description     CPU (Unix/Linux)    Bundle Patch (Windows32bit)      Bundle Patch (Windows64bit)    Bundle Patch (WindowsItanium)<br> iJAN2009    7592355     N/A     N/A     N/A<br> hOCT2008    7375660     N/A     N/A     N/A<br> hJUL2008    7154083     N/A     N/A     N/A<br> hAPR2008    6864071     N/A     N/A     N/A<br> aJAN2008    6646850     N/A     N/A     N/A<br> fOCT2007    6394997     6397028     6397030     6397029<br> JUL2007     6079588     6013105     6013121     6013118<br> APR2007     5901881     5912173     5912179     5912176<br> JAN2007     5689957     5716143     5699839     5699824<br> OCT2006     5490848     5502226     5500921     5500894<br> JUL2006     5225799     5251025     5251028     5251026<br> APR2006     5079037     5140461     5140567     5140508</p>
+<p>10.2.0.1</p>
+<p> Description     CPU (Unix/Linux)    Bundle Patch (Windows32bit)     Bundle Patch (Windows64bit)     Bundle Patch (WindowsItanium)<br> APR2007     5901880     N/A     N/A     N/A<br> JAN2007     5689937     5695784     5695786     5695785<br> OCT2006     5490846     5500927     5500954     5500951<br> JUL2006     5225798     5239698     5239701     5239699<br> APR2006     5049080     5059238     5059261     5059251<br> JAN2006     4751931     4751539     4770480     4751549</p>
+<p>10.1.0.5</p>
+<p> Description     CPU (Unix/Linux)    Bundle Patch (Windows32bit)      Bundle Patch (WindowsItanium)<br> JAN2012     13343482    13413002    13413003<br> OCT2011     12828135    12914905    12914906<br> JUL2011     12419228    12429517    12429518<br> APR2011     11725035    11731119    11731120<br> JAN2011     N/A     N/A     N/A<br> OCT2010     9952279     10089559    10089560<br> JUL2010     9655023     9683651     9683652<br> APR2010     9352208     9390288     9390289<br> JAN2010     9119261     9187104     9187105<br> OCT2009     8836540     8785211     8785212<br> JUL2009     8534394     8656224     8656226<br> APR2009     8290534     8300356     8300360<br> JAN2009     7592360     7486619     7586049<br> OCT2008     7375686     7367493     7367494<br> JUL2008     7154097     7047034     7047037<br> APR2008     6864078     6867107     6867108<br> JAN2008     6647005     6637274     6637275<br> OCT2007     6395024     6408393     6408394<br> JUL2007     6079585     6115804     6115818<br> APR2007     5901877     5907304     5907305<br> JAN2007     5689908     5716295     5634747<br> OCT2006     5490845     5500883     5500885<br> JUL2006     5225797     5251148     5251140<br> APR2006     5049074     5057606     5057609<br> JAN2006     4751932     4882231     4882236</p>
+<p>10.1.0.4</p>
+<p> Description     CPU (Unix/Linux)    Bundle Patch (Windows32bit)     Bundle Patch (WindowsItanium)<br> APR2007     5901876     5909871     5909879<br> JAN2007     5689894     5695771     5695772<br> OCT2006     5490844     5500878     5500880<br> JUL2006     5225796     5239736     5239737<br> APR2006     5049067     5059200     5059227<br> JAN2006     4751928     4751259     4745040<br> OCT2005     4567866     4579182     4579188<br> JUL2005     4392423     4440706     4404600<br> APR2005     4210374     4287619     4287611</p>
+<p>10.1.0.3</p>
+<p> Description     CPU (Unix/Linux)    Bundle Patch (Windows32bit)     Bundle Patch (WindowsItanium)<br> JAN2007     5923277     N/A     N/A<br> OCT2006     5566825     N/A     N/A<br> JUL2006     5435164     N/A     N/A<br> APR2006     5158022     N/A     N/A<br> JAN2006     4751926     4741077     4741084<br> OCT2005     4567863     4567518     4567523<br> JUL2005     4392409     4389012     4389014<br> APR2005     4193286     4269715     4158888<br> JAN2005     4003062     4074232     3990812</p>
+<p>10.1.0.2</p>
+<p> Description     CPU (Unix/Linux)    Bundle Patch (Windows32bit)     Bundle Patch (WindowsItanium)<br> APR2005     4193293     4181849     4213305<br> JUL2005     4400766     4388944     4388948<br> JAN2005     4003051     4104364     4083038</p>
+<p>9.2.0.8</p>
+<p> Description     CPU (Unix/Linux)    Bundle Patch (Windows32bit)     Bundle Patch (WindowsItanium)<br> JUL2010     9655027     9683644     9683645<br> APR2010     9352224     9390286     N/A<br> JAN2010     9119275     9187106     N/A<br> OCT2009     8836758     8785185     8785186<br> JUL2009     8534403     8427417     8427418<br> APR2009     8290549     8300340     8300346<br> JAN2009     7592365     7703210     7703212<br> OCT2008     7375695     7394394     7394402<br> JUL2008     7154111     7047026     7047029<br> APR2008     6864082     6867138     6867139<br> JAN2008     6646842     6637265     6637266<br> OCT2007     6395038     6417013     6417014<br> JUL2007     6079582     6130293     6130295<br> APR2007     5901875     5916268     5916275<br> JAN2007     N/A     N/A     N/A<br> OCT2006     5490859     5652380     5639519</p>
+<p>9.2.0.7</p>
+<p> Description     CPU (Unix/Linux)    Bundle Patch (Windows32bit)     Bundle Patch (WindowsItanium)<br> JUL2007     6079579     6146759     6146748<br> APR2007     5901872     5907274     5907275<br> JAN2007     5689875     5654905     5654909<br> OCT2006     5490841     5500873     5500874<br> JUL2006     5225794     5250980     5250981<br> APR2006     5049060     5064365     5064364<br> JAN2006     4751923     4751528     4741074<br> OCT2005     4567854     4579590     4579599<br> JUL2005     4547566     N/A     N/A   </p>
+<p>9.2.0.6</p>
+<p> Description     CPU (Unix/Linux)    Bundle Patch (Windows32bit)     Bundle Patch (WindowsItanium)<br> OCT2006     5490840     5500865     5500871<br> JUL2006     5225793     5239794     5239793<br> APR2006     5049051     5059614     5059615<br> JAN2006     4751921     4751261     4751262<br> OCT2005     4567846     4579093     4579097<br> JUL2005     4392392     4445852     4401917<br> APR2005     4193295     4269928     4213298</p>
+<p>9.2.0.5</p>
+<p> Description     CPU (Unix/Linux)    Bundle Patch (Windows32bit)     Bundle Patch (WindowsItanium)<br> OCT2006     5689708     N/A     N/A<br> JUL2006     5435138     N/A     N/A<br> APR2006     5219762     N/A     N/A<br> OCT2005     4560421     N/A     N/A<br> JUL2005     4392256     4387563     4391819<br> APR2005     4193299     4195791     4214192<br> JAN2005     4003006     4104374     3990809</p>
+<p>9.2.0.4</p>
+<p> Description     CPU (Unix/Linux)    Bundle Patch (Windows32bit)     Bundle Patch (WindowsItanium)<br> JAN2005     4002994     4104369     4083202</p>
+<p>8.1.7.4</p>
+<p> Description     CPU (Unix/Linux)    Bundle Patch (Windows32bit)<br> JAN2007     5689799     5686514<br> OCT2006     5490835     5496067<br> JUL2006     5225788     5236412<br> APR2006     5045247     5057601<br> JAN2006     4751906     4751570<br> OCT2005     4560405     4554818<br> JUL2005     4392446     4437058<br> APR2005     4193312     4180163<br> JAN2005     4002909     3921893<br>OJVM PSU Patches</p>
+<p>12.1.0.2</p>
+<p> Description     OJVM PSU (Linux/Unix)   OJVM BP (Windows)   Combo OJVM + DB PSU     Combo OJVM + GI PSU     Generic JDBC<br> JAN2017     24917972 (12.1.0.2.170117)  25112498 (12.1.0.2.170117)  24917069 (12.1.0.2.170117)  24917916 (12.1.0.2.170117)  Included in OJVM PSU<br> OCT2016     24315824 (12.1.0.2.161018)  24591630 (12.1.0.2.161018)  24433133 (12.1.0.2.161018)  24433148 (12.1.0.2.161018)  Included in OJVM PSU<br> JUL2016     23177536 (12.1.0.2.160719)  23515290 (12.1.0.2.160719)  23615289 (12.1.0.2.160719)  23615308 (12.1.0.2.160719)  23727148 (Included in OJVM PSU)<br> APR2016     22674709 (12.1.0.2.160419)  22839633 (12.1.0.2.160419)  22738582 (12.1.0.2.160419)  22738641 (12.1.0.2.160419)<br> JAN2016     22139226 (12.1.0.2.160119)  22311086 (12.1.0.2.160119)  22191659 (12.1.0.2.160119)  22191676 (12.1.0.2.160119)<br> OCT2015     21555660 (12.1.0.2.5)   21788394 (12.1.0.2.4)   21520444    21523260<br> JUL2015     21068507 (12.1.0.2.4)   21153530 (12.1.0.2.3)   21150768    21150782<br> APR2015     20415564 (12.1.0.2.3)   20391199 (12.1.0.2.2)   20834354    20834538<br> JAN2015     19877336 (12.1.0.2.2)   20225938 (12.1.0.2.1)   20132434    20132450<br> OCT2014 (12.1.0.2.1)    19282028        19791366    19791375</p>
+<p>12.1.0.1</p>
+<p> Description     OJVM PSU (Linux/Unix)   OJVM BP (Windows)   Combo OJVM + DB PSU     Combo OJVM + GI PSU     Generic JDBC<br> JUL2016 (12.1.0.1.160719)   23177541    23515285    23615355    23615368<br> 23727043 (Included in OJVM PSU)</p>
+<p> APR2016 (12.1.0.1.160419)   22674703    22839627    22738678    22738715    Included in OJVM PSU<br> JAN2016 (12.1.0.1.160119)   22139235    22311072    22191711    22191721<br> OCT2015 (12.1.0.1.5)    21555669    21788365    21744318    21744328<br> JUL2015 (12.1.0.1.4)    21068523    21153513    21150806    21150817<br> APR2015 (12.1.0.1.3)    20406245    20225909    20834568    20834579<br> JAN2015 (12.1.0.1.2)    19877342    20225916    20132482    20132489<br> OCT2014 (12.1.0.1.1)    19282024    19801531    19791363    19791360    19852357</p>
+<p>11.2.0.4</p>
+<p> Description     OJVM PSU (Linux/Unix)   OJVM BP (Windows)    Combo OJVM + DB PSU    Combo OJVM + DB SPU     Combo OJVM + GI PSU     Generic JDBC<br> JAN2017 (11.2.0.4.170117)   24917954    25043019    24918033    25367810    24918228<br> Included in OJVM PSU</p>
+<p> OCT2016 (11.2.0.4.161018)   24315821    24591637    24436313    24433791    24436346<br> Included in OJVM PSU</p>
+<p> JUL2016 (11.2.0.4.160719)   23177551    23515277    23615392    23615381    23615403<br> 23727132 (Included in OJVM PSU)</p>
+<p> APR2016 (11.2.0.4.160419)   22674697    22839614    22738777    22738732    22738793   Included in OJVM PSU<br> JAN2016 (11.2.0.4.160119)   22139245    22311053    22378146    22378121    22378167<br> OCT2015 (11.2.0.4.5)    21555791    21788344    21744343    21744335    21744348<br> JUL2015 (11.2.0.4.4)    21068539    21153498    21150851    21150829    21150864<br> APR2015 (11.2.0.4.3)    20406239    20225988    20834611    20834597    20834621<br> JAN2015 (11.2.0.4.2)    19877440    20225982    20132580    20132517    20132615<br> OCT2014 (11.2.0.4.1)    19282021   19799291     19791364    19791358    19791420    19852360</p>
+<p>11.2.0.3</p>
+<p> Description     OJVM PSU (Linux/Unix)   OJVM BP (Windows)  Combo OJVM + DB PSU  Combo OJVM + DB SPU    Combo OJVM + GI PSU  Generic JDBC<br> JUL2015 (11.2.0.3.4)   21068553     21153470   21150891    21150885     21150904   </p>
+<p> Included in OJVM PSU</p>
+<p> APR2015 (11.2.0.3.3)   20406220     20391185   20834670    20834653     20834686<br> JAN2015 (11.2.0.3.2)   19877443     20227195   20132646    20132635     20132651<br> OCT2014 (11.2.0.3.1)   19282015     19806120   19791427    19791426    19791428    19852361</p>
+<p>11.1.0.7</p>
+<p>Description OJVM PSU (Linux/Unix)    OJVM BP (Windows)  Combo OJVM + DB PSU Combo OJVM + DB SPU  Combo OJVM + GI PSU    Generic JDBC<br> JUL2015 (11.1.0.7.4)    21068565    21153423    21150939    21150929     N/A   </p>
+<p>  Included in OJVM PSU</p>
+<p> APR2015 (11.1.0.7.3)    20406213    20391156    20834724    20834712     N/A<br> JAN2015 (11.1.0.7.2)    19877446    20227146    20132677    20132669     N/A<br> OCT2014 (11.1.0.7.1)    19282002    19806118    19791436    19791434     N/A    19852363</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[VMWare CentOS 虚拟机根分区磁盘扩容(基于LVM)]]></title>
-      <url>http://dbanote.github.io/2017/03/24/linux/20170324_Vmware_centos_%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%B9%E5%88%86%E5%8C%BA%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9(%E5%9F%BA%E4%BA%8ELVM)/</url>
+      <url>/2017/03/24/linux/20170324_Vmware_centos_%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A0%B9%E5%88%86%E5%8C%BA%E7%A3%81%E7%9B%98%E6%89%A9%E5%AE%B9(%E5%9F%BA%E4%BA%8ELVM)/</url>
       <content type="html"><![CDATA[<h2 id="关闭虚拟机并修改虚拟机配置增大磁盘大小"><a href="#关闭虚拟机并修改虚拟机配置，增大磁盘大小" class="headerlink" title="关闭虚拟机并修改虚拟机配置，增大磁盘大小"></a>关闭虚拟机并修改虚拟机配置，增大磁盘大小</h2><p><img src="http://oligvdnzp.bkt.clouddn.com/0324_lvm_resize_01.png" alt=""></p>
 <a id="more"></a>
 <h2 id="启动虚拟机后查看磁盘状态"><a href="#启动虚拟机后查看磁盘状态" class="headerlink" title="启动虚拟机后查看磁盘状态"></a>启动虚拟机后查看磁盘状态</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">df -hT</span>
@@ -151,7 +339,7 @@
     
     <entry>
       <title><![CDATA[MySQL DBA从小白到大神实战-09 MySQL性能优化的关键点]]></title>
-      <url>http://dbanote.github.io/2017/03/20/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/09-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
+      <url>/2017/03/20/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/09-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<h2 id="服务器参数调优有哪些关键点"><a href="#服务器参数调优，有哪些关键点？" class="headerlink" title="服务器参数调优，有哪些关键点？"></a>服务器参数调优，有哪些关键点？</h2><ol>
 <li>优化Linux内核参数，如关闭SWAP，调优网络参数、文件限制等</li>
 <li>是否关闭NUMA</li>
@@ -351,17 +539,17 @@
     
     <entry>
       <title><![CDATA[CentOS7.3安装图解]]></title>
-      <url>http://dbanote.github.io/2017/03/18/linux/20170318_CentOS7.3%E5%AE%89%E8%A3%85%E5%9B%BE%E8%A7%A3/</url>
+      <url>/2017/03/18/linux/20170318_CentOS7.3%E5%AE%89%E8%A3%85%E5%9B%BE%E8%A7%A3/</url>
       <content type="html"><![CDATA[<p>光标向上移动，选择<code>Install CentOS Linux</code>不测试安装光盘，节省安装时间<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_01.png" alt=""><br>直接回车开始<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_02.png" alt=""><br><a id="more"></a><br>选择语言，这里我就使用英文<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_03.png" alt=""><br>这里是跟CentOS6.X区别比较大的地方，所有的配置项都集中在一起，可以根据需要进行配置<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_05.png" alt=""><br>点击<code>DATE&amp;TIME</code>配置时区和时间<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_04.png" alt=""><br><code>KEYBOARD</code>和<code>LANGUAGE SUPPORT</code>前面已经设置过了，点击<code>SOFTWARE SELECTION</code>，选择服务器部署的类型（即都安装哪些软件包），我这里默认选择<code>Minimal Install</code>，如果你需要安装图形化界面，可以选择<code>Server with GUI</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_06.png" alt=""><br>点击<code>INSTALLATION DESTINATION</code>配置硬盘分区<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_07.png" alt=""><br>手动配置<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_08.png" alt=""><br>选<code>Click here to create them automatically</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_09.png" alt=""><br>在自动创建的分区上按业务(测试)需要进行修改，无误后点左上方的<code>Done</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_10.png" alt=""><br>同意变更<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_11.png" alt=""><br>点击<code>NETWORK&amp;HOSTNAME</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_12.png" alt=""><br>可在此界面进行网络和主机名配置，这里我先默认，不配置<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_13.png" alt=""><br>完成后，回到之前的配置集中页面，点击下方的<code>Begin Installation</code>，开始安装<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_14.png" alt=""><br>在安装的过程中，点击<code>ROOT PASSWORD</code>配置root用户密码<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_15.png" alt=""><br>设置完root密码后点<code>Done</code><br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_16.png" alt=""><br>红色警告已标志已清除，等待软件包安装完成<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_17.png" alt=""><br>安装完成后，点击<code>Reboot</code>会重启服务器<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_18.png" alt=""><br>进入到字符界面，完成安装<br><img src="http://oligvdnzp.bkt.clouddn.com/0314_centos7_3_install_19.png" alt=""></p>
 ]]></content>
     </entry>
     
     <entry>
       <title><![CDATA[MySQL DBA从小白到大神实战-08 MySQL监控系统之Zabbix]]></title>
-      <url>http://dbanote.github.io/2017/03/13/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/08-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
+      <url>/2017/03/13/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/08-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<h2 id="部署zabbix监控"><a href="#部署zabbix监控" class="headerlink" title="部署zabbix监控"></a>部署zabbix监控</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>zabbix（音同 zbix）是一个基于WEB界面的提供分布式系统监视以及网络监视功能的企业级的开源解决方案。<br>zabbix能监视各种网络参数，保证服务器系统的安全运营；并提供灵活的通知机制以让系统管理员快速定位/解决存在的各种问题。<br>zabbix由2部分构成，zabbix server与可选组件zabbix agent。zabbix server可以通过SNMP，zabbix agent，ping，端口监视等方法提供对远程服务器/网络状态的监视，数据收集等功能，它可以运行在Linux，Solaris，HP-UX，AIX，Free BSD，Open BSD，OS X等平台上。</p>
 <p>为了使用最新3.2版本的Zabbix，本次部署选用的Linux OS是最新的CentOS7.3（php版本为5.4）。<br>CentOS6.X和CentOS7.X的安装和使用均有较大变化，为便于今后的学习和工作，下面将CentOS7.3的安装和基本配置也记录到本文中。</p>
-<h3 id="安装centos73"><a href="#安装CentOS7-3" class="headerlink" title="安装CentOS7.3"></a>安装CentOS7.3</h3><p>详见：<a href="https://dbanote.github.io/2017/03/18/linux/20170318_CentOS7.3安装图解/">CentOS7.3安装图解</a><br><a id="more"></a></p>
+<h3 id="安装centos73"><a href="#安装CentOS7-3" class="headerlink" title="安装CentOS7.3"></a>安装CentOS7.3</h3><p>详见：<a href="https://dbanote.github.io/2017/03/18/linux/20170318_CentOS7.3安装图解/" target="_blank" rel="external">CentOS7.3安装图解</a><br><a id="more"></a></p>
 <h3 id="centos7x系统的基本配置和使用"><a href="#CentOS7-X系统的基本配置和使用" class="headerlink" title="CentOS7.X系统的基本配置和使用"></a>CentOS7.X系统的基本配置和使用</h3><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 查看系统版本</span></span>
 <span class="line">cat /etc/redhat-release</span>
 <span class="line">-----------------------------------------------</span>
@@ -460,7 +648,7 @@
 <span class="line">       valid_lft forever preferred_lft forever</span>
 <span class="line">-----------------------------------------------</span>
 </pre></td></tr></table></figure>
-<h3 id="源码编译安装mysql"><a href="#源码编译安装mysql" class="headerlink" title="源码编译安装mysql"></a>源码编译安装mysql</h3><p>参见博文：<a href="https://dbanote.github.io/2017/01/26/mysql/课程学习/02-MySQL-DBA从小白到大神实战/#详细描述mysql编译安装的过程截图安装步骤">MySQL DBA从小白到大神实战-02 MySQL标准化、自动化部署</a></p>
+<h3 id="源码编译安装mysql"><a href="#源码编译安装mysql" class="headerlink" title="源码编译安装mysql"></a>源码编译安装mysql</h3><p>参见博文：<a href="https://dbanote.github.io/2017/01/26/mysql/课程学习/02-MySQL-DBA从小白到大神实战/#详细描述mysql编译安装的过程截图安装步骤" target="_blank" rel="external">MySQL DBA从小白到大神实战-02 MySQL标准化、自动化部署</a></p>
 <h3 id="安装和配置zabbix-server"><a href="#安装和配置zabbix-server" class="headerlink" title="安装和配置zabbix server"></a>安装和配置zabbix server</h3><h4 id="建zabbix用户-组和安装目录"><a href="#建zabbix用户、组和安装目录" class="headerlink" title="建zabbix用户、组和安装目录"></a>建zabbix用户、组和安装目录</h4><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">groupadd zabbix</span>
 <span class="line">useradd -g zabbix zabbix</span>
 <span class="line">echo <span class="string">"zabbix"</span> | passwd --stdin zabbix</span>
@@ -809,7 +997,7 @@
     
     <entry>
       <title><![CDATA[MySQL DBA从小白到大神实战-07 MySQL锁机制与事务机制实现]]></title>
-      <url>http://dbanote.github.io/2017/03/10/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/07-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
+      <url>/2017/03/10/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/07-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<h2 id="mysql参数autocommit生产环境设1还是0为什么"><a href="#MySQL参数autocommit生产环境设1还是0？为什么？" class="headerlink" title="MySQL参数autocommit生产环境设1还是0？为什么？"></a>MySQL参数autocommit生产环境设1还是0？为什么？</h2><p>MySQL参数autocommit生产环境设成0，即不自动提交。 设置成不自动提交，事务能做rollback，以满足事务的原子性Atomicity的要求，设置方法：<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">set autocommit=<span class="number">0</span>;</span>
 <span class="line"></span>
 <span class="line"><span class="comment"># 也可以修改my.cnf配置文件</span></span>
@@ -1210,7 +1398,7 @@
     
     <entry>
       <title><![CDATA[MySQL DBA从小白到大神实战-06 深入浅出MySQL备份与恢复]]></title>
-      <url>http://dbanote.github.io/2017/02/27/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/06-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
+      <url>/2017/02/27/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/06-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<h2 id="使用mydumper工具全库备份"><a href="#使用mydumper工具全库备份" class="headerlink" title="使用mydumper工具全库备份"></a>使用mydumper工具全库备份</h2><blockquote>
 <p>mydumper是针对mysql数据库备份的一个轻量级第三方的开源工具，备份方式采用逻辑备份。<br>mydumper支持多线程，备份速度远高于原生态的mysqldump。</p>
 </blockquote>
@@ -1621,7 +1809,7 @@
     
     <entry>
       <title><![CDATA[MySQL DBA从小白到大神实战-05 MySQL DBA日常操作]]></title>
-      <url>http://dbanote.github.io/2017/02/21/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/05-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
+      <url>/2017/02/21/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/05-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<h2 id="使用mysqld_mutil-start命令启动多实例3306-3307使用mysqld_multi-report命令显示结果"><a href="#使用mysqld-mutil-start命令启动多实例3306、3307，使用mysqld-multi-report命令显示结果。" class="headerlink" title="使用mysqld_mutil start命令启动多实例3306、3307，使用mysqld_multi report命令显示结果。"></a>使用mysqld_mutil start命令启动多实例3306、3307，使用mysqld_multi report命令显示结果。</h2><h3 id="规划多实例目录"><a href="#规划多实例目录" class="headerlink" title="规划多实例目录"></a>规划多实例目录</h3><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="keyword">mkdir</span> -p /u01/mysql             <span class="comment"># 程序目录</span></span>
 <span class="line"><span class="keyword">mkdir</span> -p /u01/conf              <span class="comment"># 配置文件</span></span>
 <span class="line"><span class="keyword">mkdir</span> -p /u01/data/<span class="number">3306</span>         </span>
@@ -2413,7 +2601,7 @@
     
     <entry>
       <title><![CDATA[那些在11gR2中可能惹祸的新特性]]></title>
-      <url>http://dbanote.github.io/2017/02/16/oracle/%E9%82%A3%E4%BA%9B%E5%9C%A811gR2%E4%B8%AD%E5%8F%AF%E8%83%BD%E6%83%B9%E7%A5%B8%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7/</url>
+      <url>/2017/02/16/oracle/%E9%82%A3%E4%BA%9B%E5%9C%A811gR2%E4%B8%AD%E5%8F%AF%E8%83%BD%E6%83%B9%E7%A5%B8%E7%9A%84%E6%96%B0%E7%89%B9%E6%80%A7/</url>
       <content type="html"><![CDATA[<p>有很多朋友因为11gR2那些潜在的特性可能给升级后系统稳定运行带来麻烦而无法鼓足升级到11gR2的勇气，实际Oracle在开发新版本RDBMS软件时引入的一些特性有很好的理念的，但是往往这些理念会给已稳定的应用环境带来变数，最显著的就是10g/9i升级到11gR2时的执行计划稳定性，此外adaptive cursor sharing 自适应游标、automatic serial direct path自动判断串行直接路径读、deferred segment creation、GC read mostly DRM…….等等的一系列特性已经在大量的案例中被证明是不适合于大量国产Application的。</p>
 <p>这篇文章里想做的是给出一张列表，能够将11gR2的优化器optimizer特性、和其他的如上列的这些可能引起问题的特性通过参数的方式给出一张列表，你可以选择性的禁用这些特性，前提是你的Applicaiton就该特性经过充分的测试，如果没有时间或者环境来测试这些新特性，那么还不如禁用这些特性，禁用新特性的结果也仅仅是回到老版本(一般是10gR2 10.2.0.4)的默认表现上来。<br><a id="more"></a><br>你肯定要问：“如果都禁用了11gR2的特性，那么我还升级做什么？”</p>
 <p>回答是：首先这里给出的是一张禁用11gR2特性列表，如果你对部分特性已经很熟悉，那么你可以选择性而非全部地禁用这些特性，如果不熟悉也测试不了，那么无畏给稳定的系统引入不确定因素。其次这里列出的仅仅是11gR2部分默认已启用的可能”惹祸”的特性， 其他的一些特性例如flashback archive、securefile，它们默认不开启，本身需要你去手动打开才会生效，并不会受到这张列表的影响。</p>
@@ -2433,7 +2621,7 @@
     
     <entry>
       <title><![CDATA[hexo解决代码块空行自动删除问题]]></title>
-      <url>http://dbanote.github.io/2017/02/14/tools/hexo%E8%A7%A3%E5%86%B3%E4%BB%A3%E7%A0%81%E5%9D%97%E7%A9%BA%E8%A1%8C%E8%87%AA%E5%8A%A8%E5%88%A0%E9%99%A4%E9%97%AE%E9%A2%98/</url>
+      <url>/2017/02/14/tools/hexo%E8%A7%A3%E5%86%B3%E4%BB%A3%E7%A0%81%E5%9D%97%E7%A9%BA%E8%A1%8C%E8%87%AA%E5%8A%A8%E5%88%A0%E9%99%A4%E9%97%AE%E9%A2%98/</url>
       <content type="html"><![CDATA[<h2 id="修改hexo源码"><a href="#修改hexo源码" class="headerlink" title="修改hexo源码"></a>修改hexo源码</h2><p>将<code>node_modules\hexo-util\lib\highlight.js</code>文件中第<code>35</code>行<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 原</span></span>
 <span class="line">    numbers += <span class="string">'&lt;div class="line"&gt;'</span> + (firstLine + i) + <span class="string">'&lt;/div&gt;\n'</span>;</span>
 <span class="line">    content += <span class="string">'&lt;div class="line'</span>;</span>
@@ -2469,7 +2657,7 @@
     
     <entry>
       <title><![CDATA[MySQL DBA从小白到大神实战-04 揭密MySQL databock and binlog的格式]]></title>
-      <url>http://dbanote.github.io/2017/02/14/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/04-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
+      <url>/2017/02/14/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/04-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<h2 id="1-为什么创建一个innodb表只分配了96k而不是1m"><a href="#1-为什么创建一个InnoDB表只分配了96K而不是1M？" class="headerlink" title="1. 为什么创建一个InnoDB表只分配了96K而不是1M？"></a>1. 为什么创建一个InnoDB表只分配了96K而不是1M？</h2><p>Mysql中<code>extent</code>(区)中是64个连续的<code>page</code>(页)，是分配空间的最小单位，标准大小是1M。 但在用户启用了参数<code>innodb_file_per_table=on</code>后，创建一个Innodb表时，初始分配的大小却是为96K。这是因为在每个段开始时，先用32个页大小的碎片页(fragment page)来存放数据，在使用完这些页之后才是64个连续页的申请。这样做的目的是，对于一些小表，或者是undo这类的段，可以在开始时申请较少的空间，节省磁盘容量的开销。 下面通过示例来显示InnoDB存储引擎对于区的申请方式。</p>
 <a id="more"></a>
 <h3 id="创建一个测试用的innodb表"><a href="#创建一个测试用的InnoDB表" class="headerlink" title="创建一个测试用的InnoDB表"></a>创建一个测试用的InnoDB表</h3><p>创建数据库<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">mysql&gt; create database lyj;</span>
@@ -3018,7 +3206,7 @@
     
     <entry>
       <title><![CDATA[hexo博客添加常用插件]]></title>
-      <url>http://dbanote.github.io/2017/02/08/tools/hexo%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E5%B8%B8%E7%94%A8%E6%8F%92%E4%BB%B6/</url>
+      <url>/2017/02/08/tools/hexo%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E5%B8%B8%E7%94%A8%E6%8F%92%E4%BB%B6/</url>
       <content type="html"><![CDATA[<p>Hexo提供了诸多插件来增强博客体验，地址<a href="http://hexo.io/plugins/" target="_blank" rel="external"><code>http://hexo.io/plugins</code></a></p>
 <h2 id="添加pdf浏览插件"><a href="#添加pdf浏览插件" class="headerlink" title="添加pdf浏览插件"></a>添加pdf浏览插件</h2><h3 id="安装hexo-pdf"><a href="#安装hexo-pdf" class="headerlink" title="安装hexo-pdf"></a>安装<a href="https://github.com/superalsrk/hexo-pdf" target="_blank" rel="external">hexo-pdf</a></h3><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">cnpm install --save hexo-pdf</span>
 </pre></td></tr></table></figure>
@@ -3082,7 +3270,7 @@
     
     <entry>
       <title><![CDATA[hexo更换主题并个性化定制]]></title>
-      <url>http://dbanote.github.io/2017/02/08/tools/hexo%E6%9B%B4%E6%8D%A2%E4%B8%BB%E9%A2%98%E5%B9%B6%E4%B8%AA%E6%80%A7%E5%8C%96%E5%AE%9A%E5%88%B6/</url>
+      <url>/2017/02/08/tools/hexo%E6%9B%B4%E6%8D%A2%E4%B8%BB%E9%A2%98%E5%B9%B6%E4%B8%AA%E6%80%A7%E5%8C%96%E5%AE%9A%E5%88%B6/</url>
       <content type="html"><![CDATA[<blockquote>
 <p>hexo系统默认的主题虽然也不错，但我更喜欢<a href="http://moxfive.xyz/yelee" target="_blank" rel="external">yelee</a>和<a href="https://github.com/litten/hexo-theme-yilia" target="_blank" rel="external">yilia</a>这两款主题</p>
 </blockquote>
@@ -3236,7 +3424,7 @@
     
     <entry>
       <title><![CDATA[Sublime Text 常用快捷键]]></title>
-      <url>http://dbanote.github.io/2017/01/30/tools/Sublime%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</url>
+      <url>/2017/01/30/tools/Sublime%E5%B8%B8%E7%94%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</url>
       <content type="html"><![CDATA[<h2 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">↑ ↓ ← →             上下左右移动光标</span>
 <span class="line">Alt                 调出菜单</span>
 <span class="line">Ctrl + Shift + P    调出命令板（Command Palette）</span>
@@ -3313,7 +3501,7 @@
     
     <entry>
       <title><![CDATA[MySQL DBA从小白到大神实战-03 深入MySQL体系结构]]></title>
-      <url>http://dbanote.github.io/2017/01/28/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/03-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
+      <url>/2017/01/28/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/03-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<h2 id="1-thread-pool的原理是什么"><a href="#1-thread-pool的原理是什么？" class="headerlink" title="1. thread pool的原理是什么？"></a>1. thread pool的原理是什么？</h2><p>线程池的原理很简单，类似于操作系统中的缓冲区的概念，它的流程如下：先启动若干数量的线程，并让这些线程都处于睡眠状态，当客户端有一个新请求时，就会唤醒线程池中的某一个睡眠线程，让它来处理客户端的这个请求，当处理完这个请求后，线程又处于睡眠状态。</p>
 <p>MySQL线程池只在MariaDB，Oracle MySQL企业版中提供，Oracle MySQL社区版并不提供。</p>
 <p>在传统方式下，MySQL线程调度方式有两种：每个连接一个线程(one-thread-per-connection)和所有连接一个线程（no-threads）。在实际生产中，一般用的是前者。即每当有一个客户端连接到MySQL服务器，MySQL服务器都会为该客户端创建一个单独的线程，请求结束后，销毁线程。连接数越多，则相应的线程会越多。这种方式在高并发情况下，会导致线程的频繁创建和释放。</p>
@@ -3522,7 +3710,7 @@
     
     <entry>
       <title><![CDATA[VIM常用命令]]></title>
-      <url>http://dbanote.github.io/2017/01/28/tools/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+      <url>/2017/01/28/tools/vim%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
       <content type="html"><![CDATA[<p>文本编辑器是所有计算机系统中最常用的一种工具。UNIX下的编辑器有ex,sed和vi等，其中，使用最为广泛的是vi。 文中是两张<code>VIM键盘图</code>和<code>VIM命令图解</code>。<br><a id="more"></a></p>
 <p><img src="http://oligvdnzp.bkt.clouddn.com/vim02.jpg" alt="VIM键盘图"><br><img src="http://oligvdnzp.bkt.clouddn.com/vim01.png" alt="VIM命令图解"></p>
 ]]></content>
@@ -3530,7 +3718,7 @@
     
     <entry>
       <title><![CDATA[GIT常用命令整理]]></title>
-      <url>http://dbanote.github.io/2017/01/26/tools/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%95%B4%E7%90%86/</url>
+      <url>/2017/01/26/tools/git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%95%B4%E7%90%86/</url>
       <content type="html"><![CDATA[<h2 id="基本信息设置与查看"><a href="#基本信息设置与查看" class="headerlink" title="基本信息设置与查看"></a>基本信息设置与查看</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git config --global user.name &apos;dbanote&apos;</span>
 <span class="line">git config --global user.email &apos;15004618839@139.com&apos;</span>
 <span class="line"></span>
@@ -3559,7 +3747,7 @@
     
     <entry>
       <title><![CDATA[MySQL DBA从小白到大神实战-02 MySQL标准化、自动化部署]]></title>
-      <url>http://dbanote.github.io/2017/01/26/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/02-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
+      <url>/2017/01/26/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/02-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<h2 id="为什么数据目录和日志目录需要分开"><a href="#为什么数据目录和日志目录需要分开" class="headerlink" title="为什么数据目录和日志目录需要分开?"></a>为什么数据目录和日志目录需要分开?</h2><p>这里的分开，我理解是将MySQL的数据目录和日志目录分别放到不同类型的磁盘中。<br>假设生产环境中服务器上有两种类型的磁盘，分别是SSD和SAS，SSD比SAS的响应时间要快（SSD响应时间约0.1毫秒，SAS的响应时间约10毫秒），为了更好的利用磁盘，一般会把活跃的数据放到SSD上，冷数据放到SAS磁盘上。<br>数据目录下的数据一般是随机读写的热数据，放到SSD盘中会有较高的响应速度；<br>日志目录下的日志是顺序读写的冷数据，放到SAS盘中满足写日志高吞吐量的需求。<br><a id="more"></a></p>
 <h2 id="如何标准化配置多实例例如一台物理主机上部署3306与3307两个实例"><a href="#如何标准化配置多实例-（例如：一台物理主机上部署3306与3307两个实例）" class="headerlink" title="如何标准化配置多实例?（例如：一台物理主机上部署3306与3307两个实例）"></a>如何标准化配置多实例?（例如：一台物理主机上部署3306与3307两个实例）</h2><p>标准化配置多实例，主要是标准化每个实例的目录和内存设置，这样每个实例的参数设置也很容易达到标准化。标准化配置的MYSQL实例，方便实施监控及运维管理。<br>因一个MySQL实例最多占用64G的物理内存，所以在物理内存较高的服务器上，一般会安装多个MySQL实例，MySQL不同实例是通过端口来区别的。<br>例如：一台64G的物理主机上部署3306与3307两个MYSQL实例  </p>
 <h3 id="标准化目录"><a href="#标准化目录" class="headerlink" title="标准化目录"></a>标准化目录</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">实例1：</span>
@@ -3902,7 +4090,7 @@
     
     <entry>
       <title><![CDATA[MySQL DBA从小白到大神实战-01 MySQL 高级DBA职业规划]]></title>
-      <url>http://dbanote.github.io/2017/01/26/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/01-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
+      <url>/2017/01/26/mysql/%E8%AF%BE%E7%A8%8B%E5%AD%A6%E4%B9%A0/01-MySQL-DBA%E4%BB%8E%E5%B0%8F%E7%99%BD%E5%88%B0%E5%A4%A7%E7%A5%9E%E5%AE%9E%E6%88%98/</url>
       <content type="html"><![CDATA[<h2 id="什么是mvcc有什么作用"><a href="#什么是MVCC？有什么作用？" class="headerlink" title="什么是MVCC？有什么作用？"></a>什么是MVCC？有什么作用？</h2><p>MVCC是Multiversion Concurrency Control的缩写，中文的意思是多版本并发控制。<br>目前多数DB都采用了这一技术，比如Oracle，PostgreSQL等，但各自的实现机制不尽相同，MVCC没有一个统一的实现标准。<br>MVCC能有效降低锁的开销，虽然不同数据库实现MVCC的机制有所有同，但大都实现了非阻塞的读操作，写操作也只锁定必要的行。</p>
 <a id="more"></a>
 <h2 id="acid中的i是怎么实现在的"><a href="#ACID中的I是怎么实现在的？" class="headerlink" title="ACID中的I是怎么实现在的？"></a>ACID中的I是怎么实现在的？</h2><ul>
@@ -3969,7 +4157,7 @@
     
     <entry>
       <title><![CDATA[hexo+github搭建个人博客]]></title>
-      <url>http://dbanote.github.io/2017/01/19/tools/hexo+github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+      <url>/2017/01/19/tools/hexo+github%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
       <content type="html"><![CDATA[<h2 id="前言我的博客之旅"><a href="#前言：我的博客之旅" class="headerlink" title="前言：我的博客之旅"></a>前言：我的博客之旅</h2><p>我用<code>wordpress</code>写过一段时间博客，因租用的外国空间访问速度不理想，放弃！<br>我用<code>vimwiki</code>写过一段时间博客，因其配置、更新博客比较麻烦，且生成的html也需要存放到租用的空间上才能共享，放弃！<br>我在类似CSDN免费空间上也写过一段时间博客，因没有客户端工具，在线编辑功能受限，且本地不能保存备份博客，放弃！<br>这两年我一直用有道云笔记写博客，其本地编辑功能比较强大，有易用的分类目录和标签功能，单条博客也易于分享，但缺乏一个整体对外的窗口，文章中的代码也无法实现高亮显示，不够美观！<br>2017年初，偶然的机会知道了hexo，因有较强的markdown和git功底，决定开启hexo写博之旅。</p>
 <blockquote>
 <p><strong>hexo是什么?</strong><br>hexo是一款基于Node.js的静态博客框架。 hexo官网地址：<a href="https://hexo.io" target="_blank" rel="external">https://hexo.io</a></p>
@@ -4075,7 +4263,7 @@
 <span class="line"><span class="comment"># 部署到github上</span></span>
 <span class="line">hexo d</span>
 </pre></td></tr></table></figure>
-<p>部署好了后，在浏览器地址栏中输入你的仓库名来访问，我的是<a href="http://dbanote.github.io">dbanote.github.io</a>。注意一点，第一次部署的话，可能需要等待一会（一般不到10分钟就好了）才能生效，以后每次部署就可以直接访问。到这里基本的博客就搭建好了。</p>
+<p>部署好了后，在浏览器地址栏中输入你的仓库名来访问，我的是<a href="http://dbanote.github.io" target="_blank" rel="external">dbanote.github.io</a>。注意一点，第一次部署的话，可能需要等待一会（一般不到10分钟就好了）才能生效，以后每次部署就可以直接访问。到这里基本的博客就搭建好了。</p>
 <h2 id="tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><ol>
 <li>注意一定要验证Github的验证邮件。</li>
 <li><p>出现其他任何的问题，先删除博客目录下的<code>db.json</code>文件，然后清理再部署远程博客，操作时输入以下的命令</p>

@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="刘雅君" />
+
+
+
+<meta name="description" content="设置Oracle用户密码永不过期alter profile default limit PASSWORD_LIFE_TIME unlimited;
+
+# 查看设置
+select * from dba_profiles where resource_name like &apos;PASSWORD_LIFE_TIME%&apos;;
+
+设置Oracle用户登陆失败次数限制# 设置登陆失败次数限制为100，错误登陆数超过">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle Database 11g工作中常用的命令和脚本整理">
+<meta property="og:url" content="/2017/03/28/oracle/Oracle 11g工作中常用的命令和脚本整理/index.html">
+<meta property="og:site_name" content="一个DBA的工作学习笔记">
+<meta property="og:description" content="设置Oracle用户密码永不过期alter profile default limit PASSWORD_LIFE_TIME unlimited;
+
+# 查看设置
+select * from dba_profiles where resource_name like &apos;PASSWORD_LIFE_TIME%&apos;;
+
+设置Oracle用户登陆失败次数限制# 设置登陆失败次数限制为100，错误登陆数超过">
+<meta property="og:updated_time" content="2017-03-30T09:03:24.926Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Oracle Database 11g工作中常用的命令和脚本整理">
+<meta name="twitter:description" content="设置Oracle用户密码永不过期alter profile default limit PASSWORD_LIFE_TIME unlimited;
+
+# 查看设置
+select * from dba_profiles where resource_name like &apos;PASSWORD_LIFE_TIME%&apos;;
+
+设置Oracle用户登陆失败次数限制# 设置登陆失败次数限制为100，错误登陆数超过">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="一个DBA的工作学习笔记" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/favicon.png">
+
+
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Oracle Database 11g工作中常用的命令和脚本整理 | 一个DBA的工作学习笔记</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: false,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script>
+        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
+    </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?2e7a5de312dd959398193e7e92a5cdce";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">刘雅君</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">欲事之无繁，则必劳于始而逸于终</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" href="https://github.com/dbanote" title="GitHub"></a>
+                            
+                                <a class="fa Email" href="mailto:15004618839@139.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" href="http://weibo.com/foxbei" title="新浪微博"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/11g/">11g</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/">Centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/expdp/">expdp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goldengate/">goldengate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lvm/">lvm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sublime-text/">sublime text</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zabbix/">zabbix</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://support.oracle.com/">My Oracle Support</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://edelivery.oracle.com/">Oracle Edelivery</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://docs.oracle.com/">Oracle Help Center</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.dataguru.cn/">练数成金</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.santongit.com/">三通IT论坛</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.17zixueba.com/">一起自学吧</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://www.qiniu.com/">七牛云</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">刘雅君</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">刘雅君</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">欲事之无繁，则必劳于始而逸于终</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/dbanote" title="GitHub"></a>
+                            
+                                <a class="fa Email" target="_blank" href="mailto:15004618839@139.com" title="Email"></a>
+                            
+                                <a class="fa 新浪微博" target="_blank" href="http://weibo.com/foxbei" title="新浪微博"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-oracle/Oracle 11g工作中常用的命令和脚本整理" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/28/oracle/Oracle 11g工作中常用的命令和脚本整理/" class="article-date">
+      <time datetime="2017-03-28T07:23:05.827Z" itemprop="datePublished">2017-03-28</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Oracle Database 11g工作中常用的命令和脚本整理
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/script/">script</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oracle/">oracle</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="设置oracle用户密码永不过期"><a href="#设置Oracle用户密码永不过期" class="headerlink" title="设置Oracle用户密码永不过期"></a>设置Oracle用户密码永不过期</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">alter profile default limit PASSWORD_LIFE_TIME unlimited;</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 查看设置</span></span>
+<span class="line"><span class="keyword">select</span> * from dba_profiles where resource_name like <span class="string">'PASSWORD_LIFE_TIME%'</span>;</span>
+</pre></td></tr></table></figure>
+<h2 id="设置oracle用户登陆失败次数限制"><a href="#设置Oracle用户登陆失败次数限制" class="headerlink" title="设置Oracle用户登陆失败次数限制"></a>设置Oracle用户登陆失败次数限制</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 设置登陆失败次数限制为100，错误登陆数超过100会导致用户被锁</span></span>
+<span class="line">alter profile default limit FAILED_LOGIN_ATTEMPTS <span class="number">100</span>;</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 无限制</span></span>
+<span class="line">alter profile default limit FAILED_LOGIN_ATTEMPTS unlimited;</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 查看登陆失败限制设置</span></span>
+<span class="line"><span class="keyword">select</span> * from dba_profiles where resource_name like <span class="string">'FAILED_LOGIN_ATTEMPTS%'</span>;</span>
+</pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="系统进程pid查找对应sqltext"><a href="#系统进程PID查找对应SQLTEXT" class="headerlink" title="系统进程PID查找对应SQLTEXT"></a>系统进程PID查找对应SQLTEXT</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> sql_text <span class="keyword">FROM</span> v$sqltext a </span>
+<span class="line">  <span class="keyword">WHERE</span> (a.hash_value, a.address) <span class="keyword">IN</span> (<span class="keyword">SELECT</span> <span class="keyword">DECODE</span> (sql_hash_value,<span class="number">0</span>, prev_hash_value,sql_hash_value),</span>
+<span class="line">        <span class="keyword">DECODE</span> (sql_hash_value, <span class="number">0</span>, prev_sql_addr, sql_address)</span>
+<span class="line">    <span class="keyword">FROM</span> v$<span class="keyword">session</span> b <span class="keyword">WHERE</span> b.paddr = (<span class="keyword">SELECT</span> addr <span class="keyword">FROM</span> v$process c <span class="keyword">WHERE</span> c.spid =&amp;pid)) <span class="keyword">ORDER</span> <span class="keyword">BY</span> piece <span class="keyword">ASC</span>;</span>
+</pre></td></tr></table></figure>
+<h2 id="查找长事务对应的sqltext"><a href="#查找长事务对应的SQLTEXT" class="headerlink" title="查找长事务对应的SQLTEXT"></a>查找长事务对应的SQLTEXT</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">with ltr as ( </span>
+<span class="line"><span class="keyword">select</span> to_char(<span class="keyword">sysdate</span>,<span class="string">'YYYYMMDDHH24MISS'</span>) TM, </span>
+<span class="line">       s.sid, </span>
+<span class="line">       s.sql_id, </span>
+<span class="line">       s.sql_child_number, </span>
+<span class="line">       s.prev_sql_id, </span>
+<span class="line">       xid, </span>
+<span class="line">       to_char(t.start_date,<span class="string">'YYYYMMDDHH24MISS'</span>) start_time, </span>
+<span class="line">       e.TYPE,e.block, </span>
+<span class="line">       e.ctime, </span>
+<span class="line">       <span class="keyword">decode</span>(e.CTIME, <span class="number">0</span>, (<span class="keyword">sysdate</span> - t.start_date) * <span class="number">3600</span>*<span class="number">24</span>, e.ctime) el_second </span>
+<span class="line">  <span class="keyword">from</span> v$<span class="keyword">transaction</span> t, v$<span class="keyword">session</span> s,v$transaction_enqueue e</span>
+<span class="line"> <span class="keyword">where</span> t.start_date &lt;= <span class="keyword">sysdate</span> - <span class="built_in">interval</span> <span class="string">'200'</span> <span class="keyword">second</span></span>
+<span class="line">   <span class="keyword">and</span> t.addr = s.taddr </span>
+<span class="line">   <span class="keyword">and</span> t.addr = e.addr(+) ) </span>
+<span class="line">  <span class="keyword">select</span> ltr.* , (<span class="keyword">select</span> q1.sql_text <span class="keyword">from</span> v$<span class="keyword">sql</span> q1 <span class="keyword">where</span> ltr.prev_sql_id = q1.sql_id(+)</span>
+<span class="line">   <span class="keyword">and</span> <span class="keyword">rownum</span> = <span class="number">1</span>) prev_sql_text , </span>
+<span class="line">  (<span class="keyword">select</span> q1.sql_text <span class="keyword">from</span> v$<span class="keyword">sql</span> q1 <span class="keyword">where</span> ltr.sql_id = q1.sql_id(+) </span>
+<span class="line">   <span class="keyword">and</span> ltr.sql_child_number = q1.CHILD_NUMBER(+)) sql_text </span>
+<span class="line">   <span class="keyword">from</span> ltr ltr;</span>
+</pre></td></tr></table></figure>
+<h2 id="永久设置sqlplus的环境变量"><a href="#永久设置sql-plus的环境变量" class="headerlink" title="永久设置sql*plus的环境变量"></a>永久设置sql*plus的环境变量</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">echo <span class="string">"set pagesize 9999"</span> &gt;&gt; $ORACLE_HOME/sqlplus/admin/glogin.sql</span>
+<span class="line">echo <span class="string">"set line 150"</span> &gt;&gt; $ORACLE_HOME/sqlplus/admin/glogin.sql</span>
+<span class="line">echo <span class="string">"set long 5000"</span> &gt;&gt; $ORACLE_HOME/sqlplus/admin/glogin.sql</span>
+</pre></td></tr></table></figure>
+<h2 id="查找非系统用户中无主键表"><a href="#查找非系统用户中无主键表" class="headerlink" title="查找非系统用户中无主键表"></a>查找非系统用户中无主键表</h2><figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">distinct</span> at.TABLE_NAME, at.OWNER, at.NUM_ROWS</span>
+<span class="line"><span class="keyword">from</span> </span>
+<span class="line">  (<span class="keyword">SELECT</span> owner,table_name <span class="keyword">FROM</span> all_tables <span class="keyword">WHERE</span> owner <span class="keyword">in</span> </span>
+<span class="line">   (<span class="keyword">select</span> username <span class="keyword">from</span> dba_users <span class="keyword">where</span> account_status=<span class="string">'OPEN'</span> <span class="keyword">and</span> username <span class="keyword">not</span> <span class="keyword">in</span> (<span class="string">'SYSTEM'</span>,<span class="string">'SYS'</span>,<span class="string">'GOLDENGATE'</span>))</span>
+<span class="line"><span class="keyword">MINUS</span></span>
+<span class="line">  <span class="keyword">SELECT</span> owner,table_name <span class="keyword">FROM</span> all_constraints <span class="keyword">WHERE</span> owner <span class="keyword">in</span> </span>
+<span class="line">   (<span class="keyword">select</span> username <span class="keyword">from</span> dba_users <span class="keyword">where</span> account_status=<span class="string">'OPEN'</span> <span class="keyword">and</span> username <span class="keyword">not</span> <span class="keyword">in</span> (<span class="string">'SYSTEM'</span>,<span class="string">'SYS'</span>,<span class="string">'GOLDENGATE'</span>)) </span>
+<span class="line">  <span class="keyword">AND</span> constraint_type = <span class="string">'P'</span> ) vn, all_tables <span class="keyword">at</span></span>
+<span class="line"><span class="keyword">where</span> vn.TABLE_NAME=at.TABLE_NAME <span class="keyword">and</span> vn.OWNER=at.OWNER <span class="keyword">and</span> at.TABLE_NAME <span class="keyword">not</span> <span class="keyword">like</span> <span class="string">'%$%'</span> <span class="keyword">order</span> <span class="keyword">by</span> <span class="number">2</span>,<span class="number">1</span>;</span>
+</pre></td></tr></table></figure>
+      
+    </div>
+    
+  </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/03/29/oracle/Oracle_DataPump_INCLUDE_参数限制4000个字符解决办法/">
+                    Oracle expdp中INCLUDE参数限制4000个字符的解决办法
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2017/03/28/tools/Hexo文章的密码访问/">
+                    Hexo文章的密码访问
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#设置oracle用户密码永不过期"><span class="toc-number">1.</span> <span class="toc-text">设置Oracle用户密码永不过期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置oracle用户登陆失败次数限制"><span class="toc-number">2.</span> <span class="toc-text">设置Oracle用户登陆失败次数限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#系统进程pid查找对应sqltext"><span class="toc-number">3.</span> <span class="toc-text">系统进程PID查找对应SQLTEXT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查找长事务对应的sqltext"><span class="toc-number">4.</span> <span class="toc-text">查找长事务对应的SQLTEXT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#永久设置sqlplus的环境变量"><span class="toc-number">5.</span> <span class="toc-text">永久设置sql*plus的环境变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查找非系统用户中无主键表"><span class="toc-number">6.</span> <span class="toc-text">查找非系统用户中无主键表</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-4 i,
+        .toc-level-4 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/03/29/oracle/Oracle_DataPump_INCLUDE_参数限制4000个字符解决办法/" title="上一篇: Oracle expdp中INCLUDE参数限制4000个字符的解决办法">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2017/03/28/tools/Hexo文章的密码访问/" title="下一篇: Hexo文章的密码访问">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/03/30/oracle/goldengate/GoldenGate 12.1.2 新特性参数部分解释/">GoldenGate 12.1.2 新特性参数部分解释</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/29/oracle/Oracle_DataPump_INCLUDE_参数限制4000个字符解决办法/">Oracle expdp中INCLUDE参数限制4000个字符的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/28/oracle/Oracle 11g工作中常用的命令和脚本整理/">Oracle Database 11g工作中常用的命令和脚本整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/28/tools/Hexo文章的密码访问/">Hexo文章的密码访问</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/28/oracle/Oracle数据库补丁号码快速参考 (文档 ID 1922396.1)/">数据库GI PSU，SPU(CPU)，Bundle Patches 和 Patchsets 补丁号码快速参考 (文档 ID 1922396.1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/24/linux/20170324_Vmware_centos_虚拟机根分区磁盘扩容(基于LVM)/">VMWare CentOS 虚拟机根分区磁盘扩容(基于LVM)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/20/mysql/课程学习/09-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-09 MySQL性能优化的关键点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/18/linux/20170318_CentOS7.3安装图解/">CentOS7.3安装图解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/13/mysql/课程学习/08-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-08 MySQL监控系统之Zabbix</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/mysql/课程学习/07-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-07 MySQL锁机制与事务机制实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/27/mysql/课程学习/06-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-06 深入浅出MySQL备份与恢复</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/mysql/课程学习/05-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-05 MySQL DBA日常操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/16/oracle/那些在11gR2中可能惹祸的新特性/">那些在11gR2中可能惹祸的新特性</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/tools/hexo解决代码块空行自动删除问题/">hexo解决代码块空行自动删除问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/mysql/课程学习/04-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-04 揭密MySQL databock and binlog的格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo博客添加常用插件/">hexo博客添加常用插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo更换主题并个性化定制/">hexo更换主题并个性化定制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/tools/Sublime常用快捷键/">Sublime Text 常用快捷键</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/mysql/课程学习/03-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-03 深入MySQL体系结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/tools/vim常用命令/">VIM常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/tools/git常用命令整理/">GIT常用命令整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/课程学习/02-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-02 MySQL标准化、自动化部署</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/课程学习/01-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-01 MySQL 高级DBA职业规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/tools/hexo+github搭建个人博客/">hexo+github搭建个人博客</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-right">
+                <i class="fa fa-copyright"></i> 
+                2017 刘雅君
+            </div>
+            <!--
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>-->
+        </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+             post: ".article-entry a[href], .copyright a[href]", 
+            
+            
+            
+            
+            
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>

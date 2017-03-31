@@ -266,6 +266,80 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-mysql/课程学习/07-MySQL-DBA从小白到大神实战" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/10/mysql/课程学习/07-MySQL-DBA从小白到大神实战/" class="article-date">
+      <time datetime="2017-03-09T16:00:00.000Z" itemprop="datePublished">2017-03-10</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/10/mysql/课程学习/07-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-07 MySQL锁机制与事务机制实现</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="MySQL参数autocommit生产环境设1还是0？为什么？"><a href="#MySQL参数autocommit生产环境设1还是0？为什么？" class="headerlink" title="MySQL参数autocommit生产环境设1还是0？为什么？"></a>MySQL参数autocommit生产环境设1还是0？为什么？</h2><p>MySQL参数autocommit生产环境设成0，即不自动提交。 设置成不自动提交，事务能做rollback，以满足事务的原子性Atomicity的要求，设置方法：<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">set autocommit=<span class="number">0</span>;</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 也可以修改my.cnf配置文件</span></span>
+<span class="line">autocommit=<span class="number">0</span></span>
+</pre></td></tr></table></figure></p>
+<h2 id="MySQL参数tx-isolation生产环境上大多数是设什么值，为什么？"><a href="#MySQL参数tx-isolation生产环境上大多数是设什么值，为什么？" class="headerlink" title="MySQL参数tx_isolation生产环境上大多数是设什么值，为什么？"></a>MySQL参数tx_isolation生产环境上大多数是设什么值，为什么？</h2><p>MySQL参数<code>tx_isolation</code>生产环境上大多数是设成<code>READ-COMMITED</code>。事务的隔离级别设置为<code>READ-COMMITED</code>时不会发生脏读现象，虽会出现不可重复读和幻读问题，但不会对业务应用造成影响。而设置成以下隔离级别会出现的问题如下：</p>
+<ul>
+<li>Read Uncommitted：会产生脏读、不可重复读、幻读现象，而脏读这在生产环境中是不被允许的</li>
+<li>Repeatable Read：不会出现不可重复读和幻读问题，但此特性一般不符合应用业务需要，且并发性能也不好。</li>
+<li>Serializable：所有事务全部串行执行（只允许同时一个事务操作，若有其他事务，也需要等前一个事务完成后才能开始），不能并发执行，这在生产环境中是不现实的。</li>
+</ul>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/03/10/mysql/课程学习/07-MySQL-DBA从小白到大神实战/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-mysql/课程学习/06-MySQL-DBA从小白到大神实战" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -894,70 +968,6 @@
       
         <p class="article-more-link">
           <a href="/2017/01/28/mysql/课程学习/03-MySQL-DBA从小白到大神实战/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-tools/vim常用命令" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/01/28/tools/vim常用命令/" class="article-date">
-      <time datetime="2017-01-27T16:00:00.000Z" itemprop="datePublished">2017-01-28</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/28/tools/vim常用命令/">VIM常用命令</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>文本编辑器是所有计算机系统中最常用的一种工具。UNIX下的编辑器有ex,sed和vi等，其中，使用最为广泛的是vi。 文中是两张<code>VIM键盘图</code>和<code>VIM命令图解</code>。<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/">vim</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/01/28/tools/vim常用命令/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

@@ -1452,6 +1452,8 @@ body .ui-tooltip {
 .article-entry table tr,
 .article-entry table td {
   height: 35px;
+  font-size: 14px;
+  font-family: Source Code Pro, Consolas, Monaco, Menlo, monospace;
 }
 .article-entry table th {
   font-weight: bold;

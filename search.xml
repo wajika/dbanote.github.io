@@ -159,7 +159,7 @@
 <span class="line">    execution <span class="keyword">time</span> (avg/stddev):   <span class="number">59.5033</span>/<span class="number">0</span>.<span class="number">00</span></span>
 <span class="line"><span class="comment">#--------------------------------------------------------------------------------------------------------------------</span></span>
 </pre></td></tr></table></figure>
-<h3 id="通过orzdba监控工具分析查看机器的容量"><a href="#通过orzdba监控工具分析查看机器的容量" class="headerlink" title="通过orzdba监控工具分析查看机器的容量"></a>通过orzdba监控工具分析查看机器的容量</h3><p><img src="http://oligvdnzp.bkt.clouddn.com/0413_sysbench_01.png" alt=""></p>
+<h3 id="通过orzdba监控工具分析查看机器的容量"><a href="#通过orzdba监控工具分析查看机器的容量" class="headerlink" title="通过orzdba监控工具分析查看机器的容量"></a>通过orzdba监控工具分析查看机器的容量</h3><p><img src="http://oligvdnzp.bkt.clouddn.com/0413_sysbench_01.png" alt=""><br>附：<a href="http://olejf7dok.bkt.clouddn.com/orzdba%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.pdf" target="_blank" rel="external">orzdba工具使用说明</a></p>
 <h2 id="分库分表架构设计"><a href="#分库分表架构设计" class="headerlink" title="分库分表架构设计"></a>分库分表架构设计</h2><p>问题：在订单表中（分库分表），有70%查询是通过主键和userId字段查询(userId是分库分表策略字段)，有20%要通过order_num（订单号）查数据。</p>
 <p><font color="red"><b>1. 请问order_num（订单号）要怎么设计才能快速找到订单记录是在哪个库的哪个表？</b></font><br>在订单号<code>order_num</code>中加入库序号和表序号，通过userid可以算出库序号和表序号，计算公式如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">中间变量=userId%(库数量*每个库的表数量)</span>
 <span class="line">库序号=中间变量/每个库的表数量</span>
@@ -221,7 +221,6 @@
 <li>分库分表规则确定以后，扩展变更规则需要迁移数据</li>
 </ol>
 <p>业务痛点：<br><img src="http://oligvdnzp.bkt.clouddn.com/0414_fen_database_01.png" alt="业务痛点"><br>业内解决方案：<br><img src="http://oligvdnzp.bkt.clouddn.com/0414_fen_database_02.png" alt="业务痛点"><br><img src="http://oligvdnzp.bkt.clouddn.com/0414_fen_database_03.png" alt="Proxy方案对比"></p>
-<p>附：<a href="http://olejf7dok.bkt.clouddn.com/orzdba%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.pdf" target="_blank" rel="external">orzdba工具使用说明</a></p>
 ]]></content>
     </entry>
     

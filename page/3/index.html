@@ -187,7 +187,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/11g/">11g</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/">Centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/expdp/">expdp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goldengate/">goldengate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lvm/">lvm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sublime-text/">sublime text</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zabbix/">zabbix</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/11g/">11g</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/">Centos</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ORA/">ORA-</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/expdp/">expdp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/goldengate/">goldengate</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lvm/">lvm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mysql/">mysql</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/oracle/">oracle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sublime-text/">sublime text</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sysbench/">sysbench</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tools/">tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/zabbix/">zabbix</a></li></ul>
                     </div>
                 </section>
                 
@@ -266,10 +266,168 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-mysql/课程学习/03-MySQL-DBA从小白到大神实战" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-tools/hexo更换主题并个性化定制" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/01/28/mysql/课程学习/03-MySQL-DBA从小白到大神实战/" class="article-date">
+      <a href="/2017/02/08/tools/hexo更换主题并个性化定制/" class="article-date">
+      <time datetime="2017-02-08T01:33:39.391Z" itemprop="datePublished">2017-02-08</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/08/tools/hexo更换主题并个性化定制/">hexo更换主题并个性化定制</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <blockquote>
+<p>hexo系统默认的主题虽然也不错，但我更喜欢<a href="http://moxfive.xyz/yelee">yelee</a>和<a href="https://github.com/litten/hexo-theme-yilia">yilia</a>这两款主题</p>
+</blockquote>
+<h2 id="安装yelee主题"><a href="#安装yelee主题" class="headerlink" title="安装yelee主题"></a>安装yelee主题</h2><ol>
+<li><p>主题说明文档：<a href="http://moxfive.coding.me/yelee"><code>http://moxfive.coding.me/yelee/</code></a></p>
+</li>
+<li><p>在博客根目录下执行以下命令</p>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 克隆最新一次提交（git clone速度很慢，可只克隆最新一次提交）</span></span>
+<span class="line">git clone --depth <span class="number">1</span> https:<span class="regexp">//github</span>.com/MOxFIVE/hexo-theme-yelee.git themes/yelee</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>编辑修改根目录下的<code>_config.yml</code>文件</p>
+<figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># theme: landscape</span></span>
+<span class="line">theme: yelee</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>更换主题后需要清理并重新生成静态页</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>安装搜索插件</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-generator-search --save</span>
+</pre></td></tr></table></figure>
+</li>
+<li><p>参照文档修改<code>themes\yelee</code>目录下的<code>_config.yml</code>文件</p>
+</li>
+</ol>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/02/08/tools/hexo更换主题并个性化定制/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-tools/Sublime常用快捷键" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/01/30/tools/Sublime常用快捷键/" class="article-date">
+      <time datetime="2017-01-30T08:33:55.000Z" itemprop="datePublished">2017-01-30</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/30/tools/Sublime常用快捷键/">Sublime Text 常用快捷键</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="通用"><a href="#通用" class="headerlink" title="通用"></a>通用</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">↑ ↓ ← →             上下左右移动光标</span>
+<span class="line">Alt                 调出菜单</span>
+<span class="line">Ctrl + Shift + P    调出命令板（Command Palette）</span>
+<span class="line">Ctrl + `            调出控制台</span>
+</pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sublime-text/">sublime text</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/01/30/tools/Sublime常用快捷键/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-mysql/MySQL-DBA从小白到大神实战课程学习/03-MySQL-DBA从小白到大神实战" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/01/28/mysql/MySQL-DBA从小白到大神实战课程学习/03-MySQL-DBA从小白到大神实战/" class="article-date">
       <time datetime="2017-01-28T05:42:00.000Z" itemprop="datePublished">2017-01-28</time>
 </a>
 
@@ -285,7 +443,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/28/mysql/课程学习/03-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-03 深入MySQL体系结构</a>
+      <a class="article-title" href="/2017/01/28/mysql/MySQL-DBA从小白到大神实战课程学习/03-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-03 深入MySQL体系结构</a>
     </h1>
   
 
@@ -313,7 +471,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/01/28/mysql/课程学习/03-MySQL-DBA从小白到大神实战/#more">阅读全文 >></a>
+          <a href="/2017/01/28/mysql/MySQL-DBA从小白到大神实战课程学习/03-MySQL-DBA从小白到大神实战/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -466,10 +624,10 @@
 
 
   
-    <article id="post-mysql/课程学习/02-MySQL-DBA从小白到大神实战" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-mysql/MySQL-DBA从小白到大神实战课程学习/02-MySQL-DBA从小白到大神实战" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/01/26/mysql/课程学习/02-MySQL-DBA从小白到大神实战/" class="article-date">
+      <a href="/2017/01/26/mysql/MySQL-DBA从小白到大神实战课程学习/02-MySQL-DBA从小白到大神实战/" class="article-date">
       <time datetime="2017-01-26T06:16:32.184Z" itemprop="datePublished">2017-01-26</time>
 </a>
 
@@ -485,7 +643,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/26/mysql/课程学习/02-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-02 MySQL标准化、自动化部署</a>
+      <a class="article-title" href="/2017/01/26/mysql/MySQL-DBA从小白到大神实战课程学习/02-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-02 MySQL标准化、自动化部署</a>
     </h1>
   
 
@@ -511,7 +669,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/01/26/mysql/课程学习/02-MySQL-DBA从小白到大神实战/#more">阅读全文 >></a>
+          <a href="/2017/01/26/mysql/MySQL-DBA从小白到大神实战课程学习/02-MySQL-DBA从小白到大神实战/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -530,10 +688,10 @@
 
 
   
-    <article id="post-mysql/课程学习/01-MySQL-DBA从小白到大神实战" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-mysql/MySQL-DBA从小白到大神实战课程学习/01-MySQL-DBA从小白到大神实战" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/01/26/mysql/课程学习/01-MySQL-DBA从小白到大神实战/" class="article-date">
+      <a href="/2017/01/26/mysql/MySQL-DBA从小白到大神实战课程学习/01-MySQL-DBA从小白到大神实战/" class="article-date">
       <time datetime="2017-01-26T05:54:07.005Z" itemprop="datePublished">2017-01-26</time>
 </a>
 
@@ -549,7 +707,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/26/mysql/课程学习/01-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-01 MySQL 高级DBA职业规划</a>
+      <a class="article-title" href="/2017/01/26/mysql/MySQL-DBA从小白到大神实战课程学习/01-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-01 MySQL 高级DBA职业规划</a>
     </h1>
   
 
@@ -575,7 +733,7 @@
 
       
         <p class="article-more-link">
-          <a href="/2017/01/26/mysql/课程学习/01-MySQL-DBA从小白到大神实战/#more">阅读全文 >></a>
+          <a href="/2017/01/26/mysql/MySQL-DBA从小白到大神实战课程学习/01-MySQL-DBA从小白到大神实战/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

@@ -221,13 +221,7 @@
 <li>分库分表规则确定以后，扩展变更规则需要迁移数据</li>
 </ol>
 <p>业务痛点：<br><img src="http://oligvdnzp.bkt.clouddn.com/0414_fen_database_01.png" alt="业务痛点"><br>业内解决方案：<br><img src="http://oligvdnzp.bkt.clouddn.com/0414_fen_database_02.png" alt="业务痛点"><br><img src="http://oligvdnzp.bkt.clouddn.com/0414_fen_database_03.png" alt="Proxy方案对比"></p>
-<h2 id="附orzdba工具使用说明"><a href="#附：orzdba工具使用说明" class="headerlink" title="附：orzdba工具使用说明"></a>附：<a href="http://olejf7dok.bkt.clouddn.com/orzdba%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.pdf" target="_blank" rel="external">orzdba工具使用说明</a></h2>
-
-	<div class="row">
-    <embed src="http://olejf7dok.bkt.clouddn.com/orzdba%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.pdf" width="100%" height="550" type="application/pdf">
-	</div>
-
-
+<p>附：<a href="http://olejf7dok.bkt.clouddn.com/orzdba%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E.pdf" target="_blank" rel="external">orzdba工具使用说明</a></p>
 ]]></content>
     </entry>
     

@@ -266,6 +266,78 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-tools/Hexo文章的密码访问" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/28/tools/Hexo文章的密码访问/" class="article-date">
+      <time datetime="2017-03-28T02:34:03.160Z" itemprop="datePublished">2017-03-28</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/28/tools/Hexo文章的密码访问/">Hexo文章的密码访问</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>工作中有些文档中的部分内容，虽然机密性不高，但也不便在网上直接公开发布。 这时可以通过以下的小技巧来实现<code>简单</code>的文档密码保护。</p>
+<h2 id="方法实现"><a href="#方法实现" class="headerlink" title="方法实现"></a>方法实现</h2><p>因Hexo中Markdown语言和html是混用的，所以可直接在Markdown中直接插入以下这段<code>script</code>(建议放到<code>&lt;!-- more --&gt;</code>段后面)。<br>这里用到了windows对象的<code>alert()</code>方法和<code>prompt()</code>方法。<code>prompt()</code>方法的作用即是显示一个可提示用户输入的对话框，而其本身的返回值就是你输入的那个字符串。因此只需要将其与你默认的密码比较一下就好，如果不正确，则直接将当前页面的loaction属性设为上一个页面即可。<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span>
+<span class="line">    <span class="keyword">if</span>(<span class="string">"123"</span>==prompt(<span class="string">"请输入文档密码"</span>))</span>
+<span class="line">    &#123;</span>
+<span class="line">        alert(<span class="string">"密码正确"</span>);</span>
+<span class="line">    &#125;</span>
+<span class="line">    <span class="keyword">else</span></span>
+<span class="line">    &#123;</span>
+<span class="line">        alert(<span class="string">"密码错误返回主页"</span>);</span>
+<span class="line">        location=<span class="string">"/"</span>;</span>
+<span class="line">    &#125;</span>
+<span class="line">&lt;<span class="regexp">/script&gt;</span></span>
+</pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-oracle/Oracle数据库补丁号码快速参考 (文档 ID 1922396.1)" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -881,87 +953,9 @@
 
 
   
-    <article id="post-tools/hexo解决代码块空行自动删除问题" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/02/14/tools/hexo解决代码块空行自动删除问题/" class="article-date">
-      <time datetime="2017-02-14T09:02:02.540Z" itemprop="datePublished">2017-02-14</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/14/tools/hexo解决代码块空行自动删除问题/">hexo解决代码块空行自动删除问题</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="修改hexo源码"><a href="#修改hexo源码" class="headerlink" title="修改hexo源码"></a>修改hexo源码</h2><p>将<code>node_modules\hexo-util\lib\highlight.js</code>文件中第<code>35</code>行<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 原</span></span>
-<span class="line">    numbers += <span class="string">'&lt;div class="line"&gt;'</span> + (firstLine + i) + <span class="string">'&lt;/div&gt;\n'</span>;</span>
-<span class="line">    content += <span class="string">'&lt;div class="line'</span>;</span>
-<span class="line">    content += (mark.indexOf(firstLine + i) !== -<span class="number">1</span>) ? <span class="string">' marked'</span> : <span class="string">''</span>;</span>
-<span class="line">    content += <span class="string">'"&gt;'</span> + line + <span class="string">'&lt;/div&gt;\n'</span>;</span>
-<span class="line"></span>
-<span class="line"><span class="comment"># 改后</span></span>
-<span class="line">    numbers += <span class="string">'&lt;span class="line"&gt;'</span> + (firstLine + i) + <span class="string">'&lt;/span&gt;\n'</span>;</span>
-<span class="line">    content += <span class="string">'&lt;span class="line'</span>;</span>
-<span class="line">    content += (mark.indexOf(firstLine + i) !== -<span class="number">1</span>) ? <span class="string">' marked'</span> : <span class="string">''</span>;</span>
-<span class="line">    content += <span class="string">'"&gt;'</span> + line + <span class="string">'&lt;/span&gt;\n'</span>;</span>
-</pre></td></tr></table></figure></p>
-<h2 id="清理临时数据库并重启本地服务"><a href="#清理临时数据库并重启本地服务" class="headerlink" title="清理临时数据库并重启本地服务"></a>清理临时数据库并重启本地服务</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">hexo clean</span>
-<span class="line">hexo <span class="keyword">s</span> -g</span>
-</pre></td></tr></table></figure>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/02/14/tools/hexo解决代码块空行自动删除问题/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 </div>

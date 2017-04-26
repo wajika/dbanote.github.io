@@ -266,6 +266,84 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-tools/hexo解决代码块空行自动删除问题" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/14/tools/hexo解决代码块空行自动删除问题/" class="article-date">
+      <time datetime="2017-02-14T09:02:02.540Z" itemprop="datePublished">2017-02-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/14/tools/hexo解决代码块空行自动删除问题/">hexo解决代码块空行自动删除问题</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="修改hexo源码"><a href="#修改hexo源码" class="headerlink" title="修改hexo源码"></a>修改hexo源码</h2><p>将<code>node_modules\hexo-util\lib\highlight.js</code>文件中第<code>35</code>行<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 原</span></span>
+<span class="line">    numbers += <span class="string">'&lt;div class="line"&gt;'</span> + (firstLine + i) + <span class="string">'&lt;/div&gt;\n'</span>;</span>
+<span class="line">    content += <span class="string">'&lt;div class="line'</span>;</span>
+<span class="line">    content += (mark.indexOf(firstLine + i) !== -<span class="number">1</span>) ? <span class="string">' marked'</span> : <span class="string">''</span>;</span>
+<span class="line">    content += <span class="string">'"&gt;'</span> + line + <span class="string">'&lt;/div&gt;\n'</span>;</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 改后</span></span>
+<span class="line">    numbers += <span class="string">'&lt;span class="line"&gt;'</span> + (firstLine + i) + <span class="string">'&lt;/span&gt;\n'</span>;</span>
+<span class="line">    content += <span class="string">'&lt;span class="line'</span>;</span>
+<span class="line">    content += (mark.indexOf(firstLine + i) !== -<span class="number">1</span>) ? <span class="string">' marked'</span> : <span class="string">''</span>;</span>
+<span class="line">    content += <span class="string">'"&gt;'</span> + line + <span class="string">'&lt;/span&gt;\n'</span>;</span>
+</pre></td></tr></table></figure></p>
+<h2 id="清理临时数据库并重启本地服务"><a href="#清理临时数据库并重启本地服务" class="headerlink" title="清理临时数据库并重启本地服务"></a>清理临时数据库并重启本地服务</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">hexo clean</span>
+<span class="line">hexo <span class="keyword">s</span> -g</span>
+</pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/02/14/tools/hexo解决代码块空行自动删除问题/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-mysql/MySQL-DBA从小白到大神实战课程学习/04-MySQL-DBA从小白到大神实战" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -885,76 +963,9 @@
 
 
   
-    <article id="post-tools/hexo+github搭建个人博客" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/01/19/tools/hexo+github搭建个人博客/" class="article-date">
-      <time datetime="2017-01-19T09:28:31.624Z" itemprop="datePublished">2017-01-19</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/19/tools/hexo+github搭建个人博客/">hexo+github搭建个人博客</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="前言：我的博客之旅"><a href="#前言：我的博客之旅" class="headerlink" title="前言：我的博客之旅"></a>前言：我的博客之旅</h2><p>我用<code>wordpress</code>写过一段时间博客，因租用的外国空间访问速度不理想，放弃！<br>我用<code>vimwiki</code>写过一段时间博客，因其配置、更新博客比较麻烦，且生成的html也需要存放到租用的空间上才能共享，放弃！<br>我在类似CSDN免费空间上也写过一段时间博客，因没有客户端工具，在线编辑功能受限，且本地不能保存备份博客，放弃！<br>这两年我一直用有道云笔记写博客，其本地编辑功能比较强大，有易用的分类目录和标签功能，单条博客也易于分享，但缺乏一个整体对外的窗口，文章中的代码也无法实现高亮显示，不够美观！<br>2017年初，偶然的机会知道了hexo，因有较强的markdown和git功底，决定开启hexo写博之旅。</p>
-<blockquote>
-<p><strong>hexo是什么?</strong><br>hexo是一款基于Node.js的静态博客框架。 hexo官网地址：<a href="https://hexo.io">https://hexo.io</a></p>
-</blockquote>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tools/">tools</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/01/19/tools/hexo+github搭建个人博客/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+      <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next &raquo;</a>
     </nav>
   
 </div>

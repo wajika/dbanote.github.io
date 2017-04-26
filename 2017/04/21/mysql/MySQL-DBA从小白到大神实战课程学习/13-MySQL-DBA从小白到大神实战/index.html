@@ -31,7 +31,7 @@ mysql&amp;gt; create database lyj;
 # 用sysbench工具准备测试环境
 sysbench /usr/local/share/sysbench/tests/include/oltp_legacy/insert.lua \
 --oltp-table-si">
-<meta property="og:updated_time" content="2017-04-25T06:35:53.001Z">
+<meta property="og:updated_time" content="2017-04-25T10:11:07.221Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL DBA从小白到大神实战-13 深入分析Online DDL原理">
 <meta name="twitter:description" content="用oak对表sbtest1做添加字段和增加索引的Online DDL用sysbench工具准备测试环境# 创建数据库
@@ -337,35 +337,35 @@ sysbench /usr/local/share/sysbench/tests/include/oltp_legacy/insert.lua \
 <span class="line">--events=<span class="number">0</span> --<span class="keyword">time</span>=<span class="number">60</span> --oltp-tables-count=<span class="number">2</span> --report-interval=<span class="number">10</span> --threads=<span class="number">2</span> run</span>
 </pre></td></tr></table></figure>
 <a id="more"></a>
-<h3 id="查看测试数据及表结构"><a href="#查看测试数据及表结构" class="headerlink" title="查看测试数据及表结构"></a>查看测试数据及表结构</h3><figure class="highlight"><table><tr><td class="code"><pre><span class="line">mysql&gt; use lyj</span>
-<span class="line">mysql&gt; select count(*) from sbtest1;</span>
+<h3 id="查看测试数据及表结构"><a href="#查看测试数据及表结构" class="headerlink" title="查看测试数据及表结构"></a>查看测试数据及表结构</h3><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">mysql&gt; <span class="keyword">use</span> lyj</span>
+<span class="line">mysql&gt; <span class="keyword">select</span> count(*) from sbtest1;</span>
 <span class="line">+----------+</span>
 <span class="line">| count(*) |</span>
 <span class="line">+----------+</span>
-<span class="line">|  1000000 |</span>
+<span class="line">|  <span class="number">1000000</span> |</span>
 <span class="line">+----------+</span>
 <span class="line"></span>
 <span class="line">mysql&gt; desc sbtest1;</span>
 <span class="line">+-------+------------------+------+-----+---------+----------------+</span>
 <span class="line">| Field | Type             | Null | Key | Default | Extra          |</span>
 <span class="line">+-------+------------------+------+-----+---------+----------------+</span>
-<span class="line">| id    | int(10) unsigned | NO   | PRI | NULL    | auto_increment |</span>
-<span class="line">| k     | int(10) unsigned | NO   | MUL | 0       |                |</span>
-<span class="line">| c     | char(120)        | NO   |     |         |                |</span>
-<span class="line">| pad   | char(60)         | NO   |     |         |                |</span>
+<span class="line">| id    | <span class="keyword">int</span>(<span class="number">10</span>) unsigned | NO   | PRI | NULL    | auto_increment |</span>
+<span class="line">| k     | <span class="keyword">int</span>(<span class="number">10</span>) unsigned | NO   | MUL | <span class="number">0</span>       |                |</span>
+<span class="line">| c     | char(<span class="number">120</span>)        | NO   |     |         |                |</span>
+<span class="line">| pad   | char(<span class="number">60</span>)         | NO   |     |         |                |</span>
 <span class="line">+-------+------------------+------+-----+---------+----------------+</span>
 <span class="line"></span>
 <span class="line">mysql&gt; show create table sbtest1\G;</span>
-<span class="line">*************************** 1. row ***************************</span>
+<span class="line">*************************** <span class="number">1</span>. row ***************************</span>
 <span class="line">       Table: sbtest1</span>
-<span class="line">Create Table: CREATE TABLE `sbtest1` (</span>
-<span class="line">  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,</span>
-<span class="line">  `k` int(10) unsigned NOT NULL DEFAULT '0',</span>
-<span class="line">  `c` char(120) NOT NULL DEFAULT '',</span>
-<span class="line">  `pad` char(60) NOT NULL DEFAULT '',</span>
-<span class="line">  PRIMARY KEY (`id`),</span>
-<span class="line">  KEY `k_1` (`k`)</span>
-<span class="line">) ENGINE=InnoDB AUTO_INCREMENT=1176193 DEFAULT CHARSET=utf8 MAX_ROWS=1000000</span>
+<span class="line">Create Table: CREATE TABLE <span class="string">`sbtest1`</span> (</span>
+<span class="line">  <span class="string">`id`</span> <span class="keyword">int</span>(<span class="number">10</span>) unsigned NOT NULL AUTO_INCREMENT,</span>
+<span class="line">  <span class="string">`k`</span> <span class="keyword">int</span>(<span class="number">10</span>) unsigned NOT NULL DEFAULT <span class="string">'0'</span>,</span>
+<span class="line">  <span class="string">`c`</span> char(<span class="number">120</span>) NOT NULL DEFAULT <span class="string">''</span>,</span>
+<span class="line">  <span class="string">`pad`</span> char(<span class="number">60</span>) NOT NULL DEFAULT <span class="string">''</span>,</span>
+<span class="line">  PRIMARY KEY (<span class="string">`id`</span>),</span>
+<span class="line">  KEY <span class="string">`k_1`</span> (<span class="string">`k`</span>)</span>
+<span class="line">) ENGINE=InnoDB AUTO_INCREMENT=<span class="number">1176193</span> DEFAULT CHARSET=utf8 MAX_ROWS=<span class="number">1000000</span></span>
 </pre></td></tr></table></figure>
 <h3 id="下载oak工具"><a href="#下载OAK工具" class="headerlink" title="下载OAK工具"></a>下载OAK工具</h3><p>OAK全称是Openark–kit，工具包其中的oak-online-alter-table小工具是用来实现Online DDL的。<br>官网地址：<a href="http://code.openark.org/forge/openark-kit" target="_blank" rel="external">http://code.openark.org/forge/openark-kit </a><br>google code在中国无法下载，国内下载地址：<a href="http://pan.baidu.com/s/1pLpuC91" target="_blank" rel="external">http://pan.baidu.com/s/1pLpuC91 </a></p>
 <p>下载OAK工具包后解压<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">tar xvpf openark-kit-<span class="number">196</span>.tar.gz</span>
@@ -391,20 +391,20 @@ sysbench /usr/local/share/sysbench/tests/include/oltp_legacy/insert.lua \
 <span class="line"><span class="comment"># 使用这个工具，需要安装MySQL-python包</span></span>
 <span class="line">yum -<span class="keyword">y</span> install MySQL-python</span>
 </pre></td></tr></table></figure></p>
-<h3 id="用oak对表sbtest1做添加字段和索引的online-ddl"><a href="#用oak对表sbtest1做添加字段和索引的Online-DDL" class="headerlink" title="用oak对表sbtest1做添加字段和索引的Online DDL"></a>用oak对表sbtest1做添加字段和索引的Online DDL</h3><h4 id="确认该表是否符合oak-online-alter-table的执行条件"><a href="#确认该表是否符合oak-online-alter-table的执行条件" class="headerlink" title="确认该表是否符合oak-online-alter-table的执行条件"></a>确认该表是否符合oak-online-alter-table的执行条件</h4><figure class="highlight"><table><tr><td class="code"><pre><span class="line"># 检查是否是单列唯一索引（联合索引和联合主键是不可以的）</span>
+<h3 id="用oak对表sbtest1做添加字段和索引的online-ddl"><a href="#用oak对表sbtest1做添加字段和索引的Online-DDL" class="headerlink" title="用oak对表sbtest1做添加字段和索引的Online DDL"></a>用oak对表sbtest1做添加字段和索引的Online DDL</h3><h4 id="确认该表是否符合oak-online-alter-table的执行条件"><a href="#确认该表是否符合oak-online-alter-table的执行条件" class="headerlink" title="确认该表是否符合oak-online-alter-table的执行条件"></a>确认该表是否符合oak-online-alter-table的执行条件</h4><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 检查是否是单列唯一索引（联合索引和联合主键是不可以的）</span></span>
 <span class="line">show create table sbtest1\G;</span>
 <span class="line"></span>
-<span class="line"># 检查有无触发器</span>
+<span class="line"><span class="comment"># 检查有无触发器</span></span>
 <span class="line">SELECT TRIGGER_SCHEMA,TRIGGER_NAME,EVENT_OBJECT_SCHEMA,EVENT_OBJECT_TABLE FROM information_schema.TRIGGERS</span>
-<span class="line">  WHERE event_object_schema= 'lyj';</span>
+<span class="line">  WHERE event_object_schema= <span class="string">'lyj'</span>;</span>
 <span class="line"></span>
-<span class="line"># 检查有无外键</span>
-<span class="line">select * from information_schema.key_column_usage </span>
-<span class="line"> where table_schema='lyj' and table_name='sbtest1' and referenced_table_name is not null;</span>
-<span class="line">select * from information_schema.key_column_usage</span>
-<span class="line">  where referenced_table_schema='lyj' and referenced_table_name='sbtest1';</span>
+<span class="line"><span class="comment"># 检查有无外键</span></span>
+<span class="line"><span class="keyword">select</span> * from information_schema.key_column_usage </span>
+<span class="line"> where table_schema=<span class="string">'lyj'</span> <span class="keyword">and</span> table_name=<span class="string">'sbtest1'</span> <span class="keyword">and</span> referenced_table_name is <span class="keyword">not</span> null;</span>
+<span class="line"><span class="keyword">select</span> * from information_schema.key_column_usage</span>
+<span class="line">  where referenced_table_schema=<span class="string">'lyj'</span> <span class="keyword">and</span> referenced_table_name=<span class="string">'sbtest1'</span>;</span>
 <span class="line"></span>
-<span class="line"># 要确保无大查询</span>
+<span class="line"><span class="comment"># 要确保无大查询</span></span>
 </pre></td></tr></table></figure>
 <h4 id="用oak执行online-ddl脚本"><a href="#用OAK执行Online-DDL脚本" class="headerlink" title="用OAK执行Online DDL脚本"></a>用OAK执行Online DDL脚本</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">python oak-online-alter-table -u root --ask-<span class="keyword">pass</span> -S /u01/run/<span class="number">3306</span>/mysql.sock -d lyj -t sbtest1 -g new_sbtest1 -a <span class="string">"add last_update_time timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,add key last_update_time(last_update_time)"</span> --sleep=<span class="number">300</span> --skip-delete-<span class="keyword">pass</span></span>
 <span class="line"><span class="comment">#----------------------------------------------------------------------------------------</span></span>
@@ -769,6 +769,12 @@ sysbench /usr/local/share/sysbench/tests/include/oltp_legacy/insert.lua \
 
     <nav id="article-nav">
         
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2017/04/25/mysql/MySQL-DBA从小白到大神实战课程学习/14-MySQL-DBA从小白到大神实战/">
+                    MySQL-DBA从小白到大神实战-14 运维MySQL过程中线上故障分析与排查
+                </a>
+            </div>
+        
         
             <div id="article-nav-older" class="article-nav-title">
                 <a href="/2017/04/18/oracle/那些12c中惹祸的特性关闭列表/">
@@ -815,7 +821,9 @@ sysbench /usr/local/share/sysbench/tests/include/oltp_legacy/insert.lua \
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2017/04/25/mysql/MySQL-DBA从小白到大神实战课程学习/14-MySQL-DBA从小白到大神实战/" title="上一篇: MySQL-DBA从小白到大神实战-14 运维MySQL过程中线上故障分析与排查">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
@@ -827,7 +835,7 @@ sysbench /usr/local/share/sysbench/tests/include/oltp_legacy/insert.lua \
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/21/mysql/MySQL-DBA从小白到大神实战课程学习/13-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-13 深入分析Online DDL原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/18/oracle/那些12c中惹祸的特性关闭列表/">那些12c中惹祸的特性关闭列表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/13/mysql/MySQL-DBA从小白到大神实战课程学习/12-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-12 MySQL构架设计与容量规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/13/oracle/ORA/ORA-27086/">ORA-27086 unable to lock file - already in use</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/mysql/MySQL-DBA从小白到大神实战课程学习/11-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-11 构建高可用MySQL系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql/MySQL-DBA从小白到大神实战课程学习/10-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-10 深入理解MySQL主从复制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/30/oracle/goldengate/GoldenGate 12.1.2 新特性参数部分解释/">GoldenGate 12.1.2 新特性参数部分解释</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/29/oracle/Oracle_DataPump_INCLUDE_参数限制4000个字符解决办法/">Oracle expdp中INCLUDE参数限制4000个字符的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/28/oracle/Oracle 11g工作中常用的命令和脚本整理/">Oracle Database 11g工作中常用的命令和脚本整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/28/tools/Hexo文章的密码访问/">Hexo文章的密码访问</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/28/oracle/Oracle数据库补丁号码快速参考 (文档 ID 1922396.1)/">数据库GI PSU，SPU(CPU)，Bundle Patches 和 Patchsets 补丁号码快速参考 (文档 ID 1922396.1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/24/linux/20170324_Vmware_centos_虚拟机根分区磁盘扩容(基于LVM)/">VMWare CentOS 虚拟机根分区磁盘扩容(基于LVM)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/20/mysql/MySQL-DBA从小白到大神实战课程学习/09-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-09 MySQL性能优化的关键点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/18/linux/20170318_CentOS7.3安装图解/">CentOS7.3安装图解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/13/mysql/MySQL-DBA从小白到大神实战课程学习/08-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-08 MySQL监控系统之Zabbix</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/mysql/MySQL-DBA从小白到大神实战课程学习/07-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-07 MySQL锁机制与事务机制实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/27/mysql/MySQL-DBA从小白到大神实战课程学习/06-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-06 深入浅出MySQL备份与恢复</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/mysql/MySQL-DBA从小白到大神实战课程学习/05-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-05 MySQL DBA日常操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/16/oracle/那些在11gR2中可能惹祸的新特性/">那些在11gR2中可能惹祸的新特性</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/tools/hexo解决代码块空行自动删除问题/">hexo解决代码块空行自动删除问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/mysql/MySQL-DBA从小白到大神实战课程学习/04-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-04 揭密MySQL databock and binlog的格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo博客添加常用插件/">hexo博客添加常用插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo更换主题并个性化定制/">hexo更换主题并个性化定制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/tools/Sublime常用快捷键/">Sublime Text 常用快捷键</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/mysql/MySQL-DBA从小白到大神实战课程学习/03-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-03 深入MySQL体系结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/tools/vim常用命令/">VIM常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/tools/git常用命令整理/">GIT常用命令整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/MySQL-DBA从小白到大神实战课程学习/02-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-02 MySQL标准化、自动化部署</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/MySQL-DBA从小白到大神实战课程学习/01-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-01 MySQL 高级DBA职业规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/tools/hexo+github搭建个人博客/">hexo+github搭建个人博客</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2017/04/25/mysql/MySQL-DBA从小白到大神实战课程学习/14-MySQL-DBA从小白到大神实战/">MySQL-DBA从小白到大神实战-14 运维MySQL过程中线上故障分析与排查</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/21/mysql/MySQL-DBA从小白到大神实战课程学习/13-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-13 深入分析Online DDL原理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/18/oracle/那些12c中惹祸的特性关闭列表/">那些12c中惹祸的特性关闭列表</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/13/mysql/MySQL-DBA从小白到大神实战课程学习/12-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-12 MySQL构架设计与容量规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/13/oracle/ORA/ORA-27086/">ORA-27086 unable to lock file - already in use</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/06/mysql/MySQL-DBA从小白到大神实战课程学习/11-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-11 构建高可用MySQL系统</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/31/mysql/MySQL-DBA从小白到大神实战课程学习/10-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-10 深入理解MySQL主从复制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/30/oracle/goldengate/GoldenGate 12.1.2 新特性参数部分解释/">GoldenGate 12.1.2 新特性参数部分解释</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/29/oracle/Oracle_DataPump_INCLUDE_参数限制4000个字符解决办法/">Oracle expdp中INCLUDE参数限制4000个字符的解决办法</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/28/oracle/Oracle 11g工作中常用的命令和脚本整理/">Oracle Database 11g工作中常用的命令和脚本整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/28/tools/Hexo文章的密码访问/">Hexo文章的密码访问</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/28/oracle/Oracle数据库补丁号码快速参考 (文档 ID 1922396.1)/">数据库GI PSU，SPU(CPU)，Bundle Patches 和 Patchsets 补丁号码快速参考 (文档 ID 1922396.1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/24/linux/20170324_Vmware_centos_虚拟机根分区磁盘扩容(基于LVM)/">VMWare CentOS 虚拟机根分区磁盘扩容(基于LVM)</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/20/mysql/MySQL-DBA从小白到大神实战课程学习/09-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-09 MySQL性能优化的关键点</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/18/linux/20170318_CentOS7.3安装图解/">CentOS7.3安装图解</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/13/mysql/MySQL-DBA从小白到大神实战课程学习/08-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-08 MySQL监控系统之Zabbix</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/03/10/mysql/MySQL-DBA从小白到大神实战课程学习/07-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-07 MySQL锁机制与事务机制实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/27/mysql/MySQL-DBA从小白到大神实战课程学习/06-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-06 深入浅出MySQL备份与恢复</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/mysql/MySQL-DBA从小白到大神实战课程学习/05-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-05 MySQL DBA日常操作</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/16/oracle/那些在11gR2中可能惹祸的新特性/">那些在11gR2中可能惹祸的新特性</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/tools/hexo解决代码块空行自动删除问题/">hexo解决代码块空行自动删除问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/14/mysql/MySQL-DBA从小白到大神实战课程学习/04-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-04 揭密MySQL databock and binlog的格式</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo博客添加常用插件/">hexo博客添加常用插件</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/08/tools/hexo更换主题并个性化定制/">hexo更换主题并个性化定制</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/30/tools/Sublime常用快捷键/">Sublime Text 常用快捷键</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/mysql/MySQL-DBA从小白到大神实战课程学习/03-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-03 深入MySQL体系结构</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/tools/vim常用命令/">VIM常用命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/tools/git常用命令整理/">GIT常用命令整理</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/MySQL-DBA从小白到大神实战课程学习/02-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-02 MySQL标准化、自动化部署</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/26/mysql/MySQL-DBA从小白到大神实战课程学习/01-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-01 MySQL 高级DBA职业规划</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/19/tools/hexo+github搭建个人博客/">hexo+github搭建个人博客</a></li></ul>
 
 
 

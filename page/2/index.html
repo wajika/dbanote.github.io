@@ -266,6 +266,87 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-oracle/Oracle 11g工作中常用的命令和脚本整理" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/03/28/oracle/Oracle 11g工作中常用的命令和脚本整理/" class="article-date">
+      <time datetime="2017-03-28T07:23:05.827Z" itemprop="datePublished">2017-03-28</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/28/oracle/Oracle 11g工作中常用的命令和脚本整理/">Oracle Database 11g工作中常用的命令和脚本整理</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <h2 id="设置Oracle用户密码永不过期"><a href="#设置Oracle用户密码永不过期" class="headerlink" title="设置Oracle用户密码永不过期"></a>设置Oracle用户密码永不过期</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">alter profile default limit PASSWORD_LIFE_TIME unlimited;</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 查看设置</span></span>
+<span class="line"><span class="keyword">select</span> * from dba_profiles where resource_name like <span class="string">'PASSWORD_LIFE_TIME%'</span>;</span>
+</pre></td></tr></table></figure>
+<h2 id="设置Oracle用户登陆失败次数限制"><a href="#设置Oracle用户登陆失败次数限制" class="headerlink" title="设置Oracle用户登陆失败次数限制"></a>设置Oracle用户登陆失败次数限制</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 设置登陆失败次数限制为100，错误登陆数超过100会导致用户被锁</span></span>
+<span class="line">alter profile default limit FAILED_LOGIN_ATTEMPTS <span class="number">100</span>;</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 无限制</span></span>
+<span class="line">alter profile default limit FAILED_LOGIN_ATTEMPTS unlimited;</span>
+<span class="line"></span>
+<span class="line"><span class="comment"># 查看登陆失败限制设置</span></span>
+<span class="line"><span class="keyword">select</span> * from dba_profiles where resource_name like <span class="string">'FAILED_LOGIN_ATTEMPTS%'</span>;</span>
+</pre></td></tr></table></figure>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/script/">script</a>
+    </div>
+
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oracle/">oracle</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/03/28/oracle/Oracle 11g工作中常用的命令和脚本整理/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-tools/Hexo文章的密码访问" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -870,71 +951,6 @@
       
         <p class="article-more-link">
           <a href="/2017/02/21/mysql/MySQL-DBA从小白到大神实战课程学习/05-MySQL-DBA从小白到大神实战/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-oracle/那些在11gR2中可能惹祸的新特性" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/02/16/oracle/那些在11gR2中可能惹祸的新特性/" class="article-date">
-      <time datetime="2017-02-15T16:00:00.000Z" itemprop="datePublished">2017-02-16</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/16/oracle/那些在11gR2中可能惹祸的新特性/">那些在11gR2中可能惹祸的新特性</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <p>有很多朋友因为11gR2那些潜在的特性可能给升级后系统稳定运行带来麻烦而无法鼓足升级到11gR2的勇气，实际Oracle在开发新版本RDBMS软件时引入的一些特性有很好的理念的，但是往往这些理念会给已稳定的应用环境带来变数，最显著的就是10g/9i升级到11gR2时的执行计划稳定性，此外adaptive cursor sharing 自适应游标、automatic serial direct path自动判断串行直接路径读、deferred segment creation、GC read mostly DRM…….等等的一系列特性已经在大量的案例中被证明是不适合于大量国产Application的。</p>
-<p>这篇文章里想做的是给出一张列表，能够将11gR2的优化器optimizer特性、和其他的如上列的这些可能引起问题的特性通过参数的方式给出一张列表，你可以选择性的禁用这些特性，前提是你的Applicaiton就该特性经过充分的测试，如果没有时间或者环境来测试这些新特性，那么还不如禁用这些特性，禁用新特性的结果也仅仅是回到老版本(一般是10gR2 10.2.0.4)的默认表现上来。<br>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/11g/">11g</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oracle/">oracle</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/02/16/oracle/那些在11gR2中可能惹祸的新特性/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

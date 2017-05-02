@@ -15,28 +15,25 @@
 
 
 
-<meta name="description" content="故障现象： nas存储通过nfs挂载到Linux主机上，使用expdp直接备份到nfs上时偶尔会报以下错误;;; 
-Export: Release 11.2.0.4.0 - Production on Wed Apr 12 16:58:22 2017
-......
-ORA-39000: bad dump file specification
-ORA-31641: unable to create">
+<meta name="description" content="通过gdb工具分析mysqld进程启动的过程gdb --args /u01/mysql/bin/mysqld
+#--------------------------------------------------------------------------------
+GNU gdb (GDB) Red Hat Enterprise Linux (7.2-90.el6)
+Copyright (">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ORA-27086 unable to lock file - already in use">
-<meta property="og:url" content="/2017/04/13/oracle/ORA/ORA-27086/index.html">
+<meta property="og:title" content="MySQL-DBA从小白到大神实战-15 MySQL源码初探">
+<meta property="og:url" content="/2017/05/02/mysql/MySQL-DBA从小白到大神实战课程学习/15-MySQL-DBA从小白到大神实战/index.html">
 <meta property="og:site_name" content="一个DBA的工作学习笔记">
-<meta property="og:description" content="故障现象： nas存储通过nfs挂载到Linux主机上，使用expdp直接备份到nfs上时偶尔会报以下错误;;; 
-Export: Release 11.2.0.4.0 - Production on Wed Apr 12 16:58:22 2017
-......
-ORA-39000: bad dump file specification
-ORA-31641: unable to create">
-<meta property="og:updated_time" content="2017-04-13T03:44:12.812Z">
+<meta property="og:description" content="通过gdb工具分析mysqld进程启动的过程gdb --args /u01/mysql/bin/mysqld
+#--------------------------------------------------------------------------------
+GNU gdb (GDB) Red Hat Enterprise Linux (7.2-90.el6)
+Copyright (">
+<meta property="og:updated_time" content="2017-05-02T09:11:43.882Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ORA-27086 unable to lock file - already in use">
-<meta name="twitter:description" content="故障现象： nas存储通过nfs挂载到Linux主机上，使用expdp直接备份到nfs上时偶尔会报以下错误;;; 
-Export: Release 11.2.0.4.0 - Production on Wed Apr 12 16:58:22 2017
-......
-ORA-39000: bad dump file specification
-ORA-31641: unable to create">
+<meta name="twitter:title" content="MySQL-DBA从小白到大神实战-15 MySQL源码初探">
+<meta name="twitter:description" content="通过gdb工具分析mysqld进程启动的过程gdb --args /u01/mysql/bin/mysqld
+#--------------------------------------------------------------------------------
+GNU gdb (GDB) Red Hat Enterprise Linux (7.2-90.el6)
+Copyright (">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -63,7 +60,7 @@ ORA-31641: unable to create">
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>ORA-27086 unable to lock file - already in use | 一个DBA的工作学习笔记</title>
+<title>MySQL-DBA从小白到大神实战-15 MySQL源码初探 | 一个DBA的工作学习笔记</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -277,11 +274,11 @@ ORA-31641: unable to create">
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-oracle/ORA/ORA-27086" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-mysql/MySQL-DBA从小白到大神实战课程学习/15-MySQL-DBA从小白到大神实战" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/04/13/oracle/ORA/ORA-27086/" class="article-date">
-      <time datetime="2017-04-12T16:00:00.000Z" itemprop="datePublished">2017-04-13</time>
+      <a href="/2017/05/02/mysql/MySQL-DBA从小白到大神实战课程学习/15-MySQL-DBA从小白到大神实战/" class="article-date">
+      <time datetime="2017-05-01T16:00:00.000Z" itemprop="datePublished">2017-05-02</time>
 </a>
 
 
@@ -296,7 +293,7 @@ ORA-31641: unable to create">
         
   
     <h1 class="article-title" itemprop="name">
-      ORA-27086 unable to lock file - already in use
+      MySQL-DBA从小白到大神实战-15 MySQL源码初探
     </h1>
   
 
@@ -307,7 +304,7 @@ ORA-31641: unable to create">
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ORA/">ORA-</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oracle/">oracle</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -317,24 +314,58 @@ ORA-31641: unable to create">
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><strong>故障现象：</strong> nas存储通过nfs挂载到Linux主机上，使用expdp直接备份到nfs上时偶尔会报以下错误<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">;;; </span>
-<span class="line">Export: Release <span class="number">11.2</span>.<span class="number">0</span>.<span class="number">4.0</span> - Production on Wed Apr <span class="number">12</span> <span class="number">16</span>:<span class="number">58</span>:<span class="number">22</span> <span class="number">2017</span></span>
-<span class="line">......</span>
-<span class="line">ORA-<span class="number">39000</span>: bad <span class="keyword">dump</span> file specification</span>
-<span class="line">ORA-<span class="number">31641</span>: unable to create <span class="keyword">dump</span> file <span class="string">"/oradata/hknfs/erpnogg_expdp/erpnogg_expdp_20170412165822_01.dmp"</span></span>
-<span class="line">ORA-<span class="number">27086</span>: unable to lock file - already in <span class="keyword">use</span></span>
-<span class="line">Linux-x86_64 Error: <span class="number">37</span>: No locks available</span>
-<span class="line">Additional information: <span class="number">10</span></span>
-</pre></td></tr></table></figure></p>
-<p><strong>解决办法：</strong> 卸载nfs挂载存储，重新挂载的时候加上<code>nolock</code>参数(存储上的锁文件功能也取消)<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">umount /oradata/hknfs</span>
-<span class="line">mount -t nfs -o nolock <span class="number">10.230</span>.<span class="number">51.200</span>:<span class="regexp">/cybackup /oradata</span><span class="regexp">/hknfs</span>
+        <h2 id="通过gdb工具分析mysqld进程启动的过程"><a href="#通过gdb工具分析mysqld进程启动的过程" class="headerlink" title="通过gdb工具分析mysqld进程启动的过程"></a>通过gdb工具分析mysqld进程启动的过程</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">gdb --args /u01/mysql/bin/mysqld</span>
+<span class="line"><span class="comment">#--------------------------------------------------------------------------------</span></span>
+<span class="line">GNU gdb (GDB) Red Hat Enterprise Linux (<span class="number">7.2</span>-<span class="number">90</span>.el6)</span>
+<span class="line">Copyright (C) <span class="number">2010</span> Free Software Foundation, Inc.</span>
+<span class="line">License GPLv3+: GNU GPL version <span class="number">3</span> <span class="keyword">or</span> later &lt;http:<span class="regexp">//gnu</span>.org/licenses/gpl.html&gt;</span>
+<span class="line">This is free software: you are free to change <span class="keyword">and</span> redistribute it.</span>
+<span class="line">There is NO WARRANTY, to the extent permitted by law.  Type <span class="string">"show copying"</span></span>
+<span class="line"><span class="keyword">and</span> <span class="string">"show warranty"</span> <span class="keyword">for</span> details.</span>
+<span class="line">This GDB was configured as <span class="string">"x86_64-redhat-linux-gnu"</span>.</span>
+<span class="line">For bug reporting instructions, please see:</span>
+<span class="line">&lt;http:<span class="regexp">//www</span>.gnu.org/software/gdb/bugs/&gt;...</span>
+<span class="line">Reading symbols from /u01/mysql/bin/mysqld...done.</span>
+<span class="line">(gdb) b mysqld_main   <span class="comment"># 设置断点</span></span>
+<span class="line">Breakpoint <span class="number">1</span> at <span class="number">0x58c0e4</span>: file /u01/mysql-<span class="number">5.6</span>.<span class="number">35</span>/sql/mysqld.cc, line <span class="number">5245</span>.</span>
+<span class="line">(gdb) r   <span class="comment"># 运行</span></span>
+<span class="line">Starting program: <span class="regexp">/u01/mysql</span><span class="regexp">/bin/mysqld</span> </span>
+<span class="line">[Thread debugging using libthread_db enabled]</span>
 <span class="line"></span>
-<span class="line">vi /etc</span><span class="regexp">/fstab</span>
-<span class="line">#------------------------------------------------------------------------</span>
-<span class="line">10.230.51.200:/cybackup</span> /oradata/hknfs          nfs     nolock       <span class="number">1</span> <span class="number">1</span></span>
-<span class="line"><span class="comment">#------------------------------------------------------------------------</span></span>
+<span class="line">Breakpoint <span class="number">1</span>, mysqld_main (argc=<span class="number">1</span>, argv=<span class="number">0x7fffffffe668</span>) at /u01/mysql-<span class="number">5.6</span>.<span class="number">35</span>/sql/mysqld.cc:<span class="number">5245</span></span>
+<span class="line"><span class="number">5245</span>    &#123;</span>
+<span class="line">Missing separate debuginfos, <span class="keyword">use</span>: debuginfo-install glibc-<span class="number">2.12</span>-<span class="number">1.192</span>.el6.x86_64 keyutils-libs-<span class="number">1.4</span>-<span class="number">5.0</span>.<span class="number">1</span>.el6.x86_64 krb5-libs-<span class="number">1.10</span>.<span class="number">3</span>-<span class="number">57</span>.el6.x86_64 libcom_err-<span class="number">1.42</span>.<span class="number">8</span>-<span class="number">1.0</span>.<span class="number">2</span>.el6.x86_64 libgcc-<span class="number">4.4</span>.<span class="number">7</span>-<span class="number">17</span>.el6.x86_64 libselinux-<span class="number">2.0</span>.<span class="number">94</span>-<span class="number">7</span>.el6.x86_64 libstdc++-<span class="number">4.4</span>.<span class="number">7</span>-<span class="number">17</span>.el6.x86_64 nss-softokn-freebl-<span class="number">3.14</span>.<span class="number">3</span>-<span class="number">23</span>.el6_7.x86_64 openssl-<span class="number">1.0</span>.<span class="number">1</span>e-<span class="number">48</span>.el6.x86_64 zlib-<span class="number">1.2</span>.<span class="number">3</span>-<span class="number">29</span>.el6.x86_64</span>
+<span class="line">(gdb) n   <span class="comment"># 向下</span></span>
+<span class="line"><span class="number">5250</span>      my_progname= argv[<span class="number">0</span>];</span>
+<span class="line">(gdb) n</span>
+<span class="line"><span class="number">5254</span>      <span class="keyword">if</span> (my_init())                 // init my_sys library &amp; pthreads</span>
+<span class="line">(gdb) <span class="keyword">s</span>   <span class="comment"># 看源码位置</span></span>
+<span class="line">my_init () at /u01/mysql-<span class="number">5.6</span>.<span class="number">35</span>/mysys/my_init.c:<span class="number">69</span></span>
+<span class="line"><span class="number">69</span>        <span class="keyword">if</span> (my_init_done)</span>
+<span class="line">(gdb) n</span>
+<span class="line"><span class="number">74</span>        my_umask= <span class="number">0660</span>;                       <span class="regexp">/* Default umask for new files */</span></span>
+<span class="line">(gdb) n</span>
+<span class="line"><span class="number">75</span>        my_umask_dir= <span class="number">0700</span>;                   <span class="regexp">/* Default umask for new directories */</span></span>
+<span class="line"><span class="comment">#--------------------------------------------------------------------------------</span></span>
+</pre></td></tr></table></figure>
+<p>查看<code>/u01/mysql-5.6.35/sql/mysqld.cc</code>的line 5245<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">&#123;</span>
+<span class="line">  <span class="regexp">/*</span>
+<span class="line">    Perform basic thread library and malloc initialization,</span>
+<span class="line">    to be able to read defaults files and parse options.</span>
+<span class="line">  */</span></span>
+<span class="line">  my_progname= argv[<span class="number">0</span>];</span>
 </pre></td></tr></table></figure></p>
-<p><strong>原因分析：</strong> nas存储将逻辑卷nfs共享出去，一旦服务器挂载使用，存储就会自动将该逻辑卷锁住，保护逻辑卷内不被其他服务器挂载，达到保护数据作用，但是数据库添加挂载目录中创建数据文件，数据库需要对该数据文件获取锁，但是该锁已经被存储占用，这个时候就需要设置存储在挂载的时候不锁住，使用nolock参数。</p>
+<h2 id="杂记"><a href="#杂记" class="headerlink" title="杂记"></a>杂记</h2><h3 id="mysql代码结构"><a href="#MySQL代码结构" class="headerlink" title="MySQL代码结构"></a>MySQL代码结构</h3><h4 id="client客户端工具集合"><a href="#Client：客户端工具集合" class="headerlink" title="Client：客户端工具集合"></a>Client：客户端工具集合</h4><p>比如mysql，mysqldump，mysqlbinlog等等</p>
+<h4 id="myisammyisam引擎相关的代码"><a href="#Myisam：myisam引擎相关的代码" class="headerlink" title="Myisam：myisam引擎相关的代码"></a>Myisam：myisam引擎相关的代码</h4><p>mi_open.c：打开文件<br>mi_close.c：关闭文件<br>mi_update.c：更新记录</p>
+<h4 id="mysys系统工具代码"><a href="#Mysys：系统工具代码" class="headerlink" title="Mysys：系统工具代码"></a>Mysys：系统工具代码</h4><p>比如charset.c，mf_qsort.c等</p>
+<h4 id="sqlmysql核心代码"><a href="#Sql：MySQL核心代码" class="headerlink" title="Sql：MySQL核心代码"></a>Sql：MySQL核心代码</h4><p>sql_lex.cc：词法解析<br>sql_yacc.yy: 语法解析<br>sql_select.c, sql_update, sql_delete.c, sql_insert.c等文件</p>
+<h4 id="vio网络通信代码"><a href="#Vio：网络通信代码" class="headerlink" title="Vio：网络通信代码"></a>Vio：网络通信代码</h4><p>viosocket.c：socket通信</p>
+<h4 id="第三方开源库"><a href="#第三方开源库" class="headerlink" title="第三方开源库"></a>第三方开源库</h4><p>Dbug，pstack，regex，strings，zlib</p>
+<h4 id="innobase"><a href="#Innobase" class="headerlink" title="Innobase"></a>Innobase</h4><p>InnoDB引擎代码</p>
+<h4 id="mysql-test"><a href="#Mysql-test" class="headerlink" title="Mysql-test"></a>Mysql-test</h4><p>MySQL testcase</p>
+<h4 id="scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h4><p>mysql_install_db，mysql_system_tables.sql</p>
+<h4 id="win"><a href="#win" class="headerlink" title="win"></a>win</h4><p>windows用到的</p>
+<h3 id="源码查看工具sourceinsight"><a href="#源码查看工具sourceinsight" class="headerlink" title="源码查看工具sourceinsight"></a>源码查看工具sourceinsight</h3><p>下载地址：<a href="http://pan.baidu.com/s/1bprLzZL" target="_blank" rel="external">http://pan.baidu.com/s/1bprLzZL </a></p>
 
       
     </div>
@@ -346,16 +377,10 @@ ORA-31641: unable to create">
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2017/04/13/mysql/MySQL-DBA从小白到大神实战课程学习/12-MySQL-DBA从小白到大神实战/">
-                    MySQL DBA从小白到大神实战-12 MySQL构架设计与容量规划
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2017/04/06/mysql/MySQL-DBA从小白到大神实战课程学习/11-MySQL-DBA从小白到大神实战/">
-                    MySQL DBA从小白到大神实战-11 构建高可用MySQL系统
+                <a href="/2017/04/25/mysql/MySQL-DBA从小白到大神实战课程学习/14-MySQL-DBA从小白到大神实战/">
+                    MySQL-DBA从小白到大神实战-14 运维MySQL过程中线上故障分析与排查
                 </a>
             </div>
         
@@ -367,7 +392,7 @@ ORA-31641: unable to create">
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#通过gdb工具分析mysqld进程启动的过程"><span class="toc-number">1.</span> <span class="toc-text">通过gdb工具分析mysqld进程启动的过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#杂记"><span class="toc-number">2.</span> <span class="toc-text">杂记</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mysql代码结构"><span class="toc-number">2.1.</span> <span class="toc-text">MySQL代码结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#client客户端工具集合"><span class="toc-number">2.1.1.</span> <span class="toc-text">Client：客户端工具集合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#myisammyisam引擎相关的代码"><span class="toc-number">2.1.2.</span> <span class="toc-text">Myisam：myisam引擎相关的代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mysys系统工具代码"><span class="toc-number">2.1.3.</span> <span class="toc-text">Mysys：系统工具代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sqlmysql核心代码"><span class="toc-number">2.1.4.</span> <span class="toc-text">Sql：MySQL核心代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#vio网络通信代码"><span class="toc-number">2.1.5.</span> <span class="toc-text">Vio：网络通信代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#第三方开源库"><span class="toc-number">2.1.6.</span> <span class="toc-text">第三方开源库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#innobase"><span class="toc-number">2.1.7.</span> <span class="toc-text">Innobase</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mysql-test"><span class="toc-number">2.1.8.</span> <span class="toc-text">Mysql-test</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#scripts"><span class="toc-number">2.1.9.</span> <span class="toc-text">Scripts</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#win"><span class="toc-number">2.1.10.</span> <span class="toc-text">win</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#源码查看工具sourceinsight"><span class="toc-number">2.2.</span> <span class="toc-text">源码查看工具sourceinsight</span></a></li></ol></li></ol>
         
     </div>
     <style>
@@ -398,15 +423,13 @@ ORA-31641: unable to create">
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/04/13/mysql/MySQL-DBA从小白到大神实战课程学习/12-MySQL-DBA从小白到大神实战/" title="上一篇: MySQL DBA从小白到大神实战-12 MySQL构架设计与容量规划">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2017/04/06/mysql/MySQL-DBA从小白到大神实战课程学习/11-MySQL-DBA从小白到大神实战/" title="下一篇: MySQL DBA从小白到大神实战-11 构建高可用MySQL系统">
+            <a href="/2017/04/25/mysql/MySQL-DBA从小白到大神实战课程学习/14-MySQL-DBA从小白到大神实战/" title="下一篇: MySQL-DBA从小白到大神实战-14 运维MySQL过程中线上故障分析与排查">
                 <i class="fa fa-angle-right"></i>
             </a>
         

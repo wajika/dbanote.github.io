@@ -266,6 +266,71 @@
 </nav>
       <div class="body-wrap">
   
+    <article id="post-oracle/那些在11gR2中可能惹祸的新特性" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/16/oracle/那些在11gR2中可能惹祸的新特性/" class="article-date">
+      <time datetime="2017-02-15T16:00:00.000Z" itemprop="datePublished">2017-02-16</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/16/oracle/那些在11gR2中可能惹祸的新特性/">那些在11gR2中可能惹祸的新特性</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+              <p>有很多朋友因为11gR2那些潜在的特性可能给升级后系统稳定运行带来麻烦而无法鼓足升级到11gR2的勇气，实际Oracle在开发新版本RDBMS软件时引入的一些特性有很好的理念的，但是往往这些理念会给已稳定的应用环境带来变数，最显著的就是10g/9i升级到11gR2时的执行计划稳定性，此外adaptive cursor sharing 自适应游标、automatic serial direct path自动判断串行直接路径读、deferred segment creation、GC read mostly DRM…….等等的一系列特性已经在大量的案例中被证明是不适合于大量国产Application的。</p>
+<p>这篇文章里想做的是给出一张列表，能够将11gR2的优化器optimizer特性、和其他的如上列的这些可能引起问题的特性通过参数的方式给出一张列表，你可以选择性的禁用这些特性，前提是你的Applicaiton就该特性经过充分的测试，如果没有时间或者环境来测试这些新特性，那么还不如禁用这些特性，禁用新特性的结果也仅仅是回到老版本(一般是10gR2 10.2.0.4)的默认表现上来。<br>
+          
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/11g/">11g</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/oracle/">oracle</a></li></ul>
+    </div>
+
+      
+        <p class="article-more-link">
+          <a href="/2017/02/16/oracle/那些在11gR2中可能惹祸的新特性/#more">阅读全文 >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-tools/hexo解决代码块空行自动删除问题" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -881,70 +946,6 @@
       
         <p class="article-more-link">
           <a href="/2017/01/26/mysql/MySQL-DBA从小白到大神实战课程学习/02-MySQL-DBA从小白到大神实战/#more">阅读全文 >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-mysql/MySQL-DBA从小白到大神实战课程学习/01-MySQL-DBA从小白到大神实战" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/01/26/mysql/MySQL-DBA从小白到大神实战课程学习/01-MySQL-DBA从小白到大神实战/" class="article-date">
-      <time datetime="2017-01-26T05:54:07.005Z" itemprop="datePublished">2017-01-26</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/26/mysql/MySQL-DBA从小白到大神实战课程学习/01-MySQL-DBA从小白到大神实战/">MySQL DBA从小白到大神实战-01 MySQL 高级DBA职业规划</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-              <h2 id="什么是MVCC？有什么作用？"><a href="#什么是MVCC？有什么作用？" class="headerlink" title="什么是MVCC？有什么作用？"></a>什么是MVCC？有什么作用？</h2><p>MVCC是Multiversion Concurrency Control的缩写，中文的意思是多版本并发控制。<br>目前多数DB都采用了这一技术，比如Oracle，PostgreSQL等，但各自的实现机制不尽相同，MVCC没有一个统一的实现标准。<br>MVCC能有效降低锁的开销，虽然不同数据库实现MVCC的机制有所有同，但大都实现了非阻塞的读操作，写操作也只锁定必要的行。</p>
-          
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
-    </div>
-
-      
-        <p class="article-more-link">
-          <a href="/2017/01/26/mysql/MySQL-DBA从小白到大神实战课程学习/01-MySQL-DBA从小白到大神实战/#more">阅读全文 >></a>
         </p>
       
       <div class="clearfix"></div>

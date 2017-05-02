@@ -295,7 +295,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h2 id="通过gdb工具分析mysqld进程启动的过程"><a href="#通过gdb工具分析mysqld进程启动的过程" class="headerlink" title="通过gdb工具分析mysqld进程启动的过程"></a>通过gdb工具分析mysqld进程启动的过程</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">gdb --args /u01/mysql/bin/mysqld</span>
+              <h2 id="通过gdb工具分析mysqld进程启动的过程"><a href="#通过gdb工具分析mysqld进程启动的过程" class="headerlink" title="通过gdb工具分析mysqld进程启动的过程"></a>通过gdb工具分析mysqld进程启动的过程</h2><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">gdb --args /u01/mysql/bin/mysqld</span>
 <span class="line"><span class="comment">#--------------------------------------------------------------------------------</span></span>
 <span class="line">GNU gdb (GDB) Red Hat Enterprise Linux (<span class="number">7.2</span>-<span class="number">90</span>.el6)</span>
 <span class="line">Copyright (C) <span class="number">2010</span> Free Software Foundation, Inc.</span>
@@ -315,7 +315,10 @@
 <span class="line"></span>
 <span class="line">Breakpoint <span class="number">1</span>, mysqld_main (argc=<span class="number">1</span>, argv=<span class="number">0x7fffffffe668</span>) at /u01/mysql-<span class="number">5.6</span>.<span class="number">35</span>/sql/mysqld.cc:<span class="number">5245</span></span>
 <span class="line"><span class="number">5245</span>    &#123;</span>
-<span class="line">Missing separate debuginfos, <span class="keyword">use</span>: debuginfo-install glibc-<span class="number">2.12</span>-<span class="number">1.192</span>.el6.x86_64 keyutils-libs-<span class="number">1.4</span>-<span class="number">5.0</span>.<span class="number">1</span>.el6.x86_64 krb5-libs-<span class="number">1.10</span>.<span class="number">3</span>-<span class="number">57</span>.el6.x86_64 libcom_err-<span class="number">1.42</span>.<span class="number">8</span>-<span class="number">1.0</span>.<span class="number">2</span>.el6.x86_64 libgcc-<span class="number">4.4</span>.<span class="number">7</span>-<span class="number">17</span>.el6.x86_64 libselinux-<span class="number">2.0</span>.<span class="number">94</span>-<span class="number">7</span>.el6.x86_64 libstdc++-<span class="number">4.4</span>.<span class="number">7</span>-<span class="number">17</span>.el6.x86_64 nss-softokn-freebl-<span class="number">3.14</span>.<span class="number">3</span>-<span class="number">23</span>.el6_7.x86_64 openssl-<span class="number">1.0</span>.<span class="number">1</span>e-<span class="number">48</span>.el6.x86_64 zlib-<span class="number">1.2</span>.<span class="number">3</span>-<span class="number">29</span>.el6.x86_64</span>
+<span class="line">Missing separate debuginfos, <span class="keyword">use</span>: debuginfo-install glibc-<span class="number">2.12</span>-<span class="number">1.192</span>.el6.x86_64 keyutils-libs-<span class="number">1.4</span>-<span class="number">5.0</span>.<span class="number">1</span>.el6.x86_64 </span>
+<span class="line">krb5-libs-<span class="number">1.10</span>.<span class="number">3</span>-<span class="number">57</span>.el6.x86_64 libcom_err-<span class="number">1.42</span>.<span class="number">8</span>-<span class="number">1.0</span>.<span class="number">2</span>.el6.x86_64 libgcc-<span class="number">4.4</span>.<span class="number">7</span>-<span class="number">17</span>.el6.x86_64 </span>
+<span class="line">libselinux-<span class="number">2.0</span>.<span class="number">94</span>-<span class="number">7</span>.el6.x86_64  libstdc++-<span class="number">4.4</span>.<span class="number">7</span>-<span class="number">17</span>.el6.x86_64 nss-softokn-freebl-<span class="number">3.14</span>.<span class="number">3</span>-<span class="number">23</span>.el6_7.x86_64 </span>
+<span class="line">openssl-<span class="number">1.0</span>.<span class="number">1</span>e-<span class="number">48</span>.el6.x86_64 zlib-<span class="number">1.2</span>.<span class="number">3</span>-<span class="number">29</span>.el6.x86_64</span>
 <span class="line">(gdb) n   <span class="comment"># 向下</span></span>
 <span class="line"><span class="number">5250</span>      my_progname= argv[<span class="number">0</span>];</span>
 <span class="line">(gdb) n</span>
@@ -329,25 +332,7 @@
 <span class="line"><span class="number">75</span>        my_umask_dir= <span class="number">0700</span>;                   <span class="regexp">/* Default umask for new directories */</span></span>
 <span class="line"><span class="comment">#--------------------------------------------------------------------------------</span></span>
 </pre></td></tr></table></figure>
-<p>查看<code>/u01/mysql-5.6.35/sql/mysqld.cc</code>的line 5245<br><figure class="highlight perl"><table><tr><td class="code"><pre><span class="line">&#123;</span>
-<span class="line">  <span class="regexp">/*</span>
-<span class="line">    Perform basic thread library and malloc initialization,</span>
-<span class="line">    to be able to read defaults files and parse options.</span>
-<span class="line">  */</span></span>
-<span class="line">  my_progname= argv[<span class="number">0</span>];</span>
-</pre></td></tr></table></figure></p>
-<h2 id="杂记"><a href="#杂记" class="headerlink" title="杂记"></a>杂记</h2><h3 id="mysql代码结构"><a href="#MySQL代码结构" class="headerlink" title="MySQL代码结构"></a>MySQL代码结构</h3><h4 id="client客户端工具集合"><a href="#Client：客户端工具集合" class="headerlink" title="Client：客户端工具集合"></a>Client：客户端工具集合</h4><p>比如mysql，mysqldump，mysqlbinlog等等</p>
-<h4 id="myisammyisam引擎相关的代码"><a href="#Myisam：myisam引擎相关的代码" class="headerlink" title="Myisam：myisam引擎相关的代码"></a>Myisam：myisam引擎相关的代码</h4><p>mi_open.c：打开文件<br>mi_close.c：关闭文件<br>mi_update.c：更新记录</p>
-<h4 id="mysys系统工具代码"><a href="#Mysys：系统工具代码" class="headerlink" title="Mysys：系统工具代码"></a>Mysys：系统工具代码</h4><p>比如charset.c，mf_qsort.c等</p>
-<h4 id="sqlmysql核心代码"><a href="#Sql：MySQL核心代码" class="headerlink" title="Sql：MySQL核心代码"></a>Sql：MySQL核心代码</h4><p>sql_lex.cc：词法解析<br>sql_yacc.yy: 语法解析<br>sql_select.c, sql_update, sql_delete.c, sql_insert.c等文件</p>
-<h4 id="vio网络通信代码"><a href="#Vio：网络通信代码" class="headerlink" title="Vio：网络通信代码"></a>Vio：网络通信代码</h4><p>viosocket.c：socket通信</p>
-<h4 id="第三方开源库"><a href="#第三方开源库" class="headerlink" title="第三方开源库"></a>第三方开源库</h4><p>Dbug，pstack，regex，strings，zlib</p>
-<h4 id="innobase"><a href="#Innobase" class="headerlink" title="Innobase"></a>Innobase</h4><p>InnoDB引擎代码</p>
-<h4 id="mysql-test"><a href="#Mysql-test" class="headerlink" title="Mysql-test"></a>Mysql-test</h4><p>MySQL testcase</p>
-<h4 id="scripts"><a href="#Scripts" class="headerlink" title="Scripts"></a>Scripts</h4><p>mysql_install_db，mysql_system_tables.sql</p>
-<h4 id="win"><a href="#win" class="headerlink" title="win"></a>win</h4><p>windows用到的</p>
-<h3 id="源码查看工具sourceinsight"><a href="#源码查看工具sourceinsight" class="headerlink" title="源码查看工具sourceinsight"></a>源码查看工具sourceinsight</h3><p>下载地址：<a href="http://pan.baidu.com/s/1bprLzZL" target="_blank" rel="external">http://pan.baidu.com/s/1bprLzZL </a></p>
-
+          
       
     </div>
     
@@ -360,6 +345,10 @@
         <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mysql/">mysql</a></li></ul>
     </div>
 
+      
+        <p class="article-more-link">
+          <a href="/2017/05/02/mysql/MySQL-DBA从小白到大神实战课程学习/15-MySQL-DBA从小白到大神实战/#more">阅读全文 >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
